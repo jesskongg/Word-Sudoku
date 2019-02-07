@@ -19,13 +19,13 @@ public class MainMenu extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainMenu();
+                openMainActivity();
             }
         });
     }
 
-    public void openMainMenu() {
-        Intent intent = new Intent(this, MainMenu.class);
+    public void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

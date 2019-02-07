@@ -19,13 +19,14 @@ public class MainMenu extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                openSelectLanguageMode();
             }
         });
     }
 
-    public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    // Button for user to proceed to choosing their language mode
+    public void openSelectLanguageMode() {
+        Intent goSetLang = new Intent(this, SelectLanguageMode.class);
+        startActivity(goSetLang);
     }
 }

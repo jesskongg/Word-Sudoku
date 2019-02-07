@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 //    private TextView text;
 //    private LinearLayout lin;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         sudokuTable = (TableLayout) findViewById(R.id.sudokuTable);
 
         sudokuTable.setBackgroundColor(Color.BLACK);
+
+
 
 //        text = (TextView) findViewById(R.id.textView2);
 
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 sudokuCell.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                 tableRow.addView(sudokuCell);
 
-                
+
             }
 
             sudokuTable.addView(tableRow);

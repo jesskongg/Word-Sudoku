@@ -21,7 +21,7 @@ public class SelectLanguageMode extends AppCompatActivity {
         enFrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                openMainActivity(1);
             }
         });
 
@@ -29,14 +29,16 @@ public class SelectLanguageMode extends AppCompatActivity {
         frEnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                openMainActivity(2);
             }
         });
 
         }
 
-    public void openMainActivity() {
-        Intent goMainActivity = new Intent(this, MainActivity.class);
+    public void openMainActivity(int value) {
+        Intent goMainActivity = new Intent();
+        goMainActivity.putExtra("language", value);
+        goMainActivity.setClass(this, MainActivity.class);
         startActivity(goMainActivity);
 
     }

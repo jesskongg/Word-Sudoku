@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setWordList(2);
+        //setWordList
+        Intent language = getIntent();
+        int numberOfLanguage = language.getIntExtra("language", 0);
+        setWordList(numberOfLanguage);
 
         sudokuTable = (TableLayout) findViewById(R.id.sudokuTable);
 
@@ -77,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
             for(int column = 0; column < 9; column++) {
                 //Create sudokuCell(TextView)
-                TextView sudokuCell = new TextView(this);
+                final TextView sudokuCell = new TextView(this);
                 sudokuCell.setBackgroundResource(R.drawable.cell_shap);
                 sudokuCell.setHeight(100);
                 sudokuCell.setWidth(102);
@@ -101,6 +105,25 @@ public class MainActivity extends AppCompatActivity {
                            Toast.makeText(MainActivity.this,
                                    R.string.chooseWord,
                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    //Set hint to the filled sudokuCell
+                    sudokuCell.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(MainActivity.this,
+                                    R.string.hint,
+                                    Toast.LENGTH_SHORT).show();
+                            sudokuCell.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Toast.makeText(MainActivity.this,
+                                            intToWord(board[index_board], wordListKeyboard[0]),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
                 }

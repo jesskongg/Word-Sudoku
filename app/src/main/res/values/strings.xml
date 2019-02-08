@@ -1,11 +1,12 @@
 
 <resources>
     <string name="app_name">Sudoku</string>
-    <string name="chooseWord">Choose a word</string>
-    <string name="chooseCell">Choose a cell at first</string>
-    <string name="boardTrue">Successful</string>
-    <string name="boardFalse">Failed</string>
-    <string name="check">Check</string>
+    <string name="chooseWord">Tap on a word</string>
+    <string name="chooseCell">Tap on a cell first</string>
+    <string name="boardTrue">You did it!</string>
+    <string name="boardFalse">Try again!</string>
+    <string name="check">Check your answers</string>
+    <string name="hint">Tap on the box again for a hint!</string>
 
     <!--Welcome Page -->
     <string name="welcome">Sudoku</string>

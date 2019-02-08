@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TableLayout sudokuTable;
     private TableLayout wordKeyboard;
-    private String wordListE[] = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-    private String wordListF[] = {"un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf"};
+    private String wordListE[] = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
+    private String wordListF[] = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
     private String wordListSudokuTable[];
     private String wordListKeyboard[];
     private int board[] =

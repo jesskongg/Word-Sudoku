@@ -67,9 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
+
     //Create sudokutTable
     private void setSudokuTable() {
         for(int row = 0; row < 9; row++) {

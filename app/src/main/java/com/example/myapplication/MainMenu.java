@@ -8,18 +8,27 @@ import android.widget.Button;
 
 public class MainMenu extends AppCompatActivity {
 
-    private Button mButton;
+    private Button startButton;
+    private Button helpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        mButton = (Button) findViewById(R.id.start_button);
-        mButton.setOnClickListener(new View.OnClickListener() {
+        startButton = (Button) findViewById(R.id.start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSelectLanguageMode();
+            }
+        });
+
+        helpButton = (Button) findViewById(R.id.help_button);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openInstructions();
             }
         });
     }
@@ -28,5 +37,10 @@ public class MainMenu extends AppCompatActivity {
     public void openSelectLanguageMode() {
         Intent goSetLang = new Intent(this, SelectLanguageMode.class);
         startActivity(goSetLang);
+    }
+
+    public void openInstructions() {
+        Intent goOpenInstr = new Intent(this, instructions.class);
+        startActivity(goOpenInstr);
     }
 }

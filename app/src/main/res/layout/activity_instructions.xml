@@ -18,14 +18,17 @@
         android:layout_marginEnd="125dp"
         android:layout_marginRight="125dp"
         android:layout_marginBottom="30dp"
-        android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/instructions"
+        android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView6"
@@ -97,17 +100,20 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="112dp"
+        android:layout_height="37dp"
         android:layout_marginStart="168dp"
         android:layout_marginLeft="168dp"
+        android:layout_marginTop="497dp"
         android:layout_marginEnd="168dp"
         android:layout_marginRight="168dp"
-        android:layout_marginBottom="107dp"
+        android:layout_marginBottom="68dp"
         android:background="@drawable/round_buttons"
-        android:contentDescription="Go Back to Main Menu"
+        android:contentDescription="@string/back_main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 </android.support.constraint.ConstraintLayout>

@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TableLayout sudokuTable;
     private TableLayout wordKeyboard;
-    private String wordListE[] = {"m", "b", "a", "w", "r", "c", "o", "p", "g"};
-    private String wordListF[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    private String wordListE[] = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    private String wordListF[] = {"un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf"};
     private String wordListSudokuTable[];
     private String wordListKeyboard[];
     private int board[] =

@@ -1,4 +1,4 @@
-<<<<<<< app/src/main/res/values/strings.xml
+
 <resources>
     <string name="app_name">Sudoku</string>
     <string name="chooseWord">Choose a word</string>
@@ -18,6 +18,7 @@
     <string name="description2">If ENGLISH->FRENCH mode is selected, enter the French equivalents of the 9 English words already on the board. If FRENCH->ENGLISH mode is selected, enter the English equivalents of the 9 French words already on the board.</string>
     <string name="description3">The game is complete once all 81 squares have been filled, and the answer has been verified as correct after clicking on the ‘Check Answers’ button.</string>
     <string name="good_luck">Good luck!</string>
+    <string name="back_main">Go Back to Main Menu</string>
 
     <!--Language Selector Page-->
     <string name="select_lang">Select Language Mode</string>
@@ -26,24 +27,4 @@
     <string name="how_to">Please select a language mode to begin your Sudoku puzzle.</string>
 
 </resources>
-=======
-<resources>
-    <string name="app_name">My Application</string>
-    <string name="chooseWord">Choose a word</string>
-    <string name="chooseCell">Choose a cell at first</string>
-    <string name="boardTrue">Successful</string>
-    <string name="boardFalse">Failed</string>
-    <string name="check">Check</string>
 
-    <!--Welcome Page -->
-    <string name="welcome">Sudoku</string>
-    <string name="start_button">Play</string>
-    <string name="help_button">Instructions</string>
-
-    <!--Language Selector Page-->
-    <string name="select_lang">Select Language Mode</string>
-    <string name="mode_1">ENGLISH -> FRENCH</string>
-    <string name="mode_2">FRENCH -> ENGLISH</string>
-    <string name="how_to">Please select a language mode to begin your Sudoku puzzle.</string>
-</resources>
->>>>>>> app/src/main/res/values/strings.xml

@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".MainMenu"
+        <activity android:name=".instructions"></activity>
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainMenu"
             android:allowBackup="true"
             android:hardwareAccelerated="false"
             android:icon="@mipmap/ic_launcher"

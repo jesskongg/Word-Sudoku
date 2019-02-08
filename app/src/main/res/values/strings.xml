@@ -34,6 +34,7 @@
     <string name="boardTrue">Successful</string>
     <string name="boardFalse">Failed</string>
     <string name="check">Check</string>
+    <string name="hint">Click it again and you will get hint.</string>
 
     <!--Welcome Page -->
     <string name="welcome">Sudoku</string>

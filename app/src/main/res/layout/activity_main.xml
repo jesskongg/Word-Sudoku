@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/turquoise"
     tools:context=".MainActivity">
 
     <TableLayout
@@ -44,6 +45,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginEnd="20sp"
             android:background="@drawable/round_buttons"
             android:text="@string/check"
             android:textAllCaps="true"
@@ -55,12 +59,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginStart="20sp"
             android:background="@drawable/round_buttons"
             android:contentDescription="@string/back_select"
             android:textAllCaps="true"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:srcCompat="@android:drawable/ic_menu_revert" />/>
+            app:srcCompat="@android:drawable/ic_menu_revert" />
 
     </LinearLayout>
 

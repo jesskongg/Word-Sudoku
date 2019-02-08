@@ -7,6 +7,8 @@
     <string name="boardFalse">Try again!</string>
     <string name="check">Check your answers</string>
     <string name="hint">Tap on the box again for a hint!</string>
+    <string name="back_select">Go Back to Select Language Mode</string>
+    <string name="back_select_information">Go back to selection page and you will loose what you have done. Tap on the box again for sure.</string>
 
     <!--Welcome Page -->
     <string name="welcome">Sudoku</string>

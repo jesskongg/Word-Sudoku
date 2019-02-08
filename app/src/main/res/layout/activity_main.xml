@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/turquoise"
     tools:context=".MainActivity">
 
     <TableLayout
@@ -50,6 +49,18 @@
             android:textAllCaps="true"
             android:textSize="20sp"
             android:textStyle="bold"/>
+
+        <ImageButton
+            android:id="@+id/back_select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/round_buttons"
+            android:contentDescription="@string/back_select"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:srcCompat="@android:drawable/ic_menu_revert" />/>
 
     </LinearLayout>
 

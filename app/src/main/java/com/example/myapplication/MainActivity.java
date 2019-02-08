@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView sudokucells[][] = new TextView[9][9];
     private int cell_clicked;
     private Button checkBoard;
+    private ImageButton backSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backSelect = (ImageButton) findViewById(R.id.back_select);
+        backSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,
+                        R.string.back_select_information,
+                        Toast.LENGTH_SHORT).show();
+                backSelect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goSelect();
+                    }
+                });
+            }
+        });
+
     }
 
     //Create sudokutTable
@@ -272,6 +291,11 @@ public class MainActivity extends AppCompatActivity {
             wordListSudokuTable = wordListF;
             wordListKeyboard = wordListE;
         }
+    }
+
+    private void goSelect() {
+        Intent goSelect = new Intent(this, SelectLanguageMode.class);
+        startActivity(goSelect);
     }
 
 }

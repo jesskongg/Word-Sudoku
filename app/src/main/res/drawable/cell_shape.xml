@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- cell shape is used for both, grid puzzle and grid menu-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- View background color-->
+    <solid android:color="#FCFAFA" />
+
+    <!-- View border color and width -->
+    <stroke
+        android:width="1dip"
+        android:color="#070707"/>
+
+    <!-- radius which makes corners rounded -->
+    <corners
+        android:radius="0dp"></corners>
+
+
+</shape>

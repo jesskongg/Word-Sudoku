@@ -1,5 +1,7 @@
 
 <resources>
+
+    <!--main activity sudoku grid puzzle-->
     <string name="app_name">Sudoku</string>
     <string name="chooseWord">Tap on a word</string>
     <string name="chooseCell">Tap on a cell first</string>

@@ -11,21 +11,35 @@ public class boards_and_menu_data {
 
 
 
-    private int number_board[]={0,9,2,0,0,0,0,0,4,
-            5,0,0,0,0,1,0,3,0,
-            0,0,7,8,4,6,0,0,0,
-            0,0,5,0,0,0,0,1,8,
-            1,8,3,2,0,0,0,4,0,
-            9,7,0,0,8,3,6,0,2,
-            0,3,0,6,9,4,5,7,1,
-            4,6,0,0,0,2,9,8,0,
-            7,5,9,3,1,0,0,2,6};
+    private int number_board[];
+    private int solvable_board[];
+
 
 
     public boards_and_menu_data(){
 
         mSudoku_grid_English=new String[81];
         mSudoku_grid_French=new String[81];
+        number_board= new int[]{0, 9, 2, 0, 0, 0, 0, 0, 4,
+                5, 0, 0, 0, 0, 1, 0, 3, 0,
+                0, 0, 7, 8, 4, 6, 0, 0, 0,
+                0, 0, 5, 0, 0, 0, 0, 1, 8,
+                1, 8, 3, 2, 0, 0, 0, 4, 0,
+                9, 7, 0, 0, 8, 3, 6, 0, 2,
+                0, 3, 0, 6, 9, 4, 5, 7, 1,
+                4, 6, 0, 0, 0, 2, 9, 8, 0,
+                7, 5, 9, 3, 1, 0, 0, 2, 6};
+
+        solvable_board=new int[]{0, 9, 2, 0, 0, 0, 0, 0, 4,
+                5, 0, 0, 0, 0, 1, 0, 3, 0,
+                0, 0, 7, 8, 4, 6, 0, 0, 0,
+                0, 0, 5, 0, 0, 0, 0, 1, 8,
+                1, 8, 3, 2, 0, 0, 0, 4, 0,
+                9, 7, 0, 0, 8, 3, 6, 0, 2,
+                0, 3, 0, 6, 9, 4, 5, 7, 1,
+                4, 6, 0, 0, 0, 2, 9, 8, 0,
+                7, 5, 9, 3, 1, 0, 0, 2, 6};
+
     }
 
     public String[] getMenu_list_English()
@@ -86,6 +100,11 @@ public class boards_and_menu_data {
     {
 
         return number_board;
+    }
+
+    public int[] getSolvable_board()
+    {
+        return solvable_board;
     }
 
 

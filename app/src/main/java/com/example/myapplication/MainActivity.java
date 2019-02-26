@@ -12,10 +12,8 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
 //position of arrayGrid starts from 0.
-
 public class MainActivity extends AppCompatActivity {
       //puzzle variables
     private GridView gridView;
@@ -26,14 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     //variables for grid-menu communication
     private String received_text=" ";
-    private int board_cell_clicked_position=-100;
-    private int menu_cell_clicked_position=-100;
+    private int board_cell_clicked_position;
+    private int menu_cell_clicked_position;
+    private boolean menu_cell_clicked=false;
+    private boolean grid_cell_clicked=false;
 
     private ImageButton backSelect;
 
     //number board variables
-    private int board[];
-     private int solvable_board[];
+    private int board[]=new int[81];
+     private int solvable_board[]=new int[81];
 
     //object for cheker. input: solved number board and number of rows and columns
     private board_checker checkBoard_object= new board_checker(solvable_board,9,9);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         int numberOfLanguage = language.getIntExtra("language", 0);
         setWordList(numberOfLanguage);
         board=data_object.getNumber_board();
-        solvable_board=data_object.getNumber_board();
+        solvable_board=data_object.getSolvable_board();
 
         //grid puzzle
         gridView=(GridView) findViewById(R.id.grid);
@@ -94,54 +94,75 @@ public class MainActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
-                String toast_fill_cell="Click on a menu!";
+                String toast_fill_cell="Click on a menu to fill empty cell!";
                 //if a cell has no content then a user is asked to fill the cell
                 if (board[position]==0)
                 {
-                    //boolean empty_cell_clicked=true;
                     board_cell_clicked_position=position;
+                    grid_cell_clicked=true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     TextView v = (TextView) view;
-                    v.setTextColor(Color.BLUE);
                     v.setBackgroundResource(R.drawable.cell_shape_after_click);
 
-                    if (menu_cell_clicked_position>=0) {
-                        wordListSudokuTable[position] = received_text;
-                        adapter.notifyDataSetChanged();
-                        solvable_board[position] = menu_cell_clicked_position + 1;
-                    }
-                    //board[position]=wordListF[position+1];
                 }
             }
         });
+
+
+
 
         menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //when you click
                 //String word_from_menu;
-                if (board_cell_clicked_position>=0) {
+                if (grid_cell_clicked==true) {
+                    menu_cell_clicked_position=position;
                     received_text = (String) menu_adapter.getItem(position);
-                    //Toast.makeText(getApplicationContext(), received_text, Toast.LENGTH_SHORT).show();
-                   menu_cell_clicked_position=position;
+                    wordListSudokuTable[board_cell_clicked_position]=received_text;
+
+                    adapter.notifyDataSetChanged();
+                    solvable_board[board_cell_clicked_position]=menu_cell_clicked_position+1;
+
+
+
+                    //bebug here!!
+                    String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
+                    String pos =String.valueOf(board_cell_clicked_position);
+                    String finaly="value is "+solvable_board_toast+" and position is "+pos;
+                    Toast.makeText(getApplicationContext(), finaly, Toast.LENGTH_SHORT).show();
+
                 }
                 else //board_cell_clicked_position=-100
                 {
-                    //click on the board
                     String click_puzzle_cell="Choose empty cell first!";
                     Toast.makeText(getApplicationContext(), click_puzzle_cell, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        Button checkBoard= (Button) findViewById(R.id.checkBoard);
+
+
+
+
+
+        final Button checkBoard= (Button) findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                board_checker checkBoard_object= new board_checker(solvable_board,9,9);
 
                 boolean isCorrect;
 
                 isCorrect = checkBoard_object.checker();
+
+
+                //int first_cell_of_board=checkBoard_object.getSolvedBoard();
+                //String cell=String.valueOf(first_cell_of_board);
+                //Toast.makeText(MainActivity.this, cell, Toast.LENGTH_SHORT).show();
+
+
+
                 if(isCorrect == true) {
                     Toast.makeText(MainActivity.this,
                             R.string.boardTrue,
@@ -152,6 +173,13 @@ public class MainActivity extends AppCompatActivity {
                             R.string.boardFalse,
                             Toast.LENGTH_SHORT).show();
                 }
+
+
+                //String solvable_board_toast= String.valueOf(solvable_board);
+
+                //Toast.makeText(getApplicationContext(), solvable_board_toast, Toast.LENGTH_SHORT).show();
+
+
             }
         });
 

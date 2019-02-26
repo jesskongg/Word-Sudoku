@@ -2,23 +2,16 @@ package com.example.myapplication;
 
 public class board_checker {
     private int board[];
-    private int number_of_rows;
-    private int number_of_columns;
+    //private int number_of_rows;
+    //private int number_of_columns;
 
 
-    public board_checker(int[] board, int number_of_columns, int number_of_rows)
+    public board_checker(int[] board)
     {
         //this.board=new int [81];
         this.board=board;
-        this.number_of_columns=number_of_columns;
-        this.number_of_rows=number_of_rows;
-    }
-
-    public int getSolvedBoard(){
-
-
-
-        return board[0];
+        //this.number_of_columns=number_of_columns;
+        //this.number_of_rows=number_of_rows;
     }
 
     public boolean checker()

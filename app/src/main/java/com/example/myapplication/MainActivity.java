@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
      private int solvable_board[]=new int[81];
 
     //object for cheker. input: solved number board and number of rows and columns
-    private board_checker checkBoard_object= new board_checker(solvable_board,9,9);
+    //private board_checker checkBoard_object= new board_checker(solvable_board,9,9);
 
     private String wordListKeyboard[];
     private String wordListSudokuTable[];
@@ -127,10 +127,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                     //bebug here!!
-                    String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
-                    String pos =String.valueOf(board_cell_clicked_position);
-                    String finaly="value is "+solvable_board_toast+" and position is "+pos;
-                    Toast.makeText(getApplicationContext(), finaly, Toast.LENGTH_SHORT).show();
+                    //String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
+                    //String pos =String.valueOf(board_cell_clicked_position);
+                    //String finaly="value is "+solvable_board_toast+" and position is "+pos;
+                    //Toast.makeText(getApplicationContext(), finaly, Toast.LENGTH_SHORT).show();
 
                 }
                 else //board_cell_clicked_position=-100
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                board_checker checkBoard_object= new board_checker(solvable_board,9,9);
+                board_checker checkBoard_object= new board_checker(solvable_board);
 
                 boolean isCorrect;
 
@@ -160,8 +160,6 @@ public class MainActivity extends AppCompatActivity {
                 //int first_cell_of_board=checkBoard_object.getSolvedBoard();
                 //String cell=String.valueOf(first_cell_of_board);
                 //Toast.makeText(MainActivity.this, cell, Toast.LENGTH_SHORT).show();
-
-
 
                 if(isCorrect == true) {
                     Toast.makeText(MainActivity.this,

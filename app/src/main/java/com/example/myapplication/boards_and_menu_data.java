@@ -8,7 +8,7 @@ public class boards_and_menu_data {
 
     private String[] mMenu_list_French={"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
     private String[] mSudoku_grid_English;//=new String[81];
-
+    private String[] mSudoku_grid_LCmode;
 
 
     private int number_board[];
@@ -18,8 +18,9 @@ public class boards_and_menu_data {
 
     public boards_and_menu_data(){
 
-        mSudoku_grid_English=new String[81];
-        mSudoku_grid_French=new String[81];
+        mSudoku_grid_English = new String[81];
+        mSudoku_grid_French = new String[81];
+        mSudoku_grid_LCmode = new String[81];
         number_board= new int[]{0, 9, 2, 0, 0, 0, 0, 0, 4,
                 5, 0, 0, 0, 0, 1, 0, 3, 0,
                 0, 0, 7, 8, 4, 6, 0, 0, 0,
@@ -95,6 +96,19 @@ public class boards_and_menu_data {
     return mSudoku_grid_English;
     }
 
+    // GRID WITH NUMBERS FOR LISTENING COMPREHENSION MODE
+    public String[] generate_LCmodeGrid() {
+        for (int i = 0; i < 81; i++) {
+            if (number_board[i] == 0) {
+                mSudoku_grid_LCmode[i] = " ";
+            } else {
+                String cell = Integer.toString(number_board[i]);
+                mSudoku_grid_LCmode[i] = cell;
+            }
+        }
+        return mSudoku_grid_LCmode;
+    }
+
 
     public int[] getNumber_board()
     {
@@ -102,10 +116,9 @@ public class boards_and_menu_data {
         return number_board;
     }
 
-    public int[] getSolvable_board()
-    {
+    public int[] getSolvable_board(){
         return solvable_board;
     }
 
-
 }
+

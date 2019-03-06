@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     //number board variables
     private int board[]=new int[81];
-     private int solvable_board[]=new int[81];
+    private int solvable_board[]=new int[81];
 
-    //object for cheker. input: solved number board and number of rows and columns
+    //object for checker. input: solved number board and number of rows and columns
     //private board_checker checkBoard_object= new board_checker(solvable_board,9,9);
 
     private String wordListKeyboard[];
@@ -49,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //recive language intent and set wordListKeyboard and wordListSudokuTable
-        Intent language = getIntent();
-        int numberOfLanguage = language.getIntExtra("language", 0);
-        setWordList(numberOfLanguage);
+        //receive mode intent and set wordListKeyboard and wordListSudokuTable
+        Intent mode = getIntent();
+        int langMode = mode.getIntExtra("language", 0);
+        int LC_enabled = mode.getIntExtra("modeLC", 0);
+        setWordList(langMode, LC_enabled);
         board=data_object.getNumber_board();
         solvable_board=data_object.getSolvable_board();
 
@@ -142,10 +143,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
         final Button checkBoard= (Button) findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,14 +181,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //OUTSIDE OF ON CREATE FUNCTION
-    private void setWordList(int caseNumber){
+    private void setWordList(int caseNumber, int LC_enabled){
         if(caseNumber == 1){
-            wordListSudokuTable = data_object.generate_get_grid_English();
-            wordListKeyboard = data_object.getMenu_list_French();
+            if(LC_enabled==0) {
+                wordListSudokuTable = data_object.generate_get_grid_English();
+                wordListKeyboard = data_object.getMenu_list_French();
+            }
+            else{ //L.C. MODE ON -- GRID WITH NUMBERS
+                wordListSudokuTable = data_object.generate_LCmodeGrid();
+                wordListKeyboard = data_object.getMenu_list_French();
+            }
         }
-        else{
-            wordListSudokuTable = data_object.generate_get_grid_French();
-            wordListKeyboard = data_object.getMenu_list_French();
+        else{ // CASE NUMBER =2 --> LANGUAGE MODE = FRENCH TO ENGLISH
+            if(LC_enabled==0) {
+                wordListSudokuTable = data_object.generate_get_grid_French();
+                wordListKeyboard = data_object.getMenu_list_English();
+            }
+            else{//L.C. MODE ON -- GRID WITH NUMBERS
+                wordListSudokuTable = data_object.generate_LCmodeGrid();
+                wordListKeyboard = data_object.getMenu_list_English();
+            }
 
         }
     }

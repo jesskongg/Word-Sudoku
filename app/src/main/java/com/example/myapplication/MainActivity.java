@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private String wordListKeyboard[];
     private String wordListSudokuTable[];
 
+    private String hint_for_board[];
+
     //object which gives filled with words sudoku grid and menu depending on chosen language
     private boards_and_menu_data data_object= new boards_and_menu_data();
 
@@ -104,6 +106,27 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     TextView v = (TextView) view;
                     v.setBackgroundResource(R.drawable.cell_shape_after_click);
+
+                }
+
+                else
+                {
+                    final int current_position=position;
+                    Toast.makeText(getApplicationContext(), "Tap again for a hint!", Toast.LENGTH_SHORT).show();
+
+                    view.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View V){
+
+
+                            String hint_text=hint_for_board[board[current_position]-1];
+                            Toast.makeText(getApplicationContext(),hint_text, Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    });
+
+
 
                 }
             }
@@ -186,10 +209,12 @@ public class MainActivity extends AppCompatActivity {
             if(LC_enabled==0) {
                 wordListSudokuTable = data_object.generate_get_grid_English();
                 wordListKeyboard = data_object.getMenu_list_French();
+                hint_for_board=data_object.getMenu_list_French();
             }
             else{ //L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_French();
+                hint_for_board=data_object.getMenu_list_English();
             }
         }
         else{ // CASE NUMBER =2 --> LANGUAGE MODE = FRENCH TO ENGLISH

@@ -12,16 +12,23 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.speech.tts.TextToSpeech;
+
+import java.util.Locale;
+
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
 //position of arrayGrid starts from 0.
 public class MainActivity extends AppCompatActivity {
+
+    //text to speech var
+    private TextToSpeech tFR;
+
       //puzzle variables
     private GridView gridView;
     private TextView textView;
     //menu variables
     private GridView menuView;
     private TextView textMenu;
-
     //variables for grid-menu communication
     private String received_text=" ";
     private int board_cell_clicked_position;
@@ -30,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean grid_cell_clicked=false;
 
     private ImageButton backSelect;
+
 
     //number board variables
     private int board[]=new int[81];
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private String wordListSudokuTable[];
 
     private String hint_for_board[];
+    private String listFrenchWords[]; // for L.C. mode
 
     //object which gives filled with words sudoku grid and menu depending on chosen language
     private boards_and_menu_data data_object= new boards_and_menu_data();
@@ -54,10 +63,20 @@ public class MainActivity extends AppCompatActivity {
         //receive mode intent and set wordListKeyboard and wordListSudokuTable
         Intent mode = getIntent();
         int langMode = mode.getIntExtra("language", 0);
-        int LC_enabled = mode.getIntExtra("modeLC", 0);
+        final int LC_enabled = mode.getIntExtra("modeLC", 0);
         setWordList(langMode, LC_enabled);
         board=data_object.getNumber_board();
         solvable_board=data_object.getSolvable_board();
+
+        // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
+        tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != TextToSpeech.ERROR){
+                    tFR.setLanguage(Locale.CANADA_FRENCH);
+                }
+            }
+        });
 
         //grid puzzle
         gridView=(GridView) findViewById(R.id.grid);
@@ -106,33 +125,36 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     TextView v = (TextView) view;
                     v.setBackgroundResource(R.drawable.cell_shape_after_click);
-
                 }
 
                 else
                 {
                     final int current_position=position;
                     Toast.makeText(getApplicationContext(), "Tap again for a hint!", Toast.LENGTH_SHORT).show();
+                    if(LC_enabled ==1) {
+                        //IF listening comprehension mode IS ENABLED, execute TEXT TO SPEECH when we TAP a pre-filled cell (with a number) for the FIRST TIME.
+                        String speakFrenchWord = listFrenchWords[board[current_position]-1];
+                        tFR.speak(speakFrenchWord, TextToSpeech.QUEUE_FLUSH, null);
+                    }
 
                     view.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View V){
-
-
+                            //HINT feature -- toast with word from menu @ bottom which corresponds to selected cell
                             String hint_text=hint_for_board[board[current_position]-1];
                             Toast.makeText(getApplicationContext(),hint_text, Toast.LENGTH_SHORT).show();
-
+                            //any subsequent clicks on a pre-filled cell (with #) will still pronounce word in French!
+                            if(LC_enabled ==1) {
+                                //IF listening comprehension mode is enabled, execute TEXT TO SPEECH for all subsequent TAPS to pre-filled cells
+                                String speakFrenchWord = listFrenchWords[board[current_position]-1];
+                                tFR.speak(speakFrenchWord, TextToSpeech.QUEUE_FLUSH, null);
+                            }
                         }
 
                     });
-
-
-
                 }
             }
         });
-
-
 
 
         menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    //bebug here!!
+                    //debug here!!
                     //String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
                     //String pos =String.valueOf(board_cell_clicked_position);
                     //String finaly="value is "+solvable_board_toast+" and position is "+pos;
@@ -171,12 +193,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 board_checker checkBoard_object= new board_checker(solvable_board);
-
                 boolean isCorrect;
-
                 isCorrect = checkBoard_object.checker();
-
-
                 //int first_cell_of_board=checkBoard_object.getSolvedBoard();
                 //String cell=String.valueOf(first_cell_of_board);
                 //Toast.makeText(MainActivity.this, cell, Toast.LENGTH_SHORT).show();
@@ -192,18 +210,29 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-
                 //String solvable_board_toast= String.valueOf(solvable_board);
-
                 //Toast.makeText(getApplicationContext(), solvable_board_toast, Toast.LENGTH_SHORT).show();
-
-
             }
         });
 
     }
 
     //OUTSIDE OF ON CREATE FUNCTION
+
+    //text to speech related:
+    /*this deals with the case where system is about to resume previous activity
+    -- need to ensure things are not consuming resources (ex. CPU)*/
+    public void onPause(){
+        //shut down text to speech
+        if(tFR != null){
+            tFR.stop(); // stops the speech
+            tFR.shutdown(); // releases resources being used by TextToSpeech engine
+        }
+        super.onPause();
+    }
+
+
+    // SET-UP GRIDS based on the Language Mode selected as well as Listening Comprehension mode (enabled or disabled)
     private void setWordList(int caseNumber, int LC_enabled){
         // CASE NUMBER =1 --> LANGUAGE MODE = ENGLISH TO FRENCH
         if(caseNumber == 1){
@@ -216,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_French();
                 hint_for_board=data_object.getMenu_list_French();
+                listFrenchWords = data_object.getMenu_list_French();
             }
         }
         // CASE NUMBER =2 --> LANGUAGE MODE = FRENCH TO ENGLISH
@@ -229,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_English();
                 hint_for_board=data_object.getMenu_list_English();
+                listFrenchWords = data_object.getMenu_list_French();
             }
 
         }

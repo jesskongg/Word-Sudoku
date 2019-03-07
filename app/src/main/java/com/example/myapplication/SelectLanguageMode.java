@@ -13,14 +13,15 @@ public class SelectLanguageMode extends AppCompatActivity {
     private Button enFrButton;
     private Button frEnButton;
     private Switch enableLCswitch;
-    int LC_enabled =0;
+
+    int LC_enabled = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_language_mode);
 
         //switch used to enable listening comprehension mode
-        enableLCswitch = (Switch) findViewById(R.id.enableLC);
+        enableLCswitch = findViewById(R.id.enableLC);
         enableLCswitch.setChecked(false); //by default, it is false. User must enable it
         enableLCswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -33,6 +34,7 @@ public class SelectLanguageMode extends AppCompatActivity {
                 }
             }
         });
+
 
         enFrButton = (Button) findViewById(R.id.eng_fr);
         enFrButton.setOnClickListener(new View.OnClickListener() {

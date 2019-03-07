@@ -32,5 +32,8 @@
     <string name="mode_1">ENGLISH > FRENCH</string>
     <string name="mode_2">FRENCH > ENGLISH</string>
     <string name="how_to">Please select a language mode to begin your Sudoku puzzle.</string>
+    <string name="how_to2">If you would like to practice your listening comprehension skills, enable Listening Comprehension Mode before proceeding with selecting a language mode.</string>
+    <string name="enableLC">Listening Comprehension Mode</string>
+
 
 </resources>

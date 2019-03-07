@@ -205,8 +205,9 @@ public class MainActivity extends AppCompatActivity {
 
     //OUTSIDE OF ON CREATE FUNCTION
     private void setWordList(int caseNumber, int LC_enabled){
+        // CASE NUMBER =1 --> LANGUAGE MODE = ENGLISH TO FRENCH
         if(caseNumber == 1){
-            if(LC_enabled==0) {
+            if(LC_enabled==0) { //L.C. mode OFF
                 wordListSudokuTable = data_object.generate_get_grid_English();
                 wordListKeyboard = data_object.getMenu_list_French();
                 hint_for_board=data_object.getMenu_list_French();
@@ -214,17 +215,20 @@ public class MainActivity extends AppCompatActivity {
             else{ //L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_French();
-                hint_for_board=data_object.getMenu_list_English();
+                hint_for_board=data_object.getMenu_list_French();
             }
         }
-        else{ // CASE NUMBER =2 --> LANGUAGE MODE = FRENCH TO ENGLISH
-            if(LC_enabled==0) {
+        // CASE NUMBER =2 --> LANGUAGE MODE = FRENCH TO ENGLISH
+        else{
+            if(LC_enabled==0) { //L.C. mode OFF
                 wordListSudokuTable = data_object.generate_get_grid_French();
                 wordListKeyboard = data_object.getMenu_list_English();
+                hint_for_board=data_object.getMenu_list_English();
             }
             else{//L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_English();
+                hint_for_board=data_object.getMenu_list_English();
             }
 
         }

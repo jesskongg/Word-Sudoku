@@ -39,7 +39,6 @@ public class SelectLanguageMode extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Intent i = new Intent(this, main)
-                //I CHANGED SOME STUFF HERE... REMOVE IF DOESNT WORK
                 openMainActivity(1, LC_enabled);
             }
         });

@@ -23,11 +23,14 @@ public class boards_and_menu_data {
         mSudoku_grid_LCmode = new String[81];
 
         random_sudoku_generator generator = new random_sudoku_generator();
-        int[] number_board = new int[81];
-        int[] solvable_board = new int[81];
-        number_board = generator.generate();
-        solvable_board = number_board;
-
+        int[] rand_board = new int[81];
+        number_board = new int[81];
+        solvable_board = new int[81];
+        rand_board = generator.generate();
+        for(int i = 0; i < 81; i++){
+            number_board[i] = rand_board[i];
+            solvable_board[i] = rand_board[i];
+        }
 //        number_board= new int[]{0, 9, 2, 0, 0, 0, 0, 0, 4,
 //                5, 0, 0, 0, 0, 1, 0, 3, 0,
 //                0, 0, 7, 8, 4, 6, 0, 0, 0,

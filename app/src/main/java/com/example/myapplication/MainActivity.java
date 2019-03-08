@@ -53,12 +53,42 @@ public class MainActivity extends AppCompatActivity {
     private String listFrenchWords[]; // for L.C. mode
 
     //object which gives filled with words sudoku grid and menu depending on chosen language
+
+    //default values
+    //not loaded
+    private String[] mMenu_list_English={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
+    private String[] mMenu_list_French={"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
+
+
+    //this is for file data communication
+    String[][] array_of_arrays = new String[20][2];
+    String[]  english_data= new String[9];
+    String[]   french_data =new String[9];
+    String[] values =new String[2];
+
+
+
+
+    //Bundle english_bundle = getIntent().getExtras();
+    //private String[] mMenu_list_English=english_bundle.getStringArray("EnglishArray");
+    //String arrayReceived[] = english_bundle.getStringArray("MyArray");
+
+
     private boards_and_menu_data data_object= new boards_and_menu_data();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //set english and french string data
+        data_object.setMenu_list_English(mMenu_list_English);
+        data_object.setMenu_list_French(mMenu_list_English);
+
+        set_data_recived_from_file();
+
+
+
 
         //receive mode intent and set wordListKeyboard and wordListSudokuTable
         Intent mode = getIntent();
@@ -88,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         //adapter for puzzle grid
         final ArrayAdapter adapter;
+
         adapter = new ArrayAdapter(this,R.layout.cell_layout,wordListSudokuTable );
         gridView.setAdapter(adapter);
 
@@ -267,6 +298,29 @@ public class MainActivity extends AppCompatActivity {
     private void goSelect() {
         Intent goSelect = new Intent(this, SelectLanguageMode.class);
         startActivity(goSelect);
+    }
+
+
+
+    public void set_data_recived_from_file()
+    {
+
+        //Toast.makeText(this,"I am here", Toast.LENGTH_LONG).show();
+
+        Bundle data_array_bundle=getIntent().getExtras();
+        String[] data_array=data_array_bundle.getStringArray("DataArray");
+
+        for (int i=0; i<9; i++)
+        {
+
+            values = data_array[i].split(",");
+            array_of_arrays[i]=values;
+            english_data[i]=array_of_arrays[i][0];
+            french_data[i]=array_of_arrays[i][1];
+        }
+
+        data_object.setMenu_list_French(english_data);
+        data_object.setMenu_list_English(french_data);
     }
 
 }

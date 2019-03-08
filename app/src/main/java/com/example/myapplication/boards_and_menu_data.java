@@ -103,6 +103,7 @@ public class boards_and_menu_data {
 
         }
 
+
     return mSudoku_grid_English;
     }
 
@@ -122,9 +123,9 @@ public class boards_and_menu_data {
 
     public int[] getNumber_board()
     {
-
         return number_board;
     }
+
 
     public int[] getSolvable_board(){
         return solvable_board;

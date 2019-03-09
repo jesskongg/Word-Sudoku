@@ -27,6 +27,7 @@
     <string name="back_main">Go Back to Main Menu</string>
 
     <!--Load Words-->
+    <string name="game_mode">Game Mode</string>
     <string name="load_words">Load New Words</string>
     <string name="random_words">Random Puzzle</string>
     <string name="random_description">Start a new randomly generated puzzle</string>

@@ -1,13 +1,15 @@
-package com.example.myapplication;
+package com.example.myapplication.Controller;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import com.example.myapplication.Controller.MainActivity;
+import com.example.myapplication.R;
 
 public class SelectLanguageMode extends AppCompatActivity {
 

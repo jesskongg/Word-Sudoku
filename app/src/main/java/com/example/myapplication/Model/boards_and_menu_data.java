@@ -1,7 +1,4 @@
-package com.example.myapplication;
-
-import android.content.Intent;
-import android.os.Bundle;
+package com.example.myapplication.Model;
 
 public class boards_and_menu_data {
     private String[] mMenu_list_English;//={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};

@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import com.example.myapplication.Model.board_checker;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

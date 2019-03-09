@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import com.example.myapplication.Model.boards_and_menu_data;
+
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -12,21 +12,48 @@ import static org.junit.Assert.*;
 
 public class boards_and_menu_dataTest {
 
-
-    @Ignore("WordList import is not yet finished.")
     @Test
     public void getMenu_list_English() {
         boards_and_menu_data myData = new boards_and_menu_data();
-        String[] s = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
+        String[] s = new String[9];
         assertArrayEquals(s, myData.getMenu_list_English());
     }
 
-    @Ignore("WordList import is not yet finished.")
     @Test
     public void getMenu_list_French() {
         boards_and_menu_data myData = new boards_and_menu_data();
-        String[] s = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
+        String[] s = new String[9];
         assertArrayEquals(s, myData.getMenu_list_French());
+    }
+
+    @Test
+    public void setMenu_list_English(){
+        boards_and_menu_data myData = new boards_and_menu_data();
+        String[] s = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
+        myData.setMenu_list_English(s);
+        assertArrayEquals(s, myData.getMenu_list_English());
+    }
+
+    @Test
+    public void setMenu_list_French(){
+        boards_and_menu_data myData = new boards_and_menu_data();
+        String[] s = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
+        myData.setMenu_list_French(s);
+        assertArrayEquals(s, myData.getMenu_list_French());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setMenu_list_EnglishFail(){
+        boards_and_menu_data myData = new boards_and_menu_data();
+        String[] s = {"pink", "blue", "pear", "plum", "fig"};
+        myData.setMenu_list_English(s);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setMenu_list_FrenchFail(){
+        boards_and_menu_data myData = new boards_and_menu_data();
+        String[] s = {"pink", "blue", "pear", "plum", "fig"};
+        myData.setMenu_list_French(s);
     }
 
     //a function to check if the given board is a legal sudoku board

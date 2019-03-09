@@ -76,27 +76,48 @@ public class MainActivity extends AppCompatActivity {
 
     private boards_and_menu_data data_object= new boards_and_menu_data();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //set english and french string data
-        data_object.setMenu_list_English(mMenu_list_English);
-        data_object.setMenu_list_French(mMenu_list_English);
-
-        set_data_recived_from_file();
+        //here if mode chosen is default. I set default values.
+        //here catch intent
 
 
+        //data_object.setMenu_list_English(mMenu_list_English);
+        //data_object.setMenu_list_French(mMenu_list_English);
 
-
+        //set_data_recived_from_file();
         //receive mode intent and set wordListKeyboard and wordListSudokuTable
+
+
         Intent mode = getIntent();
         int langMode = mode.getIntExtra("language", 0);
         final int LC_enabled = mode.getIntExtra("modeLC", 0);
+        int load_or_keep=mode.getIntExtra("mode_load_old",100);
+
+        if(load_or_keep==-10) {
+
+            data_object.setMenu_list_English(mMenu_list_English);
+            data_object.setMenu_list_French(mMenu_list_French);
+        }
+
+        else
+        {
+            set_data_recived_from_file();
+        }
+
+
+
         setWordList(langMode, LC_enabled);
         board=data_object.getNumber_board();
         solvable_board=data_object.getSolvable_board();
+
+
+
+
 
         // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
         tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {

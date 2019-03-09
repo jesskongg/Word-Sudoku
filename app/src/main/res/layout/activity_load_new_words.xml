@@ -53,7 +53,7 @@
         android:layout_marginRight="162dp"
         android:layout_marginBottom="281dp"
         android:background="@drawable/round_buttons"
-        android:text="Play with old words"
+        android:text="Deafault words"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

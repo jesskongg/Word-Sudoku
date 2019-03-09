@@ -25,7 +25,8 @@ public class MainMenu extends AppCompatActivity {
         });
 
         helpButton = (Button) findViewById(R.id.help_button);
-        helpButton.setOnClickListener(new View.OnClickListener() {
+        helpButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 openInstructions();
@@ -33,13 +34,17 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+
+
     // Button for user to proceed to choosing their language mode
     public void openSelectLoadMode() {
-
         //THIS SHOULD BE CHANGE TO LOAD_NEW_WORDS FILE
         Intent goLoadWords = new Intent(this, load_new_words.class);
         startActivity(goLoadWords);
     }
+
+
+
 
     public void openInstructions() {
         Intent goOpenInstr = new Intent(this, instructions.class);

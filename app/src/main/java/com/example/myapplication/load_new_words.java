@@ -67,15 +67,21 @@ public class load_new_words extends AppCompatActivity {
 
         //isStoragePermissionGranted();
         //onRequestPermissionsResult();
-
-
         oldButton = (Button) findViewById(R.id.old_button);
         oldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSelectLanguageMode();
+
+                Intent defaultMode =new Intent();
+                defaultMode.putExtra("default_words", -10);
+                defaultMode.setClass(v.getContext(), SelectLanguageMode.class);// SelectLanguageMode.class);
+                //openSelectLanguageMode();
+                startActivity(defaultMode);
+
             }
         });
+
+
 
         loadButton= (Button) findViewById(R.id.load_button);
         loadButton.setOnClickListener(new View.OnClickListener(){
@@ -195,13 +201,22 @@ public class load_new_words extends AppCompatActivity {
                     }
 
                     Toast.makeText(this, file_data_aray[0],Toast.LENGTH_SHORT).show();
+
+                    //send data to language mode
+
                     Intent data_array=new Intent(this, MainActivity.class);
                     Bundle data_array_bundle=new Bundle();
                     data_array_bundle.putStringArray("DataArray", file_data_aray);
                     data_array.putExtras(data_array_bundle);
-
-
                     startActivity(data_array);
+
+
+
+
+                    //THIS SHOULD BE CHANGE TO LOAD_NEW_WORDS FILE
+                    //Intent goLanguage = new Intent(this, SelectLanguageMode.class);
+                    //startActivity(goLanguage);
+
 
 
 

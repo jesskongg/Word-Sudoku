@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class load_new_words extends AppCompatActivity {
@@ -28,73 +29,47 @@ public class load_new_words extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int PICKFILE_RESULT_CODE = 1;
 
-
     private Button oldButton;
     private Button loadButton;
 
     private boolean defaultPermission=false;
     private boolean grantedPermission=false;
-
     private String FilePath;
 
-
-
-
-    //variables for reading data
     String[] file_data_aray=new String[9];
-   // String[] English_string=new String[9];
-    //String[] French_string=new String[9];
+    String file_string;
 
-    //String[] values =new String[2];
-
-    //size can be 9, not 20. now it's 20. it's okay
-    //String[][] array_of_arrays = new String[20][2];
-
-  //  String[]  english_data= new String[9];
-//    String[]   french_data_here=new String[9];
-
+    SharedPreferences pref;// = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor;// = pref.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_new_words);
 
-        //isStoragePermissionGranted();
-        //onRequestPermissionsResult();
+        pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        editor = pref.edit();
+
         oldButton = (Button) findViewById(R.id.old_button);
         oldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
                 editor.putInt("load_mode_chose", 100);
                 editor.commit();
-
                 Intent goLanguageMode =new Intent(v.getContext(), SelectLanguageMode.class);
                 startActivity(goLanguageMode);
-
             }
         });
-
-
 
         loadButton= (Button) findViewById(R.id.load_button);
         loadButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //ask for permission to access external files
-
                 defaultPermission=isStoragePermissionGranted();
-
-                //if permission is set by default
 
                 if (defaultPermission==true || grantedPermission==true )
                 {
-
                     Toast.makeText(load_new_words.this, "Permission is given", Toast.LENGTH_SHORT).show();
                     //@Override
                     //public void onClick(View v) {
@@ -119,17 +94,17 @@ public class load_new_words extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
+                //Log.v(TAG,"Permission is granted");
                 return true;
             } else {
-                Toast.makeText(load_new_words.this, "inside storage permission function", Toast.LENGTH_LONG).show();
-                Log.v(TAG,"Permission is revoked");
+                //Toast.makeText(load_new_words.this, "inside storage permission function", Toast.LENGTH_LONG).show();
+                //Log.v(TAG,"Permission is revoked");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 return false;
             }
         }
         else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
+            //Log.v(TAG,"Permission is granted");
             return true;
         }
 
@@ -141,7 +116,7 @@ public class load_new_words extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
+            //Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
             //resume tasks needing this permission
             //Toast.makeText(load_new_words.this, "Am I here", Toast.LENGTH_SHORT).show();
             grantedPermission=true;
@@ -173,35 +148,32 @@ public class load_new_words extends AppCompatActivity {
                     //FilePath = data.getData().getPath();
                     FilePath = data.getData().getPath();
                     Uri u = data.getData();
-                    Utils object=new Utils();
-                    String filePath_actual_one = object.getActualPath(this, u);
-                    //Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
-                    File my_file = new File(filePath_actual_one);
-                    //String file_here = "file exists";
-                    Toast.makeText(this, filePath_actual_one, Toast.LENGTH_LONG).show();
 
                     try {
-                        FileInputStream fin = new FileInputStream(my_file);
-                        BufferedReader myReader = new BufferedReader(new InputStreamReader(fin));
-                        String line; //=myReader.readLine();
+                        InputStream inputStream = getContentResolver().openInputStream(u);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                                inputStream));
 
-                        //line = " ";
-                        for (int i = 0; i < 9; i++) {
-                            line = myReader.readLine();
-                            file_data_aray[i] = line;
-                            //Toast.makeText(this, file_data_aray[i],Toast.LENGTH_SHORT).show();
+                        StringBuilder stringBuilder = new StringBuilder();
+                        String line;
+                        int i=0;
+                        while ((line = reader.readLine()) != null) {
+                            stringBuilder.append(line);
+                            stringBuilder.append(",");
+
                         }
+                        file_string=stringBuilder.toString();
 
+                        inputStream.close();
 
                     } catch (FileNotFoundException e) {
-                        //mTextLine.setText("we are inside catch block");
                         e.printStackTrace();
                     } catch (IOException e) {
-                        //mTextLine.setText("we are inside 2nd catch block");
                         e.printStackTrace();
                     }
 
-                    //Toast.makeText(this, file_data_aray[0],Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, file_data_aray[0], Toast.LENGTH_LONG).show();
+
                     put_data_into_shared_ref(1);
                     Intent goOpenInstr = new Intent(this, SelectLanguageMode.class);
                     startActivity(goOpenInstr);
@@ -211,26 +183,16 @@ public class load_new_words extends AppCompatActivity {
 
         }
 
-
     }
 
     public void put_data_into_shared_ref(int chapter_number){
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        for (int i=0; i<9; i++)
-        {
-            editor.putString("chapter "+chapter_number+" line number is "+i, file_data_aray[i]); // Storing string
-            editor.commit();
-        }
 
-
+        editor.putString("chapter "+chapter_number, file_string); // Storing string
+        editor.commit();
+        //load mode
         editor.putInt("load_mode_chose", 200);
         editor.commit();
-
-
     }
-
-
 
 }

@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     //this is for file data communication
-    String[][] array_of_arrays = new String[20][2];
+    //String[][] array_of_arrays = new String[20][2];
     String[]  english_data= new String[9];
     String[]   french_data =new String[9];
-    String[] values =new String[2];
-    String[] recieved_data=new String[20];
+    //String[] values =new String[2];
+    //String[] recieved_data=new String[20];
 
 
     private boards_and_menu_data data_object= new boards_and_menu_data();
@@ -98,13 +98,9 @@ public class MainActivity extends AppCompatActivity {
         {
             //it can be recieved as an intent
             int chapter_number=1;
-
-
-            for(int i=0; i<9; i++) {
-                recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
-            }
-            set_data_recived_from_file(recieved_data);
-
+           String recieved_string=pref.getString("chapter "+chapter_number,"no");
+                //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
+            set_data_recived_from_file(recieved_string);
         }
 
         setWordList(langMode, LC_enabled);
@@ -169,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     TextView v = (TextView) view;
                     v.setBackgroundResource(R.drawable.cell_shape_after_click);
+
                 }
 
                 else
@@ -306,18 +303,30 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goSelect);
     }
 
-    public void set_data_recived_from_file(String[] data_array)
+    public void set_data_recived_from_file(String data_string)
     {
+        //for (int i=0; i<9; i++)
+        //{
+            //values = data_array[i].split(",");
+            //array_of_arrays[i]=values;
+           // english_data[i]=array_of_arrays[i][0];
+         //   french_data[i]=array_of_arrays[i][1];
+       // }
 
-        for (int i=0; i<9; i++)
+        String[] array=data_string.split(",");
+        int array_size=array.length;
+
+        int k=0;
+        int m=0;
+        int h=1;
+        while(h<=array_size)
         {
-
-            values = data_array[i].split(",");
-            array_of_arrays[i]=values;
-            english_data[i]=array_of_arrays[i][0];
-            french_data[i]=array_of_arrays[i][1];
+            english_data[k]=array[m];
+            french_data[k]=array[h];
+            m=m+2;
+            k=k+1;
+            h=h+2;
         }
-
         data_object.setMenu_list_French(english_data);
         data_object.setMenu_list_English(french_data);
     }

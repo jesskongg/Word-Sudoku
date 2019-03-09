@@ -1,4 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.Model;
+
+import android.support.v4.app.INotificationSideChannel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +10,11 @@ import java.util.Random;
 public class random_sudoku_generator{
 
     public static ArrayList<Integer> get_possible_values(int[] board, int position){
-        HashSet<Integer> set = new HashSet<Integer>();
+        if(board.length != 81 || position < 0 || position > 80){
+            throw new IllegalArgumentException();
+        }
+
+        HashSet<Integer> set = new HashSet<>();
 
         //check the row
         int row = position/9;
@@ -40,7 +46,7 @@ public class random_sudoku_generator{
         ArrayList<Integer> list_impossible = new ArrayList<Integer>();
         list_impossible.addAll(set);
 
-        ArrayList<Integer> list_possible = new ArrayList<Integer>();
+        ArrayList<Integer> list_possible = new ArrayList<>();
         for(int i = 1; i < 10; i++){
             list_possible.add(i);
         }
@@ -60,7 +66,7 @@ public class random_sudoku_generator{
             board[i] = 0;
         }
 
-        ArrayList<Integer> randomList = new ArrayList<Integer>();
+        ArrayList<Integer> randomList = new ArrayList<>();
         for(int i = 1; i < 10; i++){
             randomList.add(i);
         }
@@ -96,15 +102,15 @@ public class random_sudoku_generator{
         }
 
         //give each empty cell an index
-        ArrayList<Integer> position_index = new ArrayList<Integer>();
+        ArrayList<Integer> position_index = new ArrayList<>();
         for(int i = 0; i < 81; i++){
             if(board[i] == 0){
                 position_index.add(i);
             }
         }
 
-        //initialize an two dimential ArrayList to hole the possible values for each position
-        ArrayList<ArrayList<Integer>> possible_values = new ArrayList<ArrayList<Integer>>();
+        //initialize a two dimensional ArrayList to hole the possible values for each position
+        ArrayList<ArrayList<Integer>> possible_values = new ArrayList<>();
 
         int i = 0;
         int position;
@@ -130,9 +136,18 @@ public class random_sudoku_generator{
         }
 
         //randomly choose balnk cells
-        for(int a = 0; a < 50; a++){
-            int rand = r.nextInt(81);
-            board[rand] = 0;
+        int number_of_0 = 0;
+        while(number_of_0 == 0){
+            for(int a = 0; a < 50; a++){
+                int rand = r.nextInt(81);
+                board[rand] = 0;
+            }
+
+            for(int a = 0; a < 81; a++){
+                if(board[a] == 0){
+                    number_of_0++;
+                }
+            }
         }
 
 

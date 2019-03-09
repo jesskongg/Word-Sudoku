@@ -1,11 +1,13 @@
-package com.example.myapplication;
+package com.example.myapplication.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.myapplication.Controller.MainMenu;
+import com.example.myapplication.R;
 
 
 public class instructions extends AppCompatActivity {

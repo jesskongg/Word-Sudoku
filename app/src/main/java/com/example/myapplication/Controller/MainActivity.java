@@ -1,9 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.Controller;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
-import java.util.ArrayList;
+import com.example.myapplication.Model.boards_and_menu_data;
+import com.example.myapplication.R;
+import com.example.myapplication.Model.board_checker;
+
 import java.util.Locale;
 
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton backSelect;
 
     //number board variables
-    private int board[]=new int[81];
+    public int board[]=new int[81];
     private int solvable_board[]=new int[81];
     private int board_tracker[]=new int[81];
 //    private ArrayList<String> solvable_board;
@@ -73,7 +74,23 @@ public class MainActivity extends AppCompatActivity {
     private String listFrenchWords[]; // for L.C. mode
 
     //object which gives filled with words sudoku grid and menu depending on chosen language
+
+    //default values
+    //not loaded
+    private String[] mMenu_list_English={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
+    private String[] mMenu_list_French={"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
+
+
+    //this is for file data communication
+    String[][] array_of_arrays = new String[20][2];
+    String[]  english_data= new String[9];
+    String[]   french_data =new String[9];
+    String[] values =new String[2];
+    String[] recieved_data=new String[20];
+
+
     private boards_and_menu_data data_object= new boards_and_menu_data();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +98,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i(TAG, "entered onCreate");
 
-        //receive mode intent and set wordListKeyboard and wordListSudokuTable
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        int load_mode_choose=0;
+        load_mode_choose=pref.getInt("load_mode_chose", 0);
+
+
         Intent mode = getIntent();
         int langMode = mode.getIntExtra("language", 0);
         final int LC_enabled = mode.getIntExtra("modeLC", 0);
+        //int load_or_keep=mode.getIntExtra("mode_load_old",100);
+
+        if(load_mode_choose==100) {
+
+            data_object.setMenu_list_English(mMenu_list_English);
+            data_object.setMenu_list_French(mMenu_list_French);
+        }
+
+        if(load_mode_choose==200)
+        {
+            //it can be recieved as an intent
+            int chapter_number=1;
+
+
+            for(int i=0; i<9; i++) {
+                recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
+            }
+            set_data_recived_from_file(recieved_data);
+
+        }
+
         setWordList(langMode, LC_enabled);
         board=data_object.getNumber_board();
         solvable_board=data_object.getSolvable_board();
@@ -109,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
         //adapter for puzzle grid
         final ArrayAdapter adapter;
+
         adapter = new ArrayAdapter(this,R.layout.cell_layout,wordListSudokuTable );
         gridView.setAdapter(adapter);
 
@@ -202,13 +246,6 @@ public class MainActivity extends AppCompatActivity {
 
                     //array stores all user word inputs in the form of numbers
                     solvable_board[board_cell_clicked_position]=menu_cell_clicked_position+1;
-
-
-                    //debug here!!
-                    //String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
-                    //String pos =String.valueOf(board_cell_clicked_position);
-                    //String finaly="value is "+solvable_board_toast+" and position is "+pos;
-                    //Toast.makeText(getApplicationContext(), finaly, Toast.LENGTH_SHORT).show();
 
                 }
                 else //board_cell_clicked_position=-100
@@ -304,6 +341,22 @@ public class MainActivity extends AppCompatActivity {
     private void goSelect() {
         Intent goSelect = new Intent(this, SelectLanguageMode.class);
         startActivity(goSelect);
+    }
+
+    public void set_data_recived_from_file(String[] data_array)
+    {
+
+        for (int i=0; i<9; i++)
+        {
+
+            values = data_array[i].split(",");
+            array_of_arrays[i]=values;
+            english_data[i]=array_of_arrays[i][0];
+            french_data[i]=array_of_arrays[i][1];
+        }
+
+        data_object.setMenu_list_French(english_data);
+        data_object.setMenu_list_English(french_data);
     }
 
 

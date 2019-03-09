@@ -1,13 +1,16 @@
-package com.example.myapplication;
+package com.example.myapplication.Model;
 
 public class board_checker {
-    private int board[];
+    public int board[];
     //private int number_of_rows;
     //private int number_of_columns;
 
 
     public board_checker(int[] board)
     {
+        if(board.length != 81){
+            throw new IllegalArgumentException();
+        }
         //this.board=new int [81];
         this.board=board;
         //this.number_of_columns=number_of_columns;
@@ -67,6 +70,9 @@ public class board_checker {
 
     }
 
+    public int[] getBoard() {
+        return board;
+    }
 }
 
 

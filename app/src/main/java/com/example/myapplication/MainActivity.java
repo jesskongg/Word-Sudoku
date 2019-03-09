@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
     //private String[] mMenu_list_English=english_bundle.getStringArray("EnglishArray");
     //String arrayReceived[] = english_bundle.getStringArray("MyArray");
 
+    String[] recieved_data=new String[20];
+
 
     private boards_and_menu_data data_object= new boards_and_menu_data();
 
@@ -93,31 +96,38 @@ public class MainActivity extends AppCompatActivity {
         //receive mode intent and set wordListKeyboard and wordListSudokuTable
 
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        int load_mode_choose=0;
+        load_mode_choose=pref.getInt("load_mode_chose", 0);
+
+
+
+
         Intent mode = getIntent();
         int langMode = mode.getIntExtra("language", 0);
         final int LC_enabled = mode.getIntExtra("modeLC", 0);
-        int load_or_keep=mode.getIntExtra("mode_load_old",100);
+        //int load_or_keep=mode.getIntExtra("mode_load_old",100);
 
-        if(load_or_keep==-10) {
+        if(load_mode_choose==100) {
 
             data_object.setMenu_list_English(mMenu_list_English);
             data_object.setMenu_list_French(mMenu_list_French);
         }
 
-        else
+        if(load_mode_choose==200)
         {
-            set_data_recived_from_file();
+
+            for(int i=0; i<9; i++) {
+                recieved_data[i]=pref.getString("line number is " +i, "no");
+            }
+            set_data_recived_from_file(recieved_data);
+
         }
-
-
 
         setWordList(langMode, LC_enabled);
         board=data_object.getNumber_board();
         solvable_board=data_object.getSolvable_board();
-
-
-
-
 
         // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
         tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -223,13 +233,6 @@ public class MainActivity extends AppCompatActivity {
                     solvable_board[board_cell_clicked_position]=menu_cell_clicked_position+1;
 
 
-
-                    //debug here!!
-                    //String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
-                    //String pos =String.valueOf(board_cell_clicked_position);
-                    //String finaly="value is "+solvable_board_toast+" and position is "+pos;
-                    //Toast.makeText(getApplicationContext(), finaly, Toast.LENGTH_SHORT).show();
-
                 }
                 else //board_cell_clicked_position=-100
                 {
@@ -321,15 +324,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goSelect);
     }
 
-
-
-    public void set_data_recived_from_file()
+    public void set_data_recived_from_file(String[] data_array)
     {
-
-        //Toast.makeText(this,"I am here", Toast.LENGTH_LONG).show();
-
-        Bundle data_array_bundle=getIntent().getExtras();
-        String[] data_array=data_array_bundle.getStringArray("DataArray");
 
         for (int i=0; i<9; i++)
         {

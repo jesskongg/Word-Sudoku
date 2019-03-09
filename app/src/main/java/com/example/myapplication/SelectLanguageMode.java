@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +14,9 @@ public class SelectLanguageMode extends AppCompatActivity {
     private Button enFrButton;
     private Button frEnButton;
     private Switch enableLCswitch;
-    private int mode_load_default;
+   // private int mode_load_default;
+
+    //String[] loaded_data;
 
 
 
@@ -22,20 +25,6 @@ public class SelectLanguageMode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_language_mode);
-
-        //intent is catched here
-        Intent mode=getIntent();
-        Bundle mode_bundle=mode.getExtras();
-        mode_load_default=(int) mode_bundle.get("default_words");
-
-
-
-
-        //Bundle load_old_new_bundle=load_old_new.getExtras();
-
-
-
-
 
         //switch used to enable listening comprehension mode
         enableLCswitch = findViewById(R.id.enableLC);
@@ -78,7 +67,7 @@ public class SelectLanguageMode extends AppCompatActivity {
         Intent goMainActivity = new Intent();
         goMainActivity.putExtra("language", lang);
         goMainActivity.putExtra("modeLC", LC_enabled);
-        goMainActivity.putExtra("mode_load_old", mode_load_default);
+        //goMainActivity.putExtra("mode_load_old", mode_load_default);
 
         goMainActivity.setClass(this, MainActivity.class);
         startActivity(goMainActivity);

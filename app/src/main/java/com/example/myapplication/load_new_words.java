@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -40,22 +42,16 @@ public class load_new_words extends AppCompatActivity {
 
     //variables for reading data
     String[] file_data_aray=new String[9];
-    String[] English_string=new String[9];
-    String[] French_string=new String[9];
+   // String[] English_string=new String[9];
+    //String[] French_string=new String[9];
 
-    String[] values =new String[2];
+    //String[] values =new String[2];
 
     //size can be 9, not 20. now it's 20. it's okay
-    String[][] array_of_arrays = new String[20][2];
+    //String[][] array_of_arrays = new String[20][2];
 
-    String[]  english_data= new String[9];
-    String[]   french_data_here=new String[9];
-
-
-
-
-
-
+  //  String[]  english_data= new String[9];
+//    String[]   french_data_here=new String[9];
 
 
     @Override
@@ -72,11 +68,14 @@ public class load_new_words extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent defaultMode =new Intent();
-                defaultMode.putExtra("default_words", -10);
-                defaultMode.setClass(v.getContext(), SelectLanguageMode.class);// SelectLanguageMode.class);
-                //openSelectLanguageMode();
-                startActivity(defaultMode);
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("load_mode_chose", 100);
+                editor.commit();
+
+                Intent goLanguageMode =new Intent(v.getContext(), SelectLanguageMode.class);
+                startActivity(goLanguageMode);
 
             }
         });
@@ -150,7 +149,7 @@ public class load_new_words extends AppCompatActivity {
         {
             //modification-polina
             grantedPermission=false;
-            Toast.makeText(load_new_words.this, "NO PERMISSION.NO FUN", Toast.LENGTH_SHORT).show();
+            Toast.makeText(load_new_words.this, "No permission.File cannot be loaded", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -202,100 +201,27 @@ public class load_new_words extends AppCompatActivity {
 
                     Toast.makeText(this, file_data_aray[0],Toast.LENGTH_SHORT).show();
 
-                    //send data to language mode
-
-                    Intent data_array=new Intent(this, MainActivity.class);
-                    Bundle data_array_bundle=new Bundle();
-                    data_array_bundle.putStringArray("DataArray", file_data_aray);
-                    data_array.putExtras(data_array_bundle);
-                    startActivity(data_array);
-
-
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                   for (int i=0; i<9; i++)
+                   {
+                       editor.putString("line number is "+i, file_data_aray[i]); // Storing string
+                     editor.commit();
+                    }
 
 
-                    //THIS SHOULD BE CHANGE TO LOAD_NEW_WORDS FILE
-                    //Intent goLanguage = new Intent(this, SelectLanguageMode.class);
-                    //startActivity(goLanguage);
+                    editor.putInt("load_mode_chose", 200);
+                    editor.commit();
 
-
-
-
-                    /*
-                    //English_string=get_English_string(file_data_aray);
-                    //French_string=get_French_string(file_data_aray);
-                    Toast.makeText(this, French_string[8],Toast.LENGTH_SHORT).show();
-
-
-                    //Pass data between activities;
-                    //THIS IS FOR ENGLISH STRING
-                    Intent english_Intent=new Intent(this, MainActivity.class);
-                    //englishIntent.putExtra("englishArray", English_string);
-                    Bundle english_bundle = new Bundle();
-                    english_bundle.putStringArray("EnglishArray", English_string);
-                    english_Intent.putExtras(english_bundle);
-                    //startActivity(english_Intent);
-
-
-                    //Intent frenchIntent=new Intent(this, MainActivity.class);
-                    //englishIntent.putExtra("frenchArray", French_string);
-                    //startActivity(frenchIntent);
-
-                    Intent french_Intent=new Intent(this, MainActivity.class);
-                    //englishIntent.putExtra("englishArray", English_string);
-                    Bundle french_bundle = new Bundle();
-                    french_bundle.putStringArray("FrenchArray", French_string);
-                    french_Intent.putExtras(french_bundle);
-                    startActivity(french_Intent);
-
-                    */
-
-
-
-
-
-
+                    Intent goOpenInstr = new Intent(this, SelectLanguageMode.class);
+                    startActivity(goOpenInstr);
 
 
                 }
 
-
-                //end of opening a file
         }
 
-        //break;
+
     }
-
-
-    /*
-    String[] get_English_string(String[] data_array){
-
-
-        for (int i=0; i<9; i++)
-        {
-
-            values = data_array[i].split(",");
-            array_of_arrays[i]=values;
-            english_data[i]=array_of_arrays[i][0];
-
-        }
-        return english_data;
-    }
-
-
-
-
-    String[] get_French_string(String data_array[]){
-
-        for (int i=0; i<9; i++)
-        {
-            values = data_array[i].split(",");
-            array_of_arrays[i]=values;
-            french_data_here[i]=array_of_arrays[i][1];
-        }
-
-        return french_data_here;
-    }
-
-*/
 
 }

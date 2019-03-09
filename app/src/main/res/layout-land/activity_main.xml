@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/turquoise"
-    tools:context=".MainActivity">
+    tools:context=".Controller.MainActivity">
 
     <!-- Grid view for Sudoku board-->
     <GridView
@@ -26,6 +26,8 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:horizontalSpacing="0dip"
+        android:configChanges="orientation"
+
 
         android:numColumns="9"
         android:verticalSpacing="0dip"

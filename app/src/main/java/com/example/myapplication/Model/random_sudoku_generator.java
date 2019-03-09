@@ -1,4 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.Model;
+
+import android.support.v4.app.INotificationSideChannel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ public class random_sudoku_generator{
             throw new IllegalArgumentException();
         }
 
-        HashSet<Integer> set = new HashSet<Integer>();
+        HashSet<Integer> set = new HashSet<>();
 
         //check the row
         int row = position/9;
@@ -44,7 +46,7 @@ public class random_sudoku_generator{
         ArrayList<Integer> list_impossible = new ArrayList<Integer>();
         list_impossible.addAll(set);
 
-        ArrayList<Integer> list_possible = new ArrayList<Integer>();
+        ArrayList<Integer> list_possible = new ArrayList<>();
         for(int i = 1; i < 10; i++){
             list_possible.add(i);
         }
@@ -64,7 +66,7 @@ public class random_sudoku_generator{
             board[i] = 0;
         }
 
-        ArrayList<Integer> randomList = new ArrayList<Integer>();
+        ArrayList<Integer> randomList = new ArrayList<>();
         for(int i = 1; i < 10; i++){
             randomList.add(i);
         }
@@ -100,15 +102,15 @@ public class random_sudoku_generator{
         }
 
         //give each empty cell an index
-        ArrayList<Integer> position_index = new ArrayList<Integer>();
+        ArrayList<Integer> position_index = new ArrayList<>();
         for(int i = 0; i < 81; i++){
             if(board[i] == 0){
                 position_index.add(i);
             }
         }
 
-        //initialize an two dimential ArrayList to hole the possible values for each position
-        ArrayList<ArrayList<Integer>> possible_values = new ArrayList<ArrayList<Integer>>();
+        //initialize a two dimensional ArrayList to hole the possible values for each position
+        ArrayList<ArrayList<Integer>> possible_values = new ArrayList<>();
 
         int i = 0;
         int position;

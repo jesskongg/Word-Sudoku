@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/turquoise"
-    tools:context=".MainActivity">
+    tools:context=".Controller.MainActivity">
 
     <!-- What's wrong with content??why are there so many weired symbols-->
     <GridView
@@ -27,6 +27,8 @@
         android:verticalSpacing="0dip"
         android:gravity="center"
         android:numColumns="9"
+
+        android:configChanges="orientation"
 
         app:layout_constraintBottom_toTopOf="@+id/guideline27"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"

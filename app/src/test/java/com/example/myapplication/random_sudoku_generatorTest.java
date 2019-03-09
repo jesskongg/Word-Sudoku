@@ -1,12 +1,12 @@
 package com.example.myapplication;
 
+import com.example.myapplication.Model.random_sudoku_generator;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -100,8 +100,8 @@ public class random_sudoku_generatorTest {
             return false;
         }
 
-        HashSet<Integer> set = new HashSet<Integer>();
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        HashSet<Integer> set = new HashSet<>();
+        ArrayList<Integer> list = new ArrayList<>();
         int index;
         //check if rows legal
         boolean rows_legal = true;
@@ -129,7 +129,7 @@ public class random_sudoku_generatorTest {
             list.clear();
             set.clear();
         }
-        if(rows_legal == false){
+        if(!rows_legal){
             return false;
         }
 
@@ -160,7 +160,7 @@ public class random_sudoku_generatorTest {
             list.clear();
             set.clear();
         }
-        if(columns_legal == false){
+        if(!columns_legal){
             return false;
         }
 
@@ -193,7 +193,7 @@ public class random_sudoku_generatorTest {
             list.clear();
             set.clear();
         }
-        if(groups_legal == false){
+        if(!groups_legal){
             return false;
         }
 

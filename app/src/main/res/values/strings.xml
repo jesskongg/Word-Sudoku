@@ -26,12 +26,20 @@
     <string name="good_luck">Good luck!</string>
     <string name="back_main">Go Back to Main Menu</string>
 
+    <!--Load Words-->
+    <string name="game_mode">Game Mode</string>
+    <string name="load_words">Load New Words</string>
+    <string name="random_words">Random Puzzle</string>
+    <string name="random_description">Start a new randomly generated puzzle</string>
+    <string name="load_description">Upload your own .csv file (max 20 words) \n and play a game using those words</string>
+
     <!--Language Selector Page-->
     <string name="select_lang">Select Language Mode</string>
-    <string name="mode_1">ENGLISH > FRENCH</string>
-    <string name="mode_2">FRENCH > ENGLISH</string>
+    <string name="mode_1"> ENGLISH > FRENCH</string>
+    <string name="mode_2"> FRENCH > ENGLISH</string>
     <string name="how_to">Please select a language mode to begin your Sudoku puzzle.</string>
-    <string name="how_to2">If you would like to practice your listening comprehension skills, enable Listening Comprehension Mode before proceeding with selecting a language mode.</string>
+    <string name="how_to2">To practice your listening comprehension \n skills, enable Listening Comprehension \n Mode to proceed with selecting a language.</string>
+    <string name="how_to2_land">To practice your listening \n comprehension skills, enable \n Listening Comprehension Mode \n to proceed with selecting \n a language.</string>
     <string name="enableLC">Listening Comprehension Mode</string>
 
 

@@ -28,6 +28,8 @@
         android:gravity="center"
         android:numColumns="9"
 
+        android:configChanges="orientation"
+
         app:layout_constraintBottom_toTopOf="@+id/guideline27"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
         app:layout_constraintHorizontal_bias="0.0"

@@ -26,6 +26,8 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:horizontalSpacing="0dip"
+        android:configChanges="orientation"
+
 
         android:numColumns="9"
         android:verticalSpacing="0dip"

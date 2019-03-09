@@ -12,23 +12,22 @@
         android:id="@+id/grid"
         android:layout_width="634dp"
         android:layout_height="683dp"
-
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-
-
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+
         android:gravity="center"
         android:horizontalSpacing="0dip"
-
         android:numColumns="9"
         android:verticalSpacing="0dip"
+        android:configChanges="orientation"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintHorizontal_bias="0.0"

@@ -19,14 +19,24 @@ public class boards_and_menu_data {
 
     public void setMenu_list_English(String[] english_file_data)
     {
-        mMenu_list_English=new String[9];
-        mMenu_list_English=english_file_data;
+        if(english_file_data.length < 9){
+            throw new IllegalArgumentException();
+        }
+        else {
+            mMenu_list_English = new String[9];
+            mMenu_list_English = english_file_data;
+        }
     }
 
     public void setMenu_list_French(String[] french_file_data)
     {
-        mMenu_list_French=new String[9];
-        mMenu_list_French=french_file_data;
+        if(french_file_data.length < 9){
+            throw new IllegalArgumentException();
+        }
+        else {
+            mMenu_list_French = new String[9];
+            mMenu_list_French = french_file_data;
+        }
     }
 
 
@@ -36,7 +46,7 @@ public class boards_and_menu_data {
         mMenu_list_French=new String[9];
         //mMenu_list_French=Menu_list_French;
 
-        mSudoku_grid_English=new String[9];
+        mMenu_list_English=new String[9];
         //mMenu_list_English=Menu_list_English;
         //mMenu_list_English
         //Bundle english_bundle = getIntent().getExtras();

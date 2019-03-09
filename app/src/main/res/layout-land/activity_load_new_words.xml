@@ -45,8 +45,8 @@
 
     <Button
         android:id="@+id/old_button"
-        android:layout_width="182dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -66,8 +66,8 @@
     <!--This is a button to load words-->
     <Button
         android:id="@+id/load_button"
-        android:layout_width="182dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_centerInParent="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -155,7 +155,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline56"

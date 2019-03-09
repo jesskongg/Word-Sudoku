@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
 
 import java.io.BufferedReader;

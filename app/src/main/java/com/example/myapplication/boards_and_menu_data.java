@@ -63,7 +63,6 @@ public class boards_and_menu_data {
         return mMenu_list_French;
     }
 
-
     public String[] generate_get_grid_French()
     {
 
@@ -106,14 +105,15 @@ public class boards_and_menu_data {
     return mSudoku_grid_English;
     }
 
+
     // GRID WITH NUMBERS FOR LISTENING COMPREHENSION MODE
     public String[] generate_LCmodeGrid() {
         for (int i = 0; i < 81; i++) {
             if (number_board[i] == 0) {
                 mSudoku_grid_LCmode[i] = " ";
             } else {
-                String cell = Integer.toString(number_board[i]);
-                mSudoku_grid_LCmode[i] = cell;
+                    String cell = Integer.toString(number_board[i]);
+                    mSudoku_grid_LCmode[i] = cell;
             }
         }
         return mSudoku_grid_LCmode;

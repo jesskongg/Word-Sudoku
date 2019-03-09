@@ -23,8 +23,21 @@ import java.util.Locale;
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
 //position of arrayGrid starts from 0.
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putIntArray(KEY_CELL, board_tracker);
+        savedInstanceState.putStringArray(KEY_WORD, wordListSudokuTable);
+        savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
+        savedInstanceState.putIntArray(KEY_BOARD, board);
+        //savedInstanceState.putParcelable(KEY_COLOUR, );
+
+    }
 
     private static final String TAG = "MainActivity";
+
+    //private static final String TAG = "MainActivity";
 
     //text to speech var
     private TextToSpeech tFR;
@@ -61,13 +74,15 @@ public class MainActivity extends AppCompatActivity {
     //save state variable
     private static final String KEY_WORD = "word";
     private static final String KEY_CELL = "selected_cell";
-    private static final String KEY_BOARD = "solvable_board";
+    private static final String KEY_SOLVABLEBOARD = "solvable_board";
+    private static final String KEY_BOARD = "board";
     private static final String KEY_COLOUR = "cell_colour";
     private int mWord[];
     private int mColour[];
     private int mCell[];
     private int mFilled[];
-
+    private int ctr = 0;
+    private int numFilled;
 
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
@@ -80,7 +95,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "entered onCreate");
-
+        //TESTING SAVING STATE FOR ROTATIONS
+        /*if(savedInstanceState != null){
+            board_tracker = savedInstanceState.getIntArray(KEY_CELL);
+            wordListSudokuTable=savedInstanceState.getStringArray(KEY_WORD);
+            solvable_board = savedInstanceState.getIntArray(KEY_SOLVABLEBOARD);
+            board= savedInstanceState.getIntArray(KEY_BOARD);
+            //ctr =1;
+            //LC_enabled = savedInstanceState.getInt(KEY_LC);
+        }*/
         //receive mode intent and set wordListKeyboard and wordListSudokuTable
         Intent mode = getIntent();
         int langMode = mode.getIntExtra("language", 0);
@@ -90,14 +113,17 @@ public class MainActivity extends AppCompatActivity {
         solvable_board=data_object.getSolvable_board();
 
         // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
-        tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if(i != TextToSpeech.ERROR){
-                    tFR.setLanguage(Locale.CANADA_FRENCH);
+        //if (tFR ==null){
+            tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int i) {
+                    if (i != TextToSpeech.ERROR) {
+                        tFR.setLanguage(Locale.CANADA_FRENCH);
+                    }
                 }
-            }
-        });
+            });
+        //}
+
 
         //grid puzzle
         gridView=(GridView) findViewById(R.id.grid);
@@ -107,6 +133,24 @@ public class MainActivity extends AppCompatActivity {
         menuView=(GridView) findViewById(R.id.grid_menu);
         textMenu=(TextView) findViewById(R.id.menu_cell);
 
+
+        // SAVING STATE FOR ROTATIONS
+        if(savedInstanceState != null){
+            board_tracker = savedInstanceState.getIntArray(KEY_CELL);
+            wordListSudokuTable=savedInstanceState.getStringArray(KEY_WORD);
+            solvable_board = savedInstanceState.getIntArray(KEY_SOLVABLEBOARD);
+            board= savedInstanceState.getIntArray(KEY_BOARD);
+            numFilled = board_tracker.length;
+            /*for(int j =0; j<numFilled; j+=1) {
+                if (board_tracker[j] !=0){
+                    board_tracker[j].;
+                }
+                //gridView.setBackground(R.drawable.cell_shape_after_click);
+                //v.setBackgroundResource(R.drawable.cell_shape_after_click);
+            }*/
+            //ctr =1;
+            //LC_enabled = savedInstanceState.getInt(KEY_LC);
+        }
         //adapter for puzzle grid
         final ArrayAdapter adapter;
         adapter = new ArrayAdapter(this,R.layout.cell_layout,wordListSudokuTable );
@@ -133,12 +177,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-////        saving state for rotation
-//        wordAdapter = new WordAdapter();    // Create empty adapter
-//        if (savedInstanceState != null) {
-//            ArrayList<String> items = savedInstanceState.getInt(KEY_WORD);
-//            wordAdapter.setItems(items);
-//        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -149,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     //stores position of green clicked cells
                     board_cell_clicked_position=position;
+                   // cellFilled[board_cell_clicked_position]
 
                     board_tracker[board_cell_clicked_position] = position;
 
@@ -187,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -202,8 +240,6 @@ public class MainActivity extends AppCompatActivity {
 
                     //array stores all user word inputs in the form of numbers
                     solvable_board[board_cell_clicked_position]=menu_cell_clicked_position+1;
-
-
 
                     //debug here!!
                     //String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
@@ -246,28 +282,39 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), solvable_board_toast, Toast.LENGTH_SHORT).show();
             }
         });
-
+        /*
         if (savedInstanceState != null) {
             mCell = savedInstanceState.getIntArray(KEY_CELL);   //clicked cells by user
             mWord = savedInstanceState.getIntArray(KEY_WORD);   //words on board including newly added by user
             mFilled = savedInstanceState.getIntArray(KEY_BOARD);    //board values including newly added by user
-        }
-
+        }*/
     }
 
     //OUTSIDE OF ON CREATE FUNCTION
 
+    //new additions
+    /*
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putIntArray(KEY_CELL, board_tracker);
+        savedInstanceState.putStringArray(KEY_WORD, wordListSudokuTable);
+        savedInstanceState.putIntArray(KEY_BOARD, solvable_board);
+
+    }*/
+
     //text to speech related:
     /*this deals with the case where system is about to resume previous activity
     -- need to ensure things are not consuming resources (ex. CPU)*/
-    public void onPause(){
+    /*public void onPause(){
         //shut down text to speech
         if(tFR != null){
             tFR.stop(); // stops the speech
             tFR.shutdown(); // releases resources being used by TextToSpeech engine
         }
         super.onPause();
-    }
+    }*/
 
 
     // SET-UP GRIDS based on the Language Mode selected as well as Listening Comprehension mode (enabled or disabled)
@@ -299,7 +346,6 @@ public class MainActivity extends AppCompatActivity {
                 hint_for_board=data_object.getMenu_list_English();
                 listFrenchWords = data_object.getMenu_list_French();
             }
-
         }
     }
     private void goSelect() {
@@ -308,6 +354,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+/*
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -315,6 +362,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putIntArray(KEY_CELL, board_tracker);
         savedInstanceState.putStringArray(KEY_WORD, wordListSudokuTable);
         savedInstanceState.putIntArray(KEY_BOARD, solvable_board);
+*/
 
 //        for (int i =0; i < wordListSudokuTable.length; i++ ) {
 //            savedInstanceState.putIntArray(KEY_CELL, board_tracker);
@@ -335,6 +383,6 @@ public class MainActivity extends AppCompatActivity {
 //        Log.i(TAG, "menu_cell_clicked_pos" + " " + menu_cell_clicked_position);
 //        savedInstanceState.putBoolean("test", menu_cell_clicked);
 //        Log.i(TAG, "menu_cell_clicked" + " " + menu_cell_clicked);
-    }
+    //}
 
 }

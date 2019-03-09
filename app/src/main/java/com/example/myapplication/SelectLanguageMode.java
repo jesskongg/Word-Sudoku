@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,11 @@ public class SelectLanguageMode extends AppCompatActivity {
     private Button enFrButton;
     private Button frEnButton;
     private Switch enableLCswitch;
+   // private int mode_load_default;
+
+    //String[] loaded_data;
+
+
 
     int LC_enabled = 0;
     @Override
@@ -56,9 +62,13 @@ public class SelectLanguageMode extends AppCompatActivity {
     }
 
     public void openMainActivity(int lang, int LC_enabled) {
+
+
         Intent goMainActivity = new Intent();
         goMainActivity.putExtra("language", lang);
         goMainActivity.putExtra("modeLC", LC_enabled);
+        //goMainActivity.putExtra("mode_load_old", mode_load_default);
+
         goMainActivity.setClass(this, MainActivity.class);
         startActivity(goMainActivity);
 

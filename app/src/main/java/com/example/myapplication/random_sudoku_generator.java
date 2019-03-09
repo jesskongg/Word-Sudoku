@@ -8,6 +8,10 @@ import java.util.Random;
 public class random_sudoku_generator{
 
     public static ArrayList<Integer> get_possible_values(int[] board, int position){
+        if(board.length != 81 || position < 0 || position > 80){
+            throw new IllegalArgumentException();
+        }
+
         HashSet<Integer> set = new HashSet<Integer>();
 
         //check the row
@@ -130,9 +134,18 @@ public class random_sudoku_generator{
         }
 
         //randomly choose balnk cells
-        for(int a = 0; a < 50; a++){
-            int rand = r.nextInt(81);
-            board[rand] = 0;
+        int number_of_0 = 0;
+        while(number_of_0 == 0){
+            for(int a = 0; a < 50; a++){
+                int rand = r.nextInt(81);
+                board[rand] = 0;
+            }
+
+            for(int a = 0; a < 81; a++){
+                if(board[a] == 0){
+                    number_of_0++;
+                }
+            }
         }
 
 

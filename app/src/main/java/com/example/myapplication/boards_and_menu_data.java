@@ -1,12 +1,13 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 public class boards_and_menu_data {
-    private String[] mMenu_list_English={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
+    private String[] mMenu_list_English;//={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
     private String[] mSudoku_grid_French;
 
-    private String[] mMenu_list_French={"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
+    private String[] mMenu_list_French;//={"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
     private String[] mSudoku_grid_English;//=new String[81];
     private String[] mSudoku_grid_LCmode;
 
@@ -16,8 +17,40 @@ public class boards_and_menu_data {
 
 
 
+    public void setMenu_list_English(String[] english_file_data)
+    {
+        if(english_file_data.length < 9){
+            throw new IllegalArgumentException();
+        }
+        else {
+            mMenu_list_English = new String[9];
+            mMenu_list_English = english_file_data;
+        }
+    }
+
+    public void setMenu_list_French(String[] french_file_data)
+    {
+        if(french_file_data.length < 9){
+            throw new IllegalArgumentException();
+        }
+        else {
+            mMenu_list_French = new String[9];
+            mMenu_list_French = french_file_data;
+        }
+    }
+
+
+
     public boards_and_menu_data(){
 
+        mMenu_list_French=new String[9];
+        //mMenu_list_French=Menu_list_French;
+
+        mMenu_list_English=new String[9];
+        //mMenu_list_English=Menu_list_English;
+        //mMenu_list_English
+        //Bundle english_bundle = getIntent().getExtras();
+        //private String[] mMenu_list_English=english_bundle.getStringArray("EnglishArray");
         mSudoku_grid_English = new String[81];
         mSudoku_grid_French = new String[81];
         mSudoku_grid_LCmode = new String[81];
@@ -63,7 +96,6 @@ public class boards_and_menu_data {
         return mMenu_list_French;
     }
 
-
     public String[] generate_get_grid_French()
     {
 
@@ -103,8 +135,10 @@ public class boards_and_menu_data {
 
         }
 
+
     return mSudoku_grid_English;
     }
+
 
     // GRID WITH NUMBERS FOR LISTENING COMPREHENSION MODE
     public String[] generate_LCmodeGrid() {
@@ -112,8 +146,8 @@ public class boards_and_menu_data {
             if (number_board[i] == 0) {
                 mSudoku_grid_LCmode[i] = " ";
             } else {
-                String cell = Integer.toString(number_board[i]);
-                mSudoku_grid_LCmode[i] = cell;
+                    String cell = Integer.toString(number_board[i]);
+                    mSudoku_grid_LCmode[i] = cell;
             }
         }
         return mSudoku_grid_LCmode;
@@ -122,9 +156,9 @@ public class boards_and_menu_data {
 
     public int[] getNumber_board()
     {
-
         return number_board;
     }
+
 
     public int[] getSolvable_board(){
         return solvable_board;

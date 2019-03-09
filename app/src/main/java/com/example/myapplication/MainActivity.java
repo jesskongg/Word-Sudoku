@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                     solvable_board[board_cell_clicked_position]=menu_cell_clicked_position+1;
 
 
-
                     //debug here!!
                     //String solvable_board_toast= String.valueOf(solvable_board[board_cell_clicked_position]);
                     //String pos =String.valueOf(board_cell_clicked_position);

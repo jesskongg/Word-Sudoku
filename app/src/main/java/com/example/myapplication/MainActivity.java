@@ -2,8 +2,11 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,21 +17,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
 //position of arrayGrid starts from 0.
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     //text to speech var
     private TextToSpeech tFR;
 
-      //puzzle variables
+    //puzzle variables
     private GridView gridView;
     private TextView textView;
+
     //menu variables
     private GridView menuView;
     private TextView textMenu;
+
     //variables for grid-menu communication
     private String received_text=" ";
     private int board_cell_clicked_position;
@@ -38,16 +46,28 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton backSelect;
 
-
     //number board variables
     private int board[]=new int[81];
     private int solvable_board[]=new int[81];
+    private int board_tracker[]=new int[81];
+//    private ArrayList<String> solvable_board;
 
     //object for checker. input: solved number board and number of rows and columns
     //private board_checker checkBoard_object= new board_checker(solvable_board,9,9);
 
     private String wordListKeyboard[];
     private String wordListSudokuTable[];
+
+    //save state variable
+    private static final String KEY_WORD = "word";
+    private static final String KEY_CELL = "selected_cell";
+    private static final String KEY_BOARD = "solvable_board";
+    private static final String KEY_COLOUR = "cell_colour";
+    private int mWord[];
+    private int mColour[];
+    private int mCell[];
+    private int mFilled[];
+
 
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
@@ -59,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i(TAG, "entered onCreate");
 
         //receive mode intent and set wordListKeyboard and wordListSudokuTable
         Intent mode = getIntent();
@@ -112,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+////        saving state for rotation
+//        wordAdapter = new WordAdapter();    // Create empty adapter
+//        if (savedInstanceState != null) {
+//            ArrayList<String> items = savedInstanceState.getInt(KEY_WORD);
+//            wordAdapter.setItems(items);
+//        }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -120,7 +147,11 @@ public class MainActivity extends AppCompatActivity {
                 //if a cell has no content then a user is asked to fill the cell
                 if (board[position]==0)
                 {
+                    //stores position of green clicked cells
                     board_cell_clicked_position=position;
+
+                    board_tracker[board_cell_clicked_position] = position;
+
                     grid_cell_clicked=true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     TextView v = (TextView) view;
@@ -168,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
                     wordListSudokuTable[board_cell_clicked_position]=received_text;
 
                     adapter.notifyDataSetChanged();
+
+                    //array stores all user word inputs in the form of numbers
                     solvable_board[board_cell_clicked_position]=menu_cell_clicked_position+1;
 
 
@@ -186,7 +219,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         final Button checkBoard= (Button) findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +246,12 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), solvable_board_toast, Toast.LENGTH_SHORT).show();
             }
         });
+
+        if (savedInstanceState != null) {
+            mCell = savedInstanceState.getIntArray(KEY_CELL);   //clicked cells by user
+            mWord = savedInstanceState.getIntArray(KEY_WORD);   //words on board including newly added by user
+            mFilled = savedInstanceState.getIntArray(KEY_BOARD);    //board values including newly added by user
+        }
 
     }
 
@@ -267,6 +305,36 @@ public class MainActivity extends AppCompatActivity {
     private void goSelect() {
         Intent goSelect = new Intent(this, SelectLanguageMode.class);
         startActivity(goSelect);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putIntArray(KEY_CELL, board_tracker);
+        savedInstanceState.putStringArray(KEY_WORD, wordListSudokuTable);
+        savedInstanceState.putIntArray(KEY_BOARD, solvable_board);
+
+//        for (int i =0; i < wordListSudokuTable.length; i++ ) {
+//            savedInstanceState.putIntArray(KEY_CELL, board_tracker);
+//            Log.i(TAG, "board_cell_clicked" + " " + board_tracker[i]);
+//        }
+//
+//        for (int i =0; i < wordListSudokuTable.length; i++ ) {
+//            savedInstanceState.putIntArray(KEY_BOARD, solvable_board);
+//            Log.i(TAG, "solvable_board" + " " + solvable_board[i]);
+//        }
+//
+//        for (int i =0; i < wordListSudokuTable.length; i++ ) {
+//            savedInstanceState.putStringArray(KEY_WORD, wordListSudokuTable);
+//            Log.i(TAG, "word_list_Sudoku_table" + " " + wordListSudokuTable[i]);
+//        }
+
+//        savedInstanceState.putInt(KEY_WORD, menu_cell_clicked_position);
+//        Log.i(TAG, "menu_cell_clicked_pos" + " " + menu_cell_clicked_position);
+//        savedInstanceState.putBoolean("test", menu_cell_clicked);
+//        Log.i(TAG, "menu_cell_clicked" + " " + menu_cell_clicked);
     }
 
 }

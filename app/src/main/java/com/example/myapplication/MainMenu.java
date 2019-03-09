@@ -44,8 +44,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-
-
     public void openInstructions() {
         Intent goOpenInstr = new Intent(this, instructions.class);
         startActivity(goOpenInstr);

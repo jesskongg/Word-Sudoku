@@ -111,6 +111,8 @@ public class load_new_words extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     public  boolean isStoragePermissionGranted() {
@@ -199,20 +201,8 @@ public class load_new_words extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(this, file_data_aray[0],Toast.LENGTH_SHORT).show();
-
-                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = pref.edit();
-                   for (int i=0; i<9; i++)
-                   {
-                       editor.putString("line number is "+i, file_data_aray[i]); // Storing string
-                     editor.commit();
-                    }
-
-
-                    editor.putInt("load_mode_chose", 200);
-                    editor.commit();
-
+                    //Toast.makeText(this, file_data_aray[0],Toast.LENGTH_SHORT).show();
+                    put_data_into_shared_ref(1);
                     Intent goOpenInstr = new Intent(this, SelectLanguageMode.class);
                     startActivity(goOpenInstr);
 
@@ -223,5 +213,24 @@ public class load_new_words extends AppCompatActivity {
 
 
     }
+
+    public void put_data_into_shared_ref(int chapter_number){
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        for (int i=0; i<9; i++)
+        {
+            editor.putString("chapter "+chapter_number+" line number is "+i, file_data_aray[i]); // Storing string
+            editor.commit();
+        }
+
+
+        editor.putInt("load_mode_chose", 200);
+        editor.commit();
+
+
+    }
+
+
 
 }

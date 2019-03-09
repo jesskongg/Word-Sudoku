@@ -66,14 +66,6 @@ public class MainActivity extends AppCompatActivity {
     String[]  english_data= new String[9];
     String[]   french_data =new String[9];
     String[] values =new String[2];
-
-
-
-
-    //Bundle english_bundle = getIntent().getExtras();
-    //private String[] mMenu_list_English=english_bundle.getStringArray("EnglishArray");
-    //String arrayReceived[] = english_bundle.getStringArray("MyArray");
-
     String[] recieved_data=new String[20];
 
 
@@ -85,23 +77,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //here if mode chosen is default. I set default values.
-        //here catch intent
-
-
-        //data_object.setMenu_list_English(mMenu_list_English);
-        //data_object.setMenu_list_French(mMenu_list_English);
-
-        //set_data_recived_from_file();
-        //receive mode intent and set wordListKeyboard and wordListSudokuTable
-
-
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
         int load_mode_choose=0;
         load_mode_choose=pref.getInt("load_mode_chose", 0);
-
-
 
 
         Intent mode = getIntent();
@@ -117,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(load_mode_choose==200)
         {
+            //it can be recieved as an intent
+            int chapter_number=1;
+
 
             for(int i=0; i<9; i++) {
-                recieved_data[i]=pref.getString("line number is " +i, "no");
+                recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
             }
             set_data_recived_from_file(recieved_data);
 

@@ -16,7 +16,7 @@ public class board_checkerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateThrows(){
+    public void testCreateThrows1(){
         int[] testBoard = new int[]{1, 2, 3, 4, 5};
         board_checker boardChecker = new board_checker(testBoard);
     }

@@ -2,17 +2,18 @@ package com.example.myapplication;
 
 public class board_checker {
     private int board[];
+    private int answer[];
     //private int number_of_rows;
     //private int number_of_columns;
 
 
-    public board_checker(int[] board)
+    public board_checker(int[] board1)
     {
-        if(board.length != 81){
+        if(board1.length != 81){
             throw new IllegalArgumentException();
         }
         //this.board=new int [81];
-        this.board=board;
+        this.board=board1;
         //this.number_of_columns=number_of_columns;
         //this.number_of_rows=number_of_rows;
     }

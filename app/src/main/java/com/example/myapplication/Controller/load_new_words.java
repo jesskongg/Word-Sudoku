@@ -28,6 +28,8 @@ import java.io.InputStreamReader;
 
 public class load_new_words extends AppCompatActivity {
 
+
+    int line_counter=0;
     //some required variables for the program to run
     private static final String TAG = "MainActivity";
     private static final int PICKFILE_RESULT_CODE = 1;
@@ -39,7 +41,7 @@ public class load_new_words extends AppCompatActivity {
     private boolean grantedPermission=false;
     private String FilePath;
 
-    String[] file_data_aray=new String[9];
+    //String[] file_data_aray=new String[9];
     String file_string;
 
     SharedPreferences pref;// = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
@@ -49,6 +51,8 @@ public class load_new_words extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_new_words);
+
+        file_string=null;
 
         pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         editor = pref.edit();
@@ -83,6 +87,8 @@ public class load_new_words extends AppCompatActivity {
 
                 }
                 else {
+
+
 
                 }
 
@@ -119,17 +125,15 @@ public class load_new_words extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            //Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
-            //resume tasks needing this permission
-            //Toast.makeText(load_new_words.this, "Am I here", Toast.LENGTH_SHORT).show();
             grantedPermission=true;
+            Toast.makeText(load_new_words.this, "Please click the button again to load your own .csv file", Toast.LENGTH_LONG).show();
 
         }
         else
         {
             //modification-polina
             grantedPermission=false;
-            Toast.makeText(load_new_words.this, "No permission.File cannot be loaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(load_new_words.this, "Permission is denied.File cannot be loaded", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -159,13 +163,18 @@ public class load_new_words extends AppCompatActivity {
                                 inputStream));
 
                         StringBuilder stringBuilder = new StringBuilder();
-                        String line;
+                        String line=null;
                         int i=0;
+                        //int line_counter=0;
+
+                        line_counter=0;
                         while ((line = reader.readLine()) != null) {
                             stringBuilder.append(line);
                             stringBuilder.append(",");
+                            line_counter=line_counter+1;
 
                         }
+                        //file_string=null;
                         file_string=stringBuilder.toString();
 
                         inputStream.close();
@@ -176,12 +185,11 @@ public class load_new_words extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(this, file_data_aray[0], Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, file_data_aray[0], Toast.LENGTH_LONG).show();
+                    put_data_into_shared_ref(1, line_counter);
 
-                    put_data_into_shared_ref(1);
                     Intent goOpenInstr = new Intent(this, SelectLanguageMode.class);
                     startActivity(goOpenInstr);
-
 
                 }
 
@@ -189,13 +197,15 @@ public class load_new_words extends AppCompatActivity {
 
     }
 
-    public void put_data_into_shared_ref(int chapter_number){
 
-
+    //this function puts file data into "app storage" which is accesable
+    //in different activities
+    public void put_data_into_shared_ref(int chapter_number, int number_of_pairs){
         editor.putString("chapter "+chapter_number, file_string); // Storing string
         editor.commit();
         //load mode
         editor.putInt("load_mode_chose", 200);
+        editor.putInt("line_counter", number_of_pairs);
         editor.commit();
     }
 

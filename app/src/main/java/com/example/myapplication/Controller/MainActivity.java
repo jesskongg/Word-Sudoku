@@ -19,7 +19,11 @@ import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
 import com.example.myapplication.Model.board_checker;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+
 
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
 //position of arrayGrid starts from 0.
@@ -82,21 +86,8 @@ public class MainActivity extends AppCompatActivity {
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
 
-    //object which gives filled with words sudoku grid and menu depending on chosen language
-
-    //default values
-    //not loaded
     private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
     private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
-
-
-    //this is for file data communication
-    //String[][] array_of_arrays = new String[20][2];
-    String[] english_data = new String[9];
-    String[] french_data = new String[9];
-    //String[] values =new String[2];
-    //String[] recieved_data=new String[20];
-
 
     private boards_and_menu_data data_object = new boards_and_menu_data();
 
@@ -106,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "entered onCreate");
+
+        data_object = new boards_and_menu_data();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
@@ -127,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
         if (load_mode_choose == 200) {
             //it can be recieved as an intent
             int chapter_number = 1;
-            String recieved_string = pref.getString("chapter " + chapter_number, "no");
+            String recieved_string=null;
+            recieved_string = pref.getString("chapter " + chapter_number, "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
             set_data_recived_from_file(recieved_string);
         }
@@ -191,12 +185,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-////        saving state for rotation
-//        wordAdapter = new WordAdapter();    // Create empty adapter
-//        if (savedInstanceState != null) {
-//            ArrayList<String> items = savedInstanceState.getInt(KEY_WORD);
-//            wordAdapter.setItems(items);
-//        }
+
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -216,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     final int current_position = position;
+                    
                     Toast.makeText(getApplicationContext(), "Tap again for a hint!", Toast.LENGTH_SHORT).show();
                     if (LC_enabled == 1) {
                         //IF listening comprehension mode IS ENABLED, execute TEXT TO SPEECH when we TAP a pre-filled cell (with a number) for the FIRST TIME.
@@ -345,18 +335,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goSelect);
     }
 
+
     public void set_data_recived_from_file(String data_string) {
-        //for (int i=0; i<9; i++)
-        //{
-        //values = data_array[i].split(",");
-        //array_of_arrays[i]=values;
-        // english_data[i]=array_of_arrays[i][0];
-        //   french_data[i]=array_of_arrays[i][1];
-        // }
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+
+        int size_of_each_array=pref.getInt("line_counter",0);
+        //int size_of_each_array=16;
 
         String[] array = data_string.split(",");
         int array_size = array.length;
 
+        String[] english_data=new String[array_size];
+        String[] french_data=new String[array_size];
+
+        //while loop is to split one big array of data into two arrays with french and english words separately.
         int k = 0;
         int m = 0;
         int h = 1;
@@ -367,7 +361,41 @@ public class MainActivity extends AppCompatActivity {
             k = k + 1;
             h = h + 2;
         }
-        data_object.setMenu_list_French(english_data);
-        data_object.setMenu_list_English(french_data);
+
+        String[] english_long_array=new String[size_of_each_array];
+        String[] french_long_array=new String[size_of_each_array];
+
+        english_long_array=Arrays.copyOfRange(english_data, 0, size_of_each_array);
+        french_long_array=Arrays.copyOfRange(english_data, 0, size_of_each_array);
+
+
+        //convert arrays into lists
+        List<String> english_list = Arrays.asList(english_long_array);
+        List<String> french_list=Arrays.asList(french_long_array);
+
+        //shuffle lists
+        Collections.shuffle(english_list);
+        Collections.shuffle(french_list);
+
+        //convert arrays back to lists
+        String[] converted_english=new String[size_of_each_array];
+        String[] converted_french=new String[size_of_each_array];
+
+        //converted_english= list.toArray(english_list);
+        for( int i=0; i<size_of_each_array; i++)
+        {
+            converted_english[i]=english_list.get(i);
+            converted_french[i]=french_list.get(i);
+        }
+
+        //now take the first 9 elements of arrays
+        String[] english_data_clean=new String[9];
+        String[] french_data_clean=new String[9];
+        english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
+        french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
+
+        //now paste clean arrays of size 9 into the menu
+        data_object.setMenu_list_French(english_data_clean);
+        data_object.setMenu_list_English(french_data_clean);
     }
 }

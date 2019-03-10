@@ -28,10 +28,10 @@
 
     <!--Load Words-->
     <string name="game_mode">Game Mode</string>
-    <string name="load_words">Load New Words</string>
-    <string name="random_words">Random Puzzle</string>
-    <string name="random_description">Start a new randomly generated puzzle</string>
-    <string name="load_description">Upload your own .csv file (max 20 words) \n and play a game using those words</string>
+    <string name="generate_puzzle">Generate Your Own Puzzle</string>
+    <string name="default_puzzle">Default Puzzle</string>
+    <string name="default_description">Start playing with our default set of words</string>
+    <string name="load_description">Upload your own .csv file using the format: \n Column 1 - Words in English \n Column 2 - Words in French \n and play a game using those words</string>
 
     <!--Language Selector Page-->
     <string name="select_lang">Select Language Mode</string>

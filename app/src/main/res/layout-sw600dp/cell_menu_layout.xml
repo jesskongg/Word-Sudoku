@@ -4,8 +4,8 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_cell"
-    android:layout_width="110dp"
-    android:layout_height="110dp"
+    android:layout_width="70dp"
+    android:layout_height="70dp"
     android:layout_marginTop="0dp"
     android:layout_marginBottom="0dp"
     android:layout_marginStart="0dp"

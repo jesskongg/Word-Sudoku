@@ -128,16 +128,21 @@ public class MainActivity extends AppCompatActivity {
             set_data_recived_from_file(recieved_string);
         }
 
+        //if newGameFlag == 1, start a new game.
         int newGameFlag = mode.getIntExtra("newGame", 0);
         if(newGameFlag == 0) {
             Userdata data = new Userdata();
             try {
+                //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
+                //At here a random board has already been created when "data_object = new boards_and_menu_data();".
+                //Just try to reset the board, so even if this step is skipped, the "set board and solvable_board" step is still ok.
                 data_object.setNumber_board(data.getNumber_board(MainActivity.this));
                 data_object.setSolvable_board(data.getSolvable_board(MainActivity.this));
             } catch (SQLiteException ex) {
 
             }
 
+            //set board and solvable_board
             board = data_object.getNumber_board();
             solvable_board = data_object.getSolvable_board();
         }
@@ -302,21 +307,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button newGameButton = (Button) findViewById(R.id.newGameButton);
-        newGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,
-                        R.string.new_game_information,
-                        Toast.LENGTH_SHORT).show();
-                newGameButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        newGame();
-                    }
-                });
-            }
-        });
+//        final Button newGameButton = (Button) findViewById(R.id.newGameButton);
+//        newGameButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this,
+//                        R.string.new_game_information,
+//                        Toast.LENGTH_SHORT).show();
+//                newGameButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        newGame();
+//                    }
+//                });
+//            }
+//        });
 
     }
 

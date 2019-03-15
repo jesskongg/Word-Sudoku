@@ -2,6 +2,7 @@ package com.example.myapplication.Controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
+import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
 import com.example.myapplication.Model.board_checker;
@@ -126,9 +128,25 @@ public class MainActivity extends AppCompatActivity {
             set_data_recived_from_file(recieved_string);
         }
 
+        int newGameFlag = mode.getIntExtra("newGame", 0);
+        if(newGameFlag == 0) {
+            Userdata data = new Userdata();
+            try {
+                data_object.setNumber_board(data.getNumber_board(MainActivity.this));
+                data_object.setSolvable_board(data.getSolvable_board(MainActivity.this));
+            } catch (SQLiteException ex) {
+
+            }
+
+            board = data_object.getNumber_board();
+            solvable_board = data_object.getSolvable_board();
+        }
+        else{
+            board = data_object.getNumber_board();
+            solvable_board = data_object.getSolvable_board();
+        }
+
         setWordList(langMode, LC_enabled);
-        board = data_object.getNumber_board();
-        solvable_board = data_object.getSolvable_board();
 
         // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
         tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -179,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
                 backSelect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Userdata data = new Userdata();
+                        data.saveData(board, solvable_board, MainActivity.this);
                         goSelect();
                     }
                 });
@@ -282,6 +302,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button newGameButton = (Button) findViewById(R.id.newGameButton);
+        newGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,
+                        R.string.new_game_information,
+                        Toast.LENGTH_SHORT).show();
+                newGameButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        newGame();
+                    }
+                });
+            }
+        });
+
     }
 
     //OUTSIDE OF ON CREATE FUNCTION
@@ -308,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListKeyboard = data_object.getMenu_list_French();
                 hint_for_board = data_object.getMenu_list_French();
             } else { //L.C. MODE ON -- GRID WITH NUMBERS
-                wordListSudokuTable = data_object.generate_LCmodeGrid();
+                wordListSudokuTable = data_object.generate_LCmodeGrid_French();
                 wordListKeyboard = data_object.getMenu_list_French();
                 hint_for_board = data_object.getMenu_list_French();
                 listFrenchWords = data_object.getMenu_list_French();
@@ -321,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListKeyboard = data_object.getMenu_list_English();
                 hint_for_board = data_object.getMenu_list_English();
             } else {//L.C. MODE ON -- GRID WITH NUMBERS
-                wordListSudokuTable = data_object.generate_LCmodeGrid();
+                wordListSudokuTable = data_object.generate_LCmodeGrid_English();
                 wordListKeyboard = data_object.getMenu_list_English();
                 hint_for_board = data_object.getMenu_list_English();
                 listFrenchWords = data_object.getMenu_list_French();
@@ -333,6 +369,12 @@ public class MainActivity extends AppCompatActivity {
     private void goSelect() {
         Intent goSelect = new Intent(this, SelectLanguageMode.class);
         startActivity(goSelect);
+    }
+
+    private void newGame(){
+        Intent goMainActivity = new Intent(this, MainActivity.class);
+        goMainActivity.putExtra("newGame", 1);
+        startActivity(goMainActivity);
     }
 
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -161,7 +162,31 @@ public class MainActivity extends AppCompatActivity {
         //adapter for puzzle grid
         final ArrayAdapter adapter;
 
-        adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable);
+        adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                int color = 0x00FFFFFF; // Transparent
+                                
+                if (board[position]==0 && solvable_board[position]!=0)
+                {
+                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                }
+                return view;
+            }
+        };
+
+
+
+
+
+
+
+
+
+
+
         gridView.setAdapter(adapter);
 
         //adapter for menu

@@ -162,13 +162,13 @@ public class MainActivity extends AppCompatActivity {
         //adapter for puzzle grid
         final ArrayAdapter adapter;
 
+
+
         adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
-                int color = 0x00FFFFFF; // Transparent
-                                
                 if (board[position]==0 && solvable_board[position]!=0)
                 {
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
@@ -176,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 return view;
             }
         };
-
 
 
 

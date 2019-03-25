@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
         String[] french_long_array=new String[size_of_each_array];
 
         english_long_array=Arrays.copyOfRange(english_data, 0, size_of_each_array);
-        french_long_array=Arrays.copyOfRange(english_data, 0, size_of_each_array);
+        french_long_array=Arrays.copyOfRange(french_data, 0, size_of_each_array);
 
 
         //convert arrays into lists
@@ -440,6 +440,7 @@ public class MainActivity extends AppCompatActivity {
         String[] french_data_clean=new String[9];
         english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
         french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
+
 
         //now paste clean arrays of size 9 into the menu
         data_object.setMenu_list_French(english_data_clean);

@@ -63,7 +63,12 @@ public class load_new_words extends AppCompatActivity {
             public void onClick(View v) {
                 editor.putInt("load_mode_chose", 100);
                 editor.commit();
+
+                Intent getNewGame = getIntent();
+                int newGame = getNewGame.getIntExtra("newGame", 0);
+
                 Intent goLanguageMode =new Intent(v.getContext(), SelectLanguageMode.class);
+                goLanguageMode.putExtra("newGame", newGame);
                 startActivity(goLanguageMode);
             }
         });
@@ -188,7 +193,11 @@ public class load_new_words extends AppCompatActivity {
                     //Toast.makeText(this, file_data_aray[0], Toast.LENGTH_LONG).show();
                     put_data_into_shared_ref(1, line_counter);
 
+                    Intent getNewGame = getIntent();
+                    int newGame = getNewGame.getIntExtra("newGame", 0);
+
                     Intent goOpenInstr = new Intent(this, SelectLanguageMode.class);
+                    goOpenInstr.putExtra("newGame", newGame);
                     startActivity(goOpenInstr);
 
                 }

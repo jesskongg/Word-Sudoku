@@ -372,6 +372,7 @@ public class MainActivity extends AppCompatActivity {
         String[] french_long_array=new String[size_of_each_array];
 
         english_long_array=Arrays.copyOfRange(english_data, 0, size_of_each_array);
+        //here I chnaged variable from french data to english data
         french_long_array=Arrays.copyOfRange(french_data, 0, size_of_each_array);
 
 

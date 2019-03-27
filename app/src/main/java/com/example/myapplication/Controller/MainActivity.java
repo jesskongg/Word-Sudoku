@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,23 +29,12 @@ import java.util.Locale;
 //import static com.bignerdranch.android.trial2.R.layout.cell_layout_after_click;
 //position of arrayGrid starts from 0.
 public class MainActivity extends AppCompatActivity {
-
     // SAVING STATE WHEN DEVICE CONFIGURATION CHANGES (DUE TO ROTATION OF DEVICE)
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        Log.i(TAG, "onSaveInstanceState");
-        savedInstanceState.putIntArray(KEY_CELLS, board_tracker);
-        savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
-        savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
-        savedInstanceState.putIntArray(KEY_BOARD, board);
-        //savedInstanceState.putIntArray(KEY_COLOUR, );
-    }
-
     private static final String TAG = "MainActivity";
-
     //text to speech var
     private TextToSpeech tFR;
+    int langMode;
+    int LC_enabled;
 
     //save state variables (device configuration changes)
     private static final String KEY_WORDS = "word";
@@ -71,17 +61,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton backSelect;
 
     //number board variables
+
     public int board[] = new int[81];
     private int solvable_board[] = new int[81];
     private int board_tracker[] = new int[81];
-//    private ArrayList<String> solvable_board;
-
-    //object for checker. input: solved number board and number of rows and columns
-    //private board_checker checkBoard_object= new board_checker(solvable_board,9,9);
 
     private String wordListKeyboard[];
     private String wordListSudokuTable[];
-
 
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
@@ -91,6 +77,20 @@ public class MainActivity extends AppCompatActivity {
 
     private boards_and_menu_data data_object = new boards_and_menu_data();
 
+    int load_mode_choose;
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putIntArray(KEY_CELLS, board_tracker);
+        savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
+        savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
+        savedInstanceState.putIntArray(KEY_BOARD, board);
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,47 +98,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i(TAG, "entered onCreate");
 
-        data_object = new boards_and_menu_data();
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-        int load_mode_choose = 0;
-        load_mode_choose = pref.getInt("load_mode_chose", 0);
-
-
-        Intent mode = getIntent();
-        int langMode = mode.getIntExtra("language", 0);
-        final int LC_enabled = mode.getIntExtra("modeLC", 0);
-        //int load_or_keep=mode.getIntExtra("mode_load_old",100);
-
-        if (load_mode_choose == 100) {
-
-            data_object.setMenu_list_English(mMenu_list_English);
-            data_object.setMenu_list_French(mMenu_list_French);
-        }
-
-        if (load_mode_choose == 200) {
-            //it can be recieved as an intent
-            int chapter_number = 1;
-            String recieved_string=null;
-            recieved_string = pref.getString("chapter " + chapter_number, "no");
-            //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
-            set_data_recived_from_file(recieved_string);
-        }
-
-        setWordList(langMode, LC_enabled);
+        //RECEIVE DATA FROM A FILE OR LOAD DEFAULT BOARD
+        set_default_or_loaded();
         board = data_object.getNumber_board();
         solvable_board = data_object.getSolvable_board();
 
-        // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
-        tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if (i != TextToSpeech.ERROR) {
-                    tFR.setLanguage(Locale.CANADA_FRENCH);
-                }
-            }
-        });
+        set_listening_comprehension();
 
         //grid puzzle
         gridView = (GridView) findViewById(R.id.grid);
@@ -148,11 +113,8 @@ public class MainActivity extends AppCompatActivity {
         menuView = (GridView) findViewById(R.id.grid_menu);
         textMenu = (TextView) findViewById(R.id.menu_cell);
 
-        /*SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
-        retrieve values saved from before change in orientation,
-        update values of vars */
+        //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
         if (savedInstanceState != null) {
-            //board_tracker = savedInstanceState.getIntArray(KEY_CELLS);
             wordListSudokuTable = savedInstanceState.getStringArray(KEY_WORDS);
             solvable_board = savedInstanceState.getIntArray(KEY_SOLVABLEBOARD);
             board = savedInstanceState.getIntArray(KEY_BOARD);
@@ -161,9 +123,21 @@ public class MainActivity extends AppCompatActivity {
         //adapter for puzzle grid
         final ArrayAdapter adapter;
 
-        adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable);
-        gridView.setAdapter(adapter);
+        adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
 
+                if (board[position]==0 && solvable_board[position]!=0)
+                {
+                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                }
+                return view;
+            }
+        };
+
+
+        gridView.setAdapter(adapter);
         //adapter for menu
         final ArrayAdapter menu_adapter;
         menu_adapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListKeyboard);
@@ -186,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -195,17 +168,13 @@ public class MainActivity extends AppCompatActivity {
                 if (board[position] == 0) {
                     //stores position of green clicked cells
                     board_cell_clicked_position = position;
-
                     board_tracker[board_cell_clicked_position] = position;
-
                     grid_cell_clicked = true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
-                    TextView v = (TextView) view;
-                    v.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
 
                 } else {
                     final int current_position = position;
-                    
                     Toast.makeText(getApplicationContext(), "Tap again for a hint!", Toast.LENGTH_SHORT).show();
                     if (LC_enabled == 1) {
                         //IF listening comprehension mode IS ENABLED, execute TEXT TO SPEECH when we TAP a pre-filled cell (with a number) for the FIRST TIME.
@@ -242,9 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     menu_cell_clicked_position = position;
                     received_text = (String) menu_adapter.getItem(position);
                     wordListSudokuTable[board_cell_clicked_position] = received_text;
-
                     adapter.notifyDataSetChanged();
-
                     //array stores all user word inputs in the form of numbers
                     solvable_board[board_cell_clicked_position] = menu_cell_clicked_position + 1;
 
@@ -263,9 +230,6 @@ public class MainActivity extends AppCompatActivity {
                 board_checker checkBoard_object = new board_checker(solvable_board);
                 boolean isCorrect;
                 isCorrect = checkBoard_object.checker();
-                //int first_cell_of_board=checkBoard_object.getSolvedBoard();
-                //String cell=String.valueOf(first_cell_of_board);
-                //Toast.makeText(MainActivity.this, cell, Toast.LENGTH_SHORT).show();
 
                 if (isCorrect == true) {
                     Toast.makeText(MainActivity.this,
@@ -276,9 +240,6 @@ public class MainActivity extends AppCompatActivity {
                             R.string.boardFalse,
                             Toast.LENGTH_SHORT).show();
                 }
-
-                //String solvable_board_toast= String.valueOf(solvable_board);
-                //Toast.makeText(getApplicationContext(), solvable_board_toast, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -299,6 +260,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void set_listening_comprehension()
+    {
+        //listening comprehension
+        Intent mode = getIntent();
+        langMode = mode.getIntExtra("language", 0);
+        LC_enabled = mode.getIntExtra("modeLC", 0);
+        //int load_or_keep=mode.getIntExtra("mode_load_old",100);
+
+        setWordList(langMode, LC_enabled);
+
+        // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
+        tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i != TextToSpeech.ERROR) {
+                    tFR.setLanguage(Locale.CANADA_FRENCH);
+                }
+            }
+        });
+    }
     // SET-UP GRIDS based on the Language Mode selected as well as Listening Comprehension mode (enabled or disabled)
     private void setWordList(int caseNumber, int LC_enabled) {
         // CASE NUMBER =1 --> LANGUAGE MODE = ENGLISH TO FRENCH
@@ -334,6 +315,31 @@ public class MainActivity extends AppCompatActivity {
         Intent goSelect = new Intent(this, SelectLanguageMode.class);
         startActivity(goSelect);
     }
+
+    public void set_default_or_loaded()
+    {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        load_mode_choose = pref.getInt("load_mode_chose", 0);
+
+
+        if (load_mode_choose == 100) {
+
+            data_object.setMenu_list_English(mMenu_list_English);
+            data_object.setMenu_list_French(mMenu_list_French);
+        }
+
+        if (load_mode_choose == 200) {
+            //it can be recieved as an intent
+            int chapter_number = 1;
+            String recieved_string=null;
+            recieved_string = pref.getString("chapter " + chapter_number, "no");
+            //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
+            set_data_recived_from_file(recieved_string);
+        }
+    }
+
+
 
 
     public void set_data_recived_from_file(String data_string) {

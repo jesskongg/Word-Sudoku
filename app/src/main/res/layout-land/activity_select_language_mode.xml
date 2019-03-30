@@ -10,13 +10,11 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
+        android:layout_width="496dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="118dp"
         android:layout_marginBottom="8dp"
         android:gravity="center_horizontal"
         android:text="@string/select_lang"
@@ -25,91 +23,75 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline18"
-        app:layout_constraintEnd_toStartOf="@+id/guideline23"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.703" />
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="0dp"
+        android:layout_width="496dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginBottom="6dp"
         android:gravity="center_horizontal"
         android:text="@string/how_to"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#ffffff"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline19"
-        app:layout_constraintEnd_toStartOf="@+id/guideline23"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@+id/eng_fr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
         android:id="@+id/eng_fr"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/round_buttons"
         android:text="@string/mode_1"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline20"
-        app:layout_constraintEnd_toStartOf="@+id/guideline43"
-        app:layout_constraintHorizontal_bias="0.215"
-        app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toTopOf="@+id/guideline19"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@+id/fr_eng"
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/fr_eng"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="58dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/round_buttons"
         android:text="@string/mode_2"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline40"
-        app:layout_constraintEnd_toStartOf="@+id/guideline43"
-        app:layout_constraintHorizontal_bias="0.215"
-        app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toTopOf="@+id/guideline20"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eng_fr" />
 
     <Switch
         android:id="@+id/enableLC"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="194dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginRight="33dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="193dp"
+        android:layout_marginBottom="60dp"
         android:switchPadding="15sp"
         android:switchTextAppearance="@style/TextAppearance.AppCompat.Display1"
         android:text="@string/enableLC"
@@ -119,30 +101,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline40"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginRight="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="309dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="38dp"
         android:gravity="center_horizontal"
         android:text="@string/how_to2_land"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#ffffff"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline40"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline43"
-        app:layout_constraintTop_toTopOf="@+id/guideline19"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/eng_fr"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="345dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="193dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="193dp"
+        android:entries="@array/gridSize"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/enableLC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fr_eng" />
 
 
     <android.support.constraint.Guideline
@@ -150,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_begin="358dp"
         app:layout_constraintGuide_percent="0.0" />
 
     <android.support.constraint.Guideline
@@ -166,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_begin="195dp"
         app:layout_constraintGuide_percent="0.45" />
 
     <android.support.constraint.Guideline
@@ -190,7 +181,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_begin="395dp"
         app:layout_constraintGuide_percent="1.0" />
 
     <android.support.constraint.Guideline
@@ -214,8 +205,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.50"/>
+        app:layout_constraintGuide_begin="391dp"
+        app:layout_constraintGuide_percent="0.50" />
+
 
 
 </android.support.constraint.ConstraintLayout>

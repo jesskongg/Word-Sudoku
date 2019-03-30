@@ -147,6 +147,7 @@
         android:layout_marginBottom="24dp"
         android:entries="@array/gridSize"
         android:textAlignment="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline44"
         app:layout_constraintEnd_toStartOf="@+id/guideline25"
         app:layout_constraintStart_toEndOf="@+id/guideline24"

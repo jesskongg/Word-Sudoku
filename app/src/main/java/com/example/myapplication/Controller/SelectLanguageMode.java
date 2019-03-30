@@ -39,7 +39,7 @@ public class SelectLanguageMode extends AppCompatActivity {
         selectGridSize = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gridSize, android.R.layout.simple_spinner_item);
         //layout for drop-down
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         selectGridSize.setAdapter(adapter);
         selectGridSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

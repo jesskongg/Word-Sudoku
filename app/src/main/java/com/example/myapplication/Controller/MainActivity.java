@@ -2,9 +2,12 @@ package com.example.myapplication.Controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +22,7 @@ import android.speech.tts.TextToSpeech;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
 import com.example.myapplication.Model.board_checker;
+import com.example.myapplication.SquareGrid;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     int load_mode_choose;
 
 
+
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -88,8 +93,19 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
         savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
         savedInstanceState.putIntArray(KEY_BOARD, board);
-
     }
+
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            setContentView(R.layout.activity_main);
+//        }
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            setContentView(R.layout.activity_main);
+//        }
+//    }
+
 
 
     @Override
@@ -120,22 +136,80 @@ public class MainActivity extends AppCompatActivity {
             board = savedInstanceState.getIntArray(KEY_BOARD);
         }
 
+
         //adapter for puzzle grid
         final ArrayAdapter adapter;
+        final DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
 
         adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
+                View puzzleView = super.getView(position, convertView, parent);
 
                 if (board[position]==0 && solvable_board[position]!=0)
                 {
-                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    puzzleView.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
-                return view;
+
+                int width = (displayMetrics.widthPixels);
+                int height = (displayMetrics.heightPixels);
+
+                int gridWidth = width/9;
+                int gridHeight = height/16;
+
+                int gridWidthLand = width/16;
+                int gridHeightLand = height/11;
+
+                if (width < height)
+                {
+                    puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
+                }
+                if (width > height)
+                {
+                    puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
+                }
+
+//                puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidth, gridHeight));
+
+                return puzzleView;
             }
+
+
+
         };
 
+        //adapter for puzzle menu grid
+        final ArrayAdapter menuAdapter;
+        final DisplayMetrics menuDisplayMetrics = this.getResources().getDisplayMetrics();
+
+        menuAdapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListSudokuTable) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View menuView = super.getView(position, convertView, parent);
+
+                int width = (displayMetrics.widthPixels);
+                int height = (displayMetrics.heightPixels);
+
+                int menuWidth = width/9;
+                int menuHeight = height/16;
+
+                int menuWidthLand = width/16;
+                int menuHeightLand = height/11;
+
+                if (width < height)
+                {
+                    menuView.setLayoutParams(new GridView.LayoutParams(menuWidth,menuHeight));
+                }
+                if (width > height)
+                {
+                    menuView.setLayoutParams(new GridView.LayoutParams(menuWidthLand, menuHeightLand));
+                }
+
+                menuView.setLayoutParams(new GridView.LayoutParams(menuWidth,menuHeight));
+
+                return menuView;
+            }
+        };
 
         gridView.setAdapter(adapter);
         //adapter for menu

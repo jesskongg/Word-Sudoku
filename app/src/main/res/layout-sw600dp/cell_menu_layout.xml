@@ -4,16 +4,9 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_cell"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginBottom="0dp"
-    android:layout_marginStart="0dp"
-    android:layout_marginEnd="0dp"
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/grid_menu_shape"
-    android:textSize="25sp"
     android:textColor="#FFFFFF"
     android:gravity="center"
-
-    />
+    android:textSize="22sp"/>

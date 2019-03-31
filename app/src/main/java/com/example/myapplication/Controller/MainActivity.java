@@ -153,63 +153,57 @@ public class MainActivity extends AppCompatActivity {
 
 
         //adapter for puzzle grid
-        final ArrayAdapter adapter;
-        final DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        final ArrayAdapter<String> adapter;
 
         final DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
+        adapter = new ArrayAdapter<String>(this, R.layout.cell_layout, wordListSudokuTable){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View puzzleView = super.getView(position, convertView, parent);
+                View view = super.getView(position, convertView, parent);
 
                 if (board[position]==0 && solvable_board[position]!=0)
                 {
-                    puzzleView.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
 
                 int width = (displayMetrics.widthPixels);
                 int height = (displayMetrics.heightPixels);
 
                 //variables for portrait mode cell dimensions
-                int gridWidth = width/9;
-                int gridHeight = height/16;
+                int gridWidth = width/gridLength;
+                int gridHeight = gridWidth-18;
 
                 //variables for landscape mode cell dimensions
-                int gridWidthLand = width/16;
-                int gridHeightLand = height/11;
+                int gridHeightLand = height/(gridLength+(gridLength/9));
+                int gridWidthLand = gridHeightLand-18;
+
 
                 //check if display is in PORTRAIT orientation
                 if (width < height)
                 {
-                    puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
+                    view.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
                 }
 
                 //check if display is in LANDSCAPE orientation
                 if (width > height)
                 {
-                    puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
+                    view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
                 }
 
 //                puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidth, gridHeight));
 
-                return puzzleView;
+                return view;
             }
 
 
 
         };
 
-        //adapter for puzzle menu grid
-        final ArrayAdapter menuAdapter;
-        final DisplayMetrics menuDisplayMetrics = this.getResources().getDisplayMetrics();
-
-
-
         gridView.setAdapter(adapter);
-        //adapter for menu
-        final ArrayAdapter menu_adapter;
-        menu_adapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListKeyboard)
-        {
+
+        //adapter for menu grid
+        final ArrayAdapter<String> menu_adapter;
+        menu_adapter = new ArrayAdapter<String>(this, R.layout.cell_menu_layout, wordListKeyboard) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View menuView = super.getView(position, convertView, parent);
@@ -218,12 +212,12 @@ public class MainActivity extends AppCompatActivity {
                 int height = (displayMetrics.heightPixels);
 
                 //variables for portrait mode cell dimensions
-                int menuWidth = width/3;
+                int menuWidth = width/4;
                 int menuHeight = height/16;
 
                 //variables for landscape mode cell dimensions
-                int menuWidthLand = width/16;
-                int menuHeightLand = height/3;
+                int menuWidthLand = width/9;
+                int menuHeightLand = height/6;
 
                 //check if display is in PORTRAIT orientation
                 if (width < height)

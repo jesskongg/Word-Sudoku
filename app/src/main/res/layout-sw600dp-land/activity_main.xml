@@ -45,12 +45,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
 
-        android:gravity="center"
         android:horizontalSpacing="0dip"
+        android:verticalSpacing="10dip"
+        android:gravity="center"
         android:numColumns="3"
-        android:verticalSpacing="0dip"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/checkBoard"
         app:layout_constraintLeft_toRightOf="@id/guideline26"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -75,7 +75,7 @@
         android:textSize="20sp"
 
         app:layout_constraintTop_toBottomOf="@id/guideline28"
-        app:layout_constraintBottom_toTopOf="@id/guideline29"
+        app:layout_constraintBottom_toBottomOf="@id/grid"
         app:layout_constraintLeft_toRightOf="@id/guideline26"
         app:layout_constraintRight_toLeftOf="@id/back_select" />
 
@@ -99,7 +99,7 @@
         android:scaleType="fitCenter"
 
         app:layout_constraintTop_toBottomOf="@id/guideline28"
-        app:layout_constraintBottom_toTopOf="@id/guideline29"
+        app:layout_constraintBottom_toBottomOf="@id/grid"
         app:layout_constraintLeft_toRightOf="@id/checkBoard"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
@@ -116,13 +116,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.99" />
 
 </android.support.constraint.ConstraintLayout>

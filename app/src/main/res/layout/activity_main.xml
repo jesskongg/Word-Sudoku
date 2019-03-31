@@ -8,7 +8,7 @@
     tools:context=".Controller.MainActivity">
 
     <!-- Sudoku Grid -->
-    <GridView
+    <com.example.myapplication.SquareGrid
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,14 +32,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-    </GridView>
+    </com.example.myapplication.SquareGrid>
 
 
     <!-- Grid view for menu-->
-    <GridView
+    <com.example.myapplication.SquareGrid
         android:id="@+id/grid_menu"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
@@ -50,8 +50,9 @@
 
         android:gravity="center"
         android:horizontalSpacing="2dip"
-        android:numColumns="3"
         android:verticalSpacing="8dip"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
 
         app:layout_constraintBottom_toTopOf="@id/guideline63"
         app:layout_constraintHorizontal_bias="0.0"
@@ -60,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/grid"
         app:layout_constraintVertical_bias="0.0">
 
-    </GridView>
+    </com.example.myapplication.SquareGrid>
 
     <Button
         android:id="@+id/checkBoard"

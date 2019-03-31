@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.myapplication.Controller.MainActivity;
@@ -16,17 +19,67 @@ public class SelectLanguageMode extends AppCompatActivity {
     private Button enFrButton;
     private Button frEnButton;
     private Switch enableLCswitch;
+    private Spinner selectGridSize;
    // private int mode_load_default;
 
     //String[] loaded_data;
-
-
-
+    //variable set up
     int LC_enabled = 0;
+    //variables for grid size selection
+    int gridLength = 9;
+    int subgridLength = 3;
+    int subgridWidth = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_language_mode);
+
+        //drop-down menu for selection of GRID SIZE
+        selectGridSize = findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.gridSize, android.R.layout.simple_spinner_item);
+        //layout for drop-down
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        selectGridSize.setAdapter(adapter);
+        selectGridSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 0:
+                        //when first item (9x9 grid) from drop-down menu selected
+                        gridLength = 9;
+                        subgridLength = 3;
+                        subgridWidth = 3;
+                        break;
+                    case 1:
+                        //when second item (4x4 grid) from drop-down menu selected
+                        gridLength = 4;
+                        subgridLength = 2;
+                        subgridWidth = 2;
+                        break;
+                    case 2:
+                        //when third item (6x6 grid) from drop-down menu selected
+                        gridLength = 6;
+                        subgridLength = 2;
+                        subgridWidth = 3;
+                        break;
+                    case 3:
+                        //when fourth item (12x12 grid) from drop-down menu selected
+                        gridLength = 12;
+                        subgridLength = 3;
+                        subgridWidth = 4;
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //set to default (9x9 grid)
+
+
+            }
+        });
 
 
         //switch used to enable listening comprehension mode

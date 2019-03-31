@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.Collections;
+
 public class boards_and_menu_data {
     private String[] mMenu_list_English;//={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
     private String[] mSudoku_grid_French;
@@ -53,7 +55,7 @@ public class boards_and_menu_data {
 
 
 
-    public boards_and_menu_data(int number_of_columns){
+    public boards_and_menu_data(int number_of_columns, int sublen, int subwid){
 
         this.number_of_columns=number_of_columns;
 
@@ -69,16 +71,16 @@ public class boards_and_menu_data {
         mSudoku_grid_French = new String[number_of_columns*number_of_columns];
         mSudoku_grid_LCmode = new String[number_of_columns*number_of_columns];
 
-        //random_sudoku_generator generator = new random_sudoku_generator();
-        //int[] rand_board = new int[81];
+        random_sudoku_generator generator = new random_sudoku_generator();
+        int[] rand_board = new int[number_of_columns];
         number_board = new int[number_of_columns*number_of_columns];
         solvable_board = new int[number_of_columns*number_of_columns];
 
-        //rand_board = generator.generate();
-        //for(int i = 0; i < 81; i++){
-        //    number_board[i] = rand_board[i];
-         //   solvable_board[i] = rand_board[i];
-        //}
+        rand_board = generator.generate(number_of_columns, sublen, subwid);
+        for(int i = 0; i < number_of_columns*number_of_columns; i++){
+            number_board[i] = rand_board[i];
+            solvable_board[i] = rand_board[i];
+        }
 //        number_board= new int[]{0, 9, 2, 0, 0, 0, 0, 0, 4,
 //                5, 0, 0, 0, 0, 1, 0, 3, 0,
 //                0, 0, 7, 8, 4, 6, 0, 0, 0,
@@ -102,49 +104,49 @@ public class boards_and_menu_data {
 
         //DUMB, TEMPORARLY, CODE SHOULD BE CHANGED WITH RANDOM SUDOKU GENERATOR
 
-        int[] example_number_board= new int[]{0, 2, 2, 0, 0, 0, 0, 0, 4,
-                2, 0, 0, 0, 0, 1, 0, 3, 0,
-                0, 0, 2, 2, 2, 2, 0, 0, 0,
-                0, 0, 2, 0, 0, 0, 0, 1, 2,
-                1, 2, 3, 2, 0, 0, 0, 2, 0,
-                9, 7, 0, 0, 8, 3, 6, 0, 2,
-                0, 3, 0, 6, 9, 4, 5, 7, 1,
-                4, 6, 0, 0, 0, 2, 9, 8, 0,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                11, 11, 7, 7, 7, 0, 0, 9, 11};
+//        int[] example_number_board= new int[]{0, 2, 2, 0, 0, 0, 0, 0, 4,
+//                2, 0, 0, 0, 0, 1, 0, 3, 0,
+//                0, 0, 2, 2, 2, 2, 0, 0, 0,
+//                0, 0, 2, 0, 0, 0, 0, 1, 2,
+//                1, 2, 3, 2, 0, 0, 0, 2, 0,
+//                9, 7, 0, 0, 8, 3, 6, 0, 2,
+//                0, 3, 0, 6, 9, 4, 5, 7, 1,
+//                4, 6, 0, 0, 0, 2, 9, 8, 0,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                11, 11, 7, 7, 7, 0, 0, 9, 11};
+//
+//        int[] example_solvable_board=new int[]{0, 2, 2, 0, 0, 0, 0, 0, 4,
+//                2, 0, 0, 0, 0, 1, 0, 3, 0,
+//                0, 0, 2, 2, 2, 2, 0, 0, 0,
+//                0, 0, 2, 0, 0, 0, 0, 1, 2,
+//                1, 2, 3, 2, 0, 0, 0, 2, 0,
+//                9, 7, 0, 0, 8, 3, 6, 0, 2,
+//                0, 3, 0, 6, 9, 4, 5, 7, 1,
+//                4, 6, 0, 0, 0, 2, 9, 8, 0,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                7, 5, 9, 3, 1, 0, 0, 2, 6,
+//                11, 11, 7, 7, 7, 0, 0, 9, 11};
 
-        int[] example_solvable_board=new int[]{0, 2, 2, 0, 0, 0, 0, 0, 4,
-                2, 0, 0, 0, 0, 1, 0, 3, 0,
-                0, 0, 2, 2, 2, 2, 0, 0, 0,
-                0, 0, 2, 0, 0, 0, 0, 1, 2,
-                1, 2, 3, 2, 0, 0, 0, 2, 0,
-                9, 7, 0, 0, 8, 3, 6, 0, 2,
-                0, 3, 0, 6, 9, 4, 5, 7, 1,
-                4, 6, 0, 0, 0, 2, 9, 8, 0,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                7, 5, 9, 3, 1, 0, 0, 2, 6,
-                11, 11, 7, 7, 7, 0, 0, 9, 11};
 
 
-
-        for (int i=0; i<number_of_columns*number_of_columns; i++){
-
-            number_board[i]=example_number_board[i];
-            solvable_board[i]=example_solvable_board[i];
-
-        }
+//        for (int i=0; i<number_of_columns*number_of_columns; i++){
+//
+//            number_board[i]=example_number_board[i];
+//            solvable_board[i]=example_solvable_board[i];
+//
+//        }
 
 
     }

@@ -1,9 +1,11 @@
 package com.example.myapplication.Controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
     //number board variables
 
-    public int board[] = new int[81];
-    private int solvable_board[] = new int[81];
-    private int board_tracker[] = new int[81];
+    public int board[];
+    private int solvable_board[];
+    private int board_tracker[];
 
     private String wordListKeyboard[];
     private String wordListSudokuTable[];
@@ -72,12 +74,19 @@ public class MainActivity extends AppCompatActivity {
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
 
-    private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
-    private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue"};
+    private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig", "en1", "en2","en3"};
+    private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue", "fr1","fr2","fr3"};
 
-    private boards_and_menu_data data_object = new boards_and_menu_data();
+    //private boards_and_menu_data data_object = new boards_and_menu_data();
 
     int load_mode_choose;
+
+    public static final String MyPREFERENCES = "Sudoku_pref" ;
+    public static final String Length = "gridLength";
+    public static final String SubgridLength = "suggridLength";
+    public static final String SubgridWidth = "subgridWidth";
+    SharedPreferences sharedpreferences_for_grid_var;
+
 
 
     @Override
@@ -98,15 +107,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i(TAG, "entered onCreate");
 
+        sharedpreferences_for_grid_var = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor_grid_var = sharedpreferences_for_grid_var.edit();
+        final int gridLength=sharedpreferences_for_grid_var.getInt(Length, 100);
+
+        boards_and_menu_data data_object = new boards_and_menu_data(gridLength);
+
         //RECEIVE DATA FROM A FILE OR LOAD DEFAULT BOARD
-        set_default_or_loaded();
+        set_default_or_loaded(data_object);
         board = data_object.getNumber_board();
         solvable_board = data_object.getSolvable_board();
 
-        set_listening_comprehension();
+        set_listening_comprehension(data_object);
 
         //grid puzzle
         gridView = (GridView) findViewById(R.id.grid);
+        gridView.setNumColumns(gridLength);
         textView = (TextView) findViewById(R.id.textView);
 
         //menu grid
@@ -123,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         //adapter for puzzle grid
         final ArrayAdapter adapter;
 
+        final DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -132,6 +149,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
+
+                int width = (displayMetrics.widthPixels)/gridLength;
+
+                //hieght is a bit less than width to allow for space for menu and buttons
+                int height=width-18;
+                //=(displayMetrics.heightPixels)/(columns_number*2-4);
+                view.setLayoutParams(new GridView.LayoutParams(width, height));
                 return view;
             }
         };
@@ -260,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void set_listening_comprehension()
+    public void set_listening_comprehension(boards_and_menu_data sudoku_object)
     {
         //listening comprehension
         Intent mode = getIntent();
@@ -268,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
         LC_enabled = mode.getIntExtra("modeLC", 0);
         //int load_or_keep=mode.getIntExtra("mode_load_old",100);
 
-        setWordList(langMode, LC_enabled);
+        setWordList(langMode, LC_enabled, sudoku_object);
 
         // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
         tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -281,31 +305,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     // SET-UP GRIDS based on the Language Mode selected as well as Listening Comprehension mode (enabled or disabled)
-    private void setWordList(int caseNumber, int LC_enabled) {
+    private void setWordList(int caseNumber, int LC_enabled, boards_and_menu_data sudoku_object) {
         // CASE NUMBER =1 --> LANGUAGE MODE = ENGLISH TO FRENCH
         if (caseNumber == 1) {
             if (LC_enabled == 0) { //L.C. mode OFF
-                wordListSudokuTable = data_object.generate_get_grid_English();
-                wordListKeyboard = data_object.getMenu_list_French();
-                hint_for_board = data_object.getMenu_list_French();
+                wordListSudokuTable = sudoku_object.generate_get_grid_English();
+                wordListKeyboard = sudoku_object.getMenu_list_French();
+                hint_for_board = sudoku_object.getMenu_list_French();
             } else { //L.C. MODE ON -- GRID WITH NUMBERS
-                wordListSudokuTable = data_object.generate_LCmodeGrid();
-                wordListKeyboard = data_object.getMenu_list_French();
-                hint_for_board = data_object.getMenu_list_French();
-                listFrenchWords = data_object.getMenu_list_French();
+                wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
+                wordListKeyboard = sudoku_object.getMenu_list_French();
+                hint_for_board = sudoku_object.getMenu_list_French();
+                listFrenchWords = sudoku_object.getMenu_list_French();
             }
         }
         // CASE NUMBER =2 --> LANGUAGE MODE = FRENCH TO ENGLISH
         else {
             if (LC_enabled == 0) { //L.C. mode OFF
-                wordListSudokuTable = data_object.generate_get_grid_French();
-                wordListKeyboard = data_object.getMenu_list_English();
-                hint_for_board = data_object.getMenu_list_English();
+                wordListSudokuTable = sudoku_object.generate_get_grid_French();
+                wordListKeyboard = sudoku_object.getMenu_list_English();
+                hint_for_board = sudoku_object.getMenu_list_English();
             } else {//L.C. MODE ON -- GRID WITH NUMBERS
-                wordListSudokuTable = data_object.generate_LCmodeGrid();
-                wordListKeyboard = data_object.getMenu_list_English();
-                hint_for_board = data_object.getMenu_list_English();
-                listFrenchWords = data_object.getMenu_list_French();
+                wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
+                wordListKeyboard = sudoku_object.getMenu_list_English();
+                hint_for_board = sudoku_object.getMenu_list_English();
+                listFrenchWords = sudoku_object.getMenu_list_French();
             }
 
         }
@@ -316,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goSelect);
     }
 
-    public void set_default_or_loaded()
+    public void set_default_or_loaded(boards_and_menu_data sudoku_object)
     {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
@@ -325,24 +349,31 @@ public class MainActivity extends AppCompatActivity {
 
         if (load_mode_choose == 100) {
 
-            data_object.setMenu_list_English(mMenu_list_English);
-            data_object.setMenu_list_French(mMenu_list_French);
+            String[] mMenu_list_English_cut=new String[sudoku_object.getNumber_of_columns()];
+            mMenu_list_English_cut=Arrays.copyOfRange(mMenu_list_English, 0, sudoku_object.getNumber_of_columns());
+
+            String[] mMenu_list_French_cut= new String[sudoku_object.getNumber_of_columns()];
+            mMenu_list_French_cut=Arrays.copyOfRange(mMenu_list_French, 0, sudoku_object.getNumber_of_columns() );
+
+            sudoku_object.setMenu_list_English(mMenu_list_English_cut);
+            sudoku_object.setMenu_list_French(mMenu_list_French_cut);
         }
 
         if (load_mode_choose == 200) {
+            //it can be recieved as an intent
             //it can be recieved as an intent
             int chapter_number = 1;
             String recieved_string=null;
             recieved_string = pref.getString("chapter " + chapter_number, "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
-            set_data_recived_from_file(recieved_string);
+            set_data_recived_from_file(recieved_string, sudoku_object);
         }
     }
 
 
 
 
-    public void set_data_recived_from_file(String data_string) {
+    public void set_data_recived_from_file(String data_string, boards_and_menu_data sudoku_object) {
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
@@ -396,13 +427,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //now take the first 9 elements of arrays
-        String[] english_data_clean=new String[9];
-        String[] french_data_clean=new String[9];
-        english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
-        french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
+        //now take the first 9 elements of arrays
+        String[] english_data_clean=new String[sudoku_object.getNumber_of_columns()];
+        String[] french_data_clean=new String[sudoku_object.getNumber_of_columns()];
+        english_data_clean=Arrays.copyOfRange(converted_english, 0, sudoku_object.getNumber_of_columns());
+        french_data_clean=Arrays.copyOfRange(converted_french, 0, sudoku_object.getNumber_of_columns());
 
         //now paste clean arrays of size 9 into the menu
-        data_object.setMenu_list_French(english_data_clean);
-        data_object.setMenu_list_English(french_data_clean);
+        sudoku_object.setMenu_list_French(english_data_clean);
+        sudoku_object.setMenu_list_English(french_data_clean);
     }
 }

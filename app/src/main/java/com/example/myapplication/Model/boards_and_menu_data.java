@@ -1,9 +1,12 @@
 package com.example.myapplication.Model;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.myapplication.Controller.MainActivity;
+
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class boards_and_menu_data {
@@ -223,17 +226,12 @@ public class boards_and_menu_data {
         return  number_of_columns;
     }
 
+    public void set_data_recived_from_file(String data_string, int size_of_each_array, Context context) {
 
-
-
-    //size of each array is a variable which is  line counter
-    //number of lines inside a file
-    public void set_data_recieved_from_file(String data_string, int size_of_each_array) {
-
-        //SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        //SharedPreferences.Editor editor = pref.edit();
-
-        //int size_of_each_array=pref.getInt("line_counter",0);
+//        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+//        SharedPreferences.Editor editor = pref.edit();
+//
+//        int size_of_each_array=pref.getInt("line_counter",0);
         //int size_of_each_array=16;
 
         String[] array = data_string.split(",");
@@ -267,8 +265,8 @@ public class boards_and_menu_data {
         List<String> french_list=Arrays.asList(french_long_array);
 
         //shuffle lists
-        Collections.shuffle(english_list);
-        Collections.shuffle(french_list);
+//        Collections.shuffle(english_list);
+//        Collections.shuffle(french_list);
 
         //convert arrays back to lists
         String[] converted_english=new String[size_of_each_array];
@@ -281,23 +279,29 @@ public class boards_and_menu_data {
             converted_french[i]=french_list.get(i);
         }
 
+        String[] english_data_clean=new String[getNumber_of_columns()];
+        String[] french_data_clean=new String[getNumber_of_columns()];
+
+        //for tracking words which are difficult to recognize
+        //choosing words according to hint times.
+
+        Userdata data = new Userdata();
+        HashMap<String, Integer> map = data.getHashMap(context);
+        ChooseWords chooseWords = new ChooseWords();
+        french_data_clean = chooseWords.chooseFrench(getNumber_of_columns(), map, converted_french);
+        english_data_clean = chooseWords.chooseEnglish(getNumber_of_columns(), french_data_clean, converted_english, converted_french);
+
         //now take the first 9 elements of arrays
-        //now take the first 9 elements of arrays
-        String[] english_data_clean=new String[number_of_columns];
-        String[] french_data_clean=new String[number_of_columns];
-        english_data_clean=Arrays.copyOfRange(converted_english, 0, number_of_columns);
-        french_data_clean=Arrays.copyOfRange(converted_french, 0, number_of_columns);
+
+//        english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
+//        french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
+
 
         //now paste clean arrays of size 9 into the menu
-        setMenu_list_French(english_data_clean);
-        setMenu_list_English(french_data_clean);
-
-
-
+        setMenu_list_French(french_data_clean);
+        setMenu_list_English(english_data_clean);
     }
-
-
-
-
 }
+
+
 

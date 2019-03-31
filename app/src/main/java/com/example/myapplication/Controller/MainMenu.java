@@ -12,6 +12,7 @@ public class MainMenu extends AppCompatActivity {
 
     private Button startButton;
     private Button helpButton;
+    private Button newGameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

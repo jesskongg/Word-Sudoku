@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.R;
 
 import java.io.BufferedReader;
@@ -33,6 +34,7 @@ public class load_new_words extends AppCompatActivity {
     private static final int PICKFILE_RESULT_CODE = 1;
 
     private Button oldButton;
+    private Button continueButton;
     private Button loadButton;
 
     private boolean defaultPermission=false;
@@ -61,12 +63,24 @@ public class load_new_words extends AppCompatActivity {
             }
         });
 
+        continueButton = (Button) findViewById(R.id.continue_button);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainActivity();
+            }
+        });
+
         loadButton=(Button) findViewById(R.id.load_button);
         loadButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //ask for permission to access external files
                 defaultPermission=isStoragePermissionGranted();
+
+                Userdata data = new Userdata();
+                data.deleteHashMap(load_new_words.this);
+
                 if (defaultPermission==true || grantedPermission==true )
                 {
                     Toast.makeText(load_new_words.this, "Permission is given", Toast.LENGTH_SHORT).show();
@@ -96,8 +110,8 @@ public class load_new_words extends AppCompatActivity {
             Toast.makeText(load_new_words.this, "Permission is denied.File cannot be loaded", Toast.LENGTH_SHORT).show();
         }
 
-    }
 
+    }
 
     public void openSelectLanguageMode() {
         //THIS SHOULD BE CHANGE TO LOAD_NEW_WORDS FILE
@@ -105,10 +119,16 @@ public class load_new_words extends AppCompatActivity {
         startActivity(goLanguage);
     }
 
+    public void openMainActivity() {
+        Intent goMainActivity = new Intent(this, MainActivity.class);
+        goMainActivity.putExtra("newGame", 0);
+        startActivity(goMainActivity);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
         switch(requestCode){
             case PICKFILE_RESULT_CODE:
                 if(resultCode==RESULT_OK){

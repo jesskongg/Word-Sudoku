@@ -1,6 +1,8 @@
 package com.example.myapplication.Controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,10 +32,22 @@ public class SelectLanguageMode extends AppCompatActivity {
     int subgridLength = 3;
     int subgridWidth = 3;
 
+    public static final String MyPREFERENCES = "Sudoku_pref" ;
+    public static final String Length = "gridLength";
+    public static final String SubgridLength = "suggridLength";
+    public static final String SubgridWidth = "subgridWidth";
+    SharedPreferences sharedpreferences_for_grid_var;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_language_mode);
+
+        //to send sudoku grid size variables into main activity
+        sharedpreferences_for_grid_var = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor_grid_var = sharedpreferences_for_grid_var.edit();
 
         //drop-down menu for selection of GRID SIZE
         selectGridSize = findViewById(R.id.spinner);
@@ -46,28 +60,61 @@ public class SelectLanguageMode extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){
                     case 0:
-                        //when first item (9x9 grid) from drop-down menu selected
                         gridLength = 9;
+                        editor_grid_var.putInt(Length, gridLength);
+
+
                         subgridLength = 3;
+                        editor_grid_var.putInt(SubgridLength, subgridLength);
+
                         subgridWidth = 3;
+                        editor_grid_var.putInt(SubgridWidth,subgridWidth);
+
+                        editor_grid_var.commit();
                         break;
+
                     case 1:
                         //when second item (4x4 grid) from drop-down menu selected
                         gridLength = 4;
+                        editor_grid_var.putInt(Length, gridLength);
+                        editor_grid_var.commit();
+
                         subgridLength = 2;
+                        editor_grid_var.putInt(SubgridLength, subgridLength);
+
                         subgridWidth = 2;
+                        editor_grid_var.putInt(SubgridWidth,subgridWidth);
+
+                        editor_grid_var.commit();
                         break;
                     case 2:
                         //when third item (6x6 grid) from drop-down menu selected
                         gridLength = 6;
+                        editor_grid_var.putInt(Length, gridLength);
+                        editor_grid_var.commit();
+
                         subgridLength = 2;
+                        editor_grid_var.putInt(SubgridLength, subgridLength);
+                        editor_grid_var.commit();
+
                         subgridWidth = 3;
+                        editor_grid_var.putInt(SubgridWidth,subgridWidth);
+                        editor_grid_var.commit();
                         break;
                     case 3:
                         //when fourth item (12x12 grid) from drop-down menu selected
                         gridLength = 12;
+                        editor_grid_var.putInt(Length, gridLength);
+                        editor_grid_var.commit();
+
                         subgridLength = 3;
+                        editor_grid_var.putInt(SubgridLength, subgridLength);
+                        editor_grid_var.commit();
+
+
                         subgridWidth = 4;
+                        editor_grid_var.putInt(SubgridWidth,subgridWidth);
+                        editor_grid_var.commit();
                         break;
 
                 }

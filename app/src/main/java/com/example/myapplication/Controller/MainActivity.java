@@ -119,48 +119,26 @@ public class MainActivity extends AppCompatActivity {
 
         boards_and_menu_data data_object = new boards_and_menu_data(gridLength);
 
-        Intent mode = getIntent();
-        final int langMode = mode.getIntExtra("language", 0);
-        final int LC_enabled = mode.getIntExtra("modeLC", 0);
-        //int load_or_keep=mode.getIntExtra("mode_load_old",100);
-
         //RECEIVE DATA FROM A FILE OR LOAD DEFAULT BOARD
         set_default_or_loaded(data_object);
-
-        //if newGameFlag == 1, start a new game.
-        int newGameFlag = mode.getIntExtra("newGame", 1);
-        if(newGameFlag == 0) {
-            Userdata data = new Userdata();
-            try {
-                //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
-                board = data.getNumber_board(MainActivity.this);
-                solvable_board = data.getSolvable_board(MainActivity.this);
-                wordListSudokuTable = data.getWordsTable(MainActivity.this);
-                wordListKeyboard = data.getKeyBoard(MainActivity.this);
-                hint_for_board = data.getKeyBoard(MainActivity.this);
-                listFrenchWords = data.getListFrenchWords(MainActivity.this);
-//                data_object.setNumber_board(data.getNumber_board(MainActivity.this));
-//                data_object.setSolvable_board(data.getSolvable_board(MainActivity.this));
-//                data_object.setMenu_list_English(data.getEnglish(MainActivity.this));
-//                data_object.setMenu_list_French(data.getFrench(MainActivity.this));
-//                langMode = data.getLangMode(MainActivity.this);
-//                LC_enabled = data.getLC(MainActivity.this);
-            } catch (SQLiteException ex) {
-                //same as new game
-                board = data_object.getNumber_board();
-                solvable_board = data_object.getSolvable_board();
-                setWordList(langMode, LC_enabled);
-            }
-        }
-        else{
-            board = data_object.getNumber_board();
-            solvable_board = data_object.getSolvable_board();
-            setWordList(langMode, LC_enabled);
-        }
-
-
+        board = data_object.getNumber_board();
+        solvable_board = data_object.getSolvable_board();
 
         set_listening_comprehension(data_object);
+
+
+        //if newGameFlag == 1, start a new game.
+        Intent mode = getIntent();
+        int newGameFlag = mode.getIntExtra("newGame", 1);
+        if(newGameFlag == 0) {
+            try {
+                //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
+                //NOTICE: just recover variables in MainActivity. Variables in boards_and_menu_data are not changed.
+                continue_game(gridLength);
+            } catch (SQLiteException ex) {
+            }
+        }
+
 
         //grid puzzle
         gridView = (GridView) findViewById(R.id.grid);
@@ -234,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 if (board[position] == 0) {
                     //stores position of green clicked cells
                     board_cell_clicked_position = position;
-                    board_tracker[board_cell_clicked_position] = position;
+//                    board_tracker[board_cell_clicked_position] = position;
                     grid_cell_clicked = true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
@@ -256,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), hint_text, Toast.LENGTH_SHORT).show();
 
                             Userdata data = new Userdata();
-                            String frenchWord = data_object.getMenu_list_French()[board[current_position]-1];
+                            String frenchWord = listFrenchWords[board[current_position]-1];
                             data.record_hint_times(frenchWord, MainActivity.this);
 
                             //any subsequent clicks on a pre-filled cell (with #) will still pronounce word in French!
@@ -333,6 +311,15 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    public void continue_game(int gridLength){
+        Userdata data = new Userdata();
+        board = data.getNumber_board(gridLength, MainActivity.this);
+        solvable_board = data.getSolvable_board(gridLength, MainActivity.this);
+        wordListSudokuTable = data.getWordsTable(gridLength, MainActivity.this);
+        wordListKeyboard = data.getKeyBoard(gridLength, MainActivity.this);
+        hint_for_board = data.getKeyBoard(gridLength, MainActivity.this);
+        listFrenchWords = data.getListFrenchWords(gridLength, MainActivity.this);
+    }
 
     public void set_listening_comprehension(boards_and_menu_data sudoku_object)
     {
@@ -362,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListSudokuTable = sudoku_object.generate_get_grid_English();
                 wordListKeyboard = sudoku_object.getMenu_list_French();
                 hint_for_board = sudoku_object.getMenu_list_French();
+                listFrenchWords = sudoku_object.getMenu_list_French();
             } else { //L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
                 wordListKeyboard = sudoku_object.getMenu_list_French();
@@ -375,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListSudokuTable = sudoku_object.generate_get_grid_French();
                 wordListKeyboard = sudoku_object.getMenu_list_English();
                 hint_for_board = sudoku_object.getMenu_list_English();
+                listFrenchWords = sudoku_object.getMenu_list_French();
             } else {//L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
                 wordListKeyboard = sudoku_object.getMenu_list_English();
@@ -485,8 +474,8 @@ public class MainActivity extends AppCompatActivity {
         Userdata data = new Userdata();
         HashMap<String, Integer> map = data.getHashMap(MainActivity.this);
         ChooseWords chooseWords = new ChooseWords();
-        french_data_clean = chooseWords.chooseFrench(map, converted_french);
-        english_data_clean = chooseWords.chooseEnglish(french_data_clean, converted_english, converted_french);
+        french_data_clean = chooseWords.chooseFrench(sudoku_object.getNumber_of_columns(), map, converted_french);
+        english_data_clean = chooseWords.chooseEnglish(sudoku_object.getNumber_of_columns(), french_data_clean, converted_english, converted_french);
 
         //now take the first 9 elements of arrays
 
@@ -495,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //now paste clean arrays of size 9 into the menu
-        sudoku_object.setMenu_list_French(english_data_clean);
-        sudoku_object.setMenu_list_English(french_data_clean);
+        sudoku_object.setMenu_list_French(french_data_clean);
+        sudoku_object.setMenu_list_English(english_data_clean);
     }
 }

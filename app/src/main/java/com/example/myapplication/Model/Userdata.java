@@ -24,7 +24,7 @@ public class Userdata {
 
         db = new UserDataHelper(mContext).getWritableDatabase();
         db.delete("boardData", null, null);
-        for (int i = 0; i < 81; i++) {
+        for (int i = 0; i < number_board.length; i++) {
             ContentValues values1 = new ContentValues();
             String index = Integer.toString(i);
             String number = Integer.toString(number_board[i]);
@@ -40,7 +40,7 @@ public class Userdata {
 
         db.delete("wordsData", null, null);
         if (list_French_words == null) {
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < key_board.length; i++) {
                 ContentValues values2 = new ContentValues();
                 String index = Integer.toString(i);
                 values2.put("words_index", index);
@@ -50,7 +50,7 @@ public class Userdata {
             }
         }
         else {
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < key_board.length; i++) {
                 ContentValues values2 = new ContentValues();
                 String index = Integer.toString(i);
                 values2.put("words_index", index);
@@ -96,8 +96,9 @@ public class Userdata {
     }
 
 
-    public int[] getNumber_board(Context context){
-        int[] board = new int[81];
+    public int[] getNumber_board(int gridLength, Context context){
+        int capacity = gridLength * gridLength;
+        int[] board = new int[capacity];
 
         int i = 0;
         mContext = context.getApplicationContext();
@@ -116,22 +117,23 @@ public class Userdata {
             cursor.close();
         }
 
-        int number_of_0 = 0;
-        for(int j = 0; j < 81; j++){
-            if(board[j] == 0){
-                number_of_0++;
-            }
-        }
-
-        if(number_of_0 == 81){
-            throw new SQLiteException();
-        }
+//        int number_of_0 = 0;
+//        for(int j = 0; j < 81; j++){
+//            if(board[j] == 0){
+//                number_of_0++;
+//            }
+//        }
+//
+//        if(number_of_0 == 81){
+//            throw new SQLiteException();
+//        }
 
         return board;
     }
 
-    public int[] getSolvable_board(Context context){
-        int[] board = new int[81];
+    public int[] getSolvable_board(int gridLength, Context context){
+        int capacity = gridLength * gridLength;
+        int[] board = new int[capacity];
 
         int i = 0;
         mContext = context.getApplicationContext();
@@ -150,22 +152,23 @@ public class Userdata {
             cursor.close();
         }
 
-        int number_of_0 = 0;
-        for(int j = 0; j < 81; j++){
-            if(board[j] == 0){
-                number_of_0++;
-            }
-        }
-
-        if(number_of_0 == 81){
-            throw new SQLiteException();
-        }
+//        int number_of_0 = 0;
+//        for(int j = 0; j < 81; j++){
+//            if(board[j] == 0){
+//                number_of_0++;
+//            }
+//        }
+//
+//        if(number_of_0 == 81){
+//            throw new SQLiteException();
+//        }
 
         return board;
     }
 
-    public String[] getWordsTable(Context context){
-        String[] words_table = new String[81];
+    public String[] getWordsTable(int gridLength, Context context){
+        int capacity = gridLength * gridLength;
+        String[] words_table = new String[capacity];
 
         int i = 0;
         mContext = context.getApplicationContext();
@@ -197,8 +200,8 @@ public class Userdata {
         return words_table;
     }
 
-    public String[] getKeyBoard(Context context){
-        String[] key_words = new String[9];
+    public String[] getKeyBoard(int gridLength, Context context){
+        String[] key_words = new String[gridLength];
 
         int i = 0;
         mContext = context.getApplicationContext();
@@ -219,8 +222,8 @@ public class Userdata {
         return key_words;
     }
 
-    public String[] getListFrenchWords(Context context){
-        String[] French_words = new String[9];
+    public String[] getListFrenchWords(int gridLength, Context context){
+        String[] French_words = new String[gridLength];
 
         int i = 0;
         mContext = context.getApplicationContext();

@@ -165,8 +165,6 @@ public class SelectLanguageMode extends AppCompatActivity {
     }
 
     public void openMainActivity(int lang, int LC_enabled) {
-
-
         Intent goMainActivity = new Intent();
         goMainActivity.putExtra("language", lang);
         goMainActivity.putExtra("modeLC", LC_enabled);

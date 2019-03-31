@@ -3,6 +3,8 @@ package com.example.myapplication.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteException;
+import android.service.autofill.UserData;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -18,12 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
+import com.example.myapplication.Model.ChooseWords;
+import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
 import com.example.myapplication.Model.board_checker;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -120,6 +126,20 @@ public class MainActivity extends AppCompatActivity {
 
         set_listening_comprehension(data_object);
 
+
+        //if newGameFlag == 1, start a new game.
+        Intent mode = getIntent();
+        int newGameFlag = mode.getIntExtra("newGame", 1);
+        if(newGameFlag == 0) {
+            try {
+                //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
+                //NOTICE: just recover variables in MainActivity. Variables in boards_and_menu_data are not changed.
+                continue_game(gridLength);
+            } catch (SQLiteException ex) {
+            }
+        }
+
+
         //grid puzzle
         gridView = (GridView) findViewById(R.id.grid);
         gridView.setNumColumns(gridLength);
@@ -214,6 +234,11 @@ public class MainActivity extends AppCompatActivity {
                             //HINT feature -- toast with word from menu @ bottom which corresponds to selected cell
                             String hint_text = hint_for_board[board[current_position] - 1];
                             Toast.makeText(getApplicationContext(), hint_text, Toast.LENGTH_SHORT).show();
+
+                            Userdata data = new Userdata();
+                            String frenchWord = listFrenchWords[board[current_position]-1];
+                            data.record_hint_times(frenchWord, MainActivity.this);
+
                             //any subsequent clicks on a pre-filled cell (with #) will still pronounce word in French!
                             if (LC_enabled == 1) {
                                 //IF listening comprehension mode is enabled, execute TEXT TO SPEECH for all subsequent TAPS to pre-filled cells
@@ -240,6 +265,9 @@ public class MainActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     //array stores all user word inputs in the form of numbers
                     solvable_board[board_cell_clicked_position] = menu_cell_clicked_position + 1;
+
+                    Userdata data = new Userdata();
+                    data.saveData(board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
 
                 } else //board_cell_clicked_position=-100
                 {
@@ -285,6 +313,15 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    public void continue_game(int gridLength){
+        Userdata data = new Userdata();
+        board = data.getNumber_board(gridLength, MainActivity.this);
+        solvable_board = data.getSolvable_board(gridLength, MainActivity.this);
+        wordListSudokuTable = data.getWordsTable(gridLength, MainActivity.this);
+        wordListKeyboard = data.getKeyBoard(gridLength, MainActivity.this);
+        hint_for_board = data.getKeyBoard(gridLength, MainActivity.this);
+        listFrenchWords = data.getListFrenchWords(gridLength, MainActivity.this);
+    }
 
     public void set_listening_comprehension(boards_and_menu_data sudoku_object)
     {
@@ -314,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListSudokuTable = sudoku_object.generate_get_grid_English();
                 wordListKeyboard = sudoku_object.getMenu_list_French();
                 hint_for_board = sudoku_object.getMenu_list_French();
+                listFrenchWords = sudoku_object.getMenu_list_French();
             } else { //L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
                 wordListKeyboard = sudoku_object.getMenu_list_French();
@@ -327,6 +365,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListSudokuTable = sudoku_object.generate_get_grid_French();
                 wordListKeyboard = sudoku_object.getMenu_list_English();
                 hint_for_board = sudoku_object.getMenu_list_English();
+                listFrenchWords = sudoku_object.getMenu_list_French();
             } else {//L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
                 wordListKeyboard = sudoku_object.getMenu_list_English();
@@ -368,12 +407,14 @@ public class MainActivity extends AppCompatActivity {
             String recieved_string=null;
             recieved_string = pref.getString("chapter " + chapter_number, "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
-            //set_data_recived_from_file(recieved_string, sudoku_object);
 
-            //line_counter should be obtained from pref
             int line_counter=pref.getInt("line_counter",0);
-            sudoku_object.set_data_recieved_from_file(recieved_string, line_counter);
+            sudoku_object.set_data_recived_from_file(recieved_string, line_counter, MainActivity.this);
         }
     }
+
+
+
+
 
 }

@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
 
-    private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig", "en1", "en2","en3"};
-    private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue", "fr1","fr2","fr3"};
+    private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig", "egg", "black","white"};
+    private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue", "oeuf","noir","blanc"};
 
     //private boards_and_menu_data data_object = new boards_and_menu_data();
 

@@ -16,7 +16,7 @@ public class Userdata {
 
     }
 
-    public void saveData(int[] number_board, int[] solvable_board, String[] words_table, String[] key_board, String[] list_French_words, Context context) {
+    public void saveData(int length, int[] number_board, int[] solvable_board, String[] words_table, String[] key_board, String[] list_French_words, Context context) {
 //        if (board.length != 81) {
 //            throw new IllegalArgumentException();
 //        } else {
@@ -60,6 +60,11 @@ public class Userdata {
             }
         }
 
+        db.delete("boardSize", null, null);
+        ContentValues values = new ContentValues();
+        String sLength = Integer.toString(length);
+        values.put("length", sLength);
+        db.insert("boardSize", null, values);
 
         //Should I do it? I cant find it in textBook.
 //        db.close();
@@ -68,22 +73,22 @@ public class Userdata {
 //        }
     }
 
-    public void record_hint_times(String word, Context context){
+    public void record_hint_times(String word, Context context) {
         mContext = context.getApplicationContext();
         String times;
         int num;
 
         db = new UserDataHelper(mContext).getWritableDatabase();
         ContentValues values = new ContentValues();
-        Cursor cursor = db.query("hashMap", new String[]{"words", "times"}, "words=?", new String[] {word}, null, null, "words");
-        if(cursor.getCount()> 0) {
+        Cursor cursor = db.query("hashMap", new String[]{"words", "times"}, "words=?", new String[]{word}, null, null, "words");
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             times = cursor.getString(cursor.getColumnIndex("times"));
             num = Integer.valueOf(times).intValue();
             num = num + 1;
             times = Integer.toString(num);
             values.put("times", times);
-            db.update("hashMap", values, "words=?", new String[] {word});
+            db.update("hashMap", values, "words=?", new String[]{word});
         } else {
             num = 1;
             times = Integer.toString(num);
@@ -93,6 +98,46 @@ public class Userdata {
         }
         cursor.close();
 
+    }
+
+    public int[] getLenth(Context context){
+        int[] size = new int[3];
+
+        int i = 0;
+        mContext = context.getApplicationContext();
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        Cursor cursor = db.query("boardSize", new String[]{"length"}, null, null, null, null, "length");
+        String number;
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                number = cursor.getString(cursor.getColumnIndex("length"));
+                size[i] = Integer.valueOf(number).intValue();
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        if(size[0] == 4){
+            size[1] = 2;
+            size[2] = 2;
+        }
+        else if(size[0] == 6){
+            size[1] = 2;
+            size[2] = 3;
+        }
+        else if(size[0] == 9){
+            size[1] = 3;
+            size[2] = 3;
+        }
+        else if(size[0] == 12){
+            size[1] = 3;
+            size[2] = 4;
+        }
+
+        return size;
     }
 
 

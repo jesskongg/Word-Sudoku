@@ -15,6 +15,7 @@ public class UserDataHelper extends SQLiteOpenHelper {
         db.execSQL("create table boardData(board_index String primary key, number String, sNumber String, words String)");
         db.execSQL("create table wordsData(words_index String primary key, key_words String, French_words String)");
         db.execSQL("create table hashMap(words String primary key, times String)");
+        db.execSQL("create table boardSize(length String primary key)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

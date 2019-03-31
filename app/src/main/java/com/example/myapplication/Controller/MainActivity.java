@@ -151,11 +151,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 int width = (displayMetrics.widthPixels)/gridLength;
-
                 //hieght is a bit less than width to allow for space for menu and buttons
                 int height=width-18;
                 //=(displayMetrics.heightPixels)/(columns_number*2-4);
                 view.setLayoutParams(new GridView.LayoutParams(width, height));
+
+
+
                 return view;
             }
         };
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 if (board[position] == 0) {
                     //stores position of green clicked cells
                     board_cell_clicked_position = position;
-                    board_tracker[board_cell_clicked_position] = position;
+                    //board_tracker[board_cell_clicked_position] = position;
                     grid_cell_clicked = true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);

@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String MyPREFERENCES = "Sudoku_pref" ;
     public static final String Length = "gridLength";
-    public static final String SubgridLength = "suggridLength";
+    public static final String SubgridLength = "subgridLength";
     public static final String SubgridWidth = "subgridWidth";
     SharedPreferences sharedpreferences_for_grid_var;
 
@@ -131,8 +131,10 @@ public class MainActivity extends AppCompatActivity {
         sharedpreferences_for_grid_var = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor_grid_var = sharedpreferences_for_grid_var.edit();
         final int gridLength=sharedpreferences_for_grid_var.getInt(Length, 100);
+        final int subLen = sharedpreferences_for_grid_var.getInt(SubgridLength, 100);
+        final int subWid = sharedpreferences_for_grid_var.getInt(SubgridWidth, 100);
 
-        boards_and_menu_data data_object = new boards_and_menu_data(gridLength);
+        boards_and_menu_data data_object = new boards_and_menu_data(gridLength, subLen, subWid);
 
         //RECEIVE DATA FROM A FILE OR LOAD DEFAULT BOARD
         set_default_or_loaded(data_object);
@@ -351,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 board_checker checkBoard_object = new board_checker(solvable_board);
                 boolean isCorrect;
-                isCorrect = checkBoard_object.checker();
+                isCorrect = checkBoard_object.checker(gridLength, subLen, subWid);
 
                 if (isCorrect == true) {
                     Toast.makeText(MainActivity.this,

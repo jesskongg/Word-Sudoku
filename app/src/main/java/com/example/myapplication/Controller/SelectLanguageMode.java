@@ -34,7 +34,7 @@ public class SelectLanguageMode extends AppCompatActivity {
 
     public static final String MyPREFERENCES = "Sudoku_pref" ;
     public static final String Length = "gridLength";
-    public static final String SubgridLength = "suggridLength";
+    public static final String SubgridLength = "subgridLength";
     public static final String SubgridWidth = "subgridWidth";
     SharedPreferences sharedpreferences_for_grid_var;
 

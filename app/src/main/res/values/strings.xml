@@ -14,7 +14,7 @@
 
     <!--Welcome Page -->
     <string name="welcome">Sudoku</string>
-    <string name="start_button">Continue</string>
+    <string name="start_button">Play</string>
     <string name="help_button">Instructions</string>
 
     <!-- Instructions Page-->
@@ -43,6 +43,6 @@
     <string name="enableLC">Listening Comprehension Mode</string>
 
 
-    <string name="new_game_button">New Game</string>
+    <string name="continue_text">Continue Game</string>
 
 </resources>

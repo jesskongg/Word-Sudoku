@@ -65,13 +65,9 @@ public class SelectLanguageMode extends AppCompatActivity {
     }
 
     public void openMainActivity(int lang, int LC_enabled) {
-        Intent getNewGame = getIntent();
-        int newGame = getNewGame.getIntExtra("newGame", 0);
-
         Intent goMainActivity = new Intent();
         goMainActivity.putExtra("language", lang);
         goMainActivity.putExtra("modeLC", LC_enabled);
-        goMainActivity.putExtra("newGame", newGame);
         //goMainActivity.putExtra("mode_load_old", mode_load_default);
 
         goMainActivity.setClass(this, MainActivity.class);

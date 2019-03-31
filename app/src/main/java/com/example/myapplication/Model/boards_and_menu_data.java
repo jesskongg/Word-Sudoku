@@ -36,14 +36,6 @@ public class boards_and_menu_data {
         }
     }
 
-    public void setNumber_board(int[] number_board) {
-        this.number_board = number_board;
-    }
-
-    public void setSolvable_board(int[] solvable_board) {
-        this.solvable_board = solvable_board;
-    }
-
     public boards_and_menu_data(){
 
         mMenu_list_French=new String[9];
@@ -103,14 +95,11 @@ public class boards_and_menu_data {
     {
 
         for (int i=0; i<81; i++) {
-            if (number_board[i] == 0 && solvable_board[i] == 0) {
+            if (number_board[i] == 0) {
                 mSudoku_grid_French[i] = " ";
-            } else if(number_board[i] != 0 && solvable_board[i] != 0){
+            } else {
 
                 String cell=mMenu_list_French[(number_board[i]-1)];
-                mSudoku_grid_French[i] = cell;
-            } else if(number_board[i] == 0 && solvable_board[i] != 0){
-                String cell =mMenu_list_English[(solvable_board[i]-1)];
                 mSudoku_grid_French[i] = cell;
             }
 
@@ -126,55 +115,39 @@ public class boards_and_menu_data {
 
         for(int i=0; i<81; i++)
         {
-            if (number_board[i] == 0 && solvable_board[i] == 0) {
-                mSudoku_grid_English[i] = " ";
-            } else if(number_board[i] != 0 && solvable_board[i] != 0){
+            if (number_board[i]==0)
+            {
+                mSudoku_grid_English[i]=" ";
+            }
 
-                String cell=mMenu_list_English[(number_board[i]-1)];
-                mSudoku_grid_English[i] = cell;
-            } else if(number_board[i] == 0 && solvable_board[i] != 0){
-                String cell=mMenu_list_French[(solvable_board[i]-1)];
-                mSudoku_grid_English[i] = cell;
+            else
+            {
+
+                String cell=mMenu_list_English[number_board[i]-1];
+                mSudoku_grid_English[i]=cell;
             }
 
 
         }
 
 
-    return mSudoku_grid_English;
+        return mSudoku_grid_English;
     }
 
 
     // GRID WITH NUMBERS FOR LISTENING COMPREHENSION MODE
-    public String[] generate_LCmodeGrid_English() {
+    public String[] generate_LCmodeGrid() {
         for (int i = 0; i < 81; i++) {
-            if (number_board[i] == 0  && solvable_board[i] == 0) {
+            if (number_board[i] == 0) {
                 mSudoku_grid_LCmode[i] = " ";
-            } else if(number_board[i] != 0 && solvable_board[i] != 0){
+            } else {
                 String cell = Integer.toString(number_board[i]);
-                mSudoku_grid_LCmode[i] = cell;
-            } else if(number_board[i] == 0 && solvable_board[i] != 0){
-                String cell =mMenu_list_English[(solvable_board[i]-1)];
                 mSudoku_grid_LCmode[i] = cell;
             }
         }
         return mSudoku_grid_LCmode;
     }
 
-    public String[] generate_LCmodeGrid_French() {
-        for (int i = 0; i < 81; i++) {
-            if (number_board[i] == 0  && solvable_board[i] == 0) {
-                mSudoku_grid_LCmode[i] = " ";
-            } else if(number_board[i] != 0 && solvable_board[i] != 0){
-                String cell = Integer.toString(number_board[i]);
-                mSudoku_grid_LCmode[i] = cell;
-            } else if(number_board[i] == 0 && solvable_board[i] != 0){
-                String cell =mMenu_list_French[(solvable_board[i]-1)];
-                mSudoku_grid_LCmode[i] = cell;
-            }
-        }
-        return mSudoku_grid_LCmode;
-    }
 
 
     public int[] getNumber_board()

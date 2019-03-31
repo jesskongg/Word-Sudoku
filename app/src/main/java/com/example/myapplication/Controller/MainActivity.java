@@ -3,6 +3,7 @@ package com.example.myapplication.Controller;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
+import android.service.autofill.UserData;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
+import com.example.myapplication.Model.ChooseWords;
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
@@ -23,6 +25,8 @@ import com.example.myapplication.Model.board_checker;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -105,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
         int load_mode_choose = 0;
-        load_mode_choose = pref.getInt("load_mode_chose", 0);
+        load_mode_choose = pref.getInt("load_mode_chose", 100);
 
 
         Intent mode = getIntent();
-        int langMode = mode.getIntExtra("language", 0);
+        final int langMode = mode.getIntExtra("language", 0);
         final int LC_enabled = mode.getIntExtra("modeLC", 0);
         //int load_or_keep=mode.getIntExtra("mode_load_old",100);
 
@@ -129,29 +133,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //if newGameFlag == 1, start a new game.
-        int newGameFlag = mode.getIntExtra("newGame", 0);
+        int newGameFlag = mode.getIntExtra("newGame", 1);
         if(newGameFlag == 0) {
             Userdata data = new Userdata();
             try {
                 //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
-                //At here a random board has already been created when "data_object = new boards_and_menu_data();".
-                //Just try to reset the board, so even if this step is skipped, the "set board and solvable_board" step is still ok.
-                data_object.setNumber_board(data.getNumber_board(MainActivity.this));
-                data_object.setSolvable_board(data.getSolvable_board(MainActivity.this));
+                board = data.getNumber_board(MainActivity.this);
+                solvable_board = data.getSolvable_board(MainActivity.this);
+                wordListSudokuTable = data.getWordsTable(MainActivity.this);
+                wordListKeyboard = data.getKeyBoard(MainActivity.this);
+                hint_for_board = data.getKeyBoard(MainActivity.this);
+                listFrenchWords = data.getListFrenchWords(MainActivity.this);
+//                data_object.setNumber_board(data.getNumber_board(MainActivity.this));
+//                data_object.setSolvable_board(data.getSolvable_board(MainActivity.this));
+//                data_object.setMenu_list_English(data.getEnglish(MainActivity.this));
+//                data_object.setMenu_list_French(data.getFrench(MainActivity.this));
+//                langMode = data.getLangMode(MainActivity.this);
+//                LC_enabled = data.getLC(MainActivity.this);
             } catch (SQLiteException ex) {
-
+                //same as new game
+                board = data_object.getNumber_board();
+                solvable_board = data_object.getSolvable_board();
+                setWordList(langMode, LC_enabled);
             }
-
-            //set board and solvable_board
-            board = data_object.getNumber_board();
-            solvable_board = data_object.getSolvable_board();
         }
         else{
             board = data_object.getNumber_board();
             solvable_board = data_object.getSolvable_board();
+            setWordList(langMode, LC_enabled);
         }
 
-        setWordList(langMode, LC_enabled);
+
 
         // text-to-speech (i.e. Listening Comprehension) -- setting up the speaking feature
         tFR = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -202,8 +214,6 @@ public class MainActivity extends AppCompatActivity {
                 backSelect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Userdata data = new Userdata();
-                        data.saveData(board, solvable_board, MainActivity.this);
                         goSelect();
                     }
                 });
@@ -228,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView v = (TextView) view;
                     v.setBackgroundResource(R.drawable.cell_shape_after_click);
 
+
                 } else {
                     final int current_position = position;
                     
@@ -244,6 +255,11 @@ public class MainActivity extends AppCompatActivity {
                             //HINT feature -- toast with word from menu @ bottom which corresponds to selected cell
                             String hint_text = hint_for_board[board[current_position] - 1];
                             Toast.makeText(getApplicationContext(), hint_text, Toast.LENGTH_SHORT).show();
+
+                            Userdata data = new Userdata();
+                            String frenchWord = data_object.getMenu_list_French()[board[current_position]-1];
+                            data.record_hint_times(frenchWord, MainActivity.this);
+
                             //any subsequent clicks on a pre-filled cell (with #) will still pronounce word in French!
                             if (LC_enabled == 1) {
                                 //IF listening comprehension mode is enabled, execute TEXT TO SPEECH for all subsequent TAPS to pre-filled cells
@@ -272,6 +288,9 @@ public class MainActivity extends AppCompatActivity {
 
                     //array stores all user word inputs in the form of numbers
                     solvable_board[board_cell_clicked_position] = menu_cell_clicked_position + 1;
+
+                    Userdata data = new Userdata();
+                    data.saveData(board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
 
                 } else //board_cell_clicked_position=-100
                 {
@@ -349,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListKeyboard = data_object.getMenu_list_French();
                 hint_for_board = data_object.getMenu_list_French();
             } else { //L.C. MODE ON -- GRID WITH NUMBERS
-                wordListSudokuTable = data_object.generate_LCmodeGrid_French();
+                wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_French();
                 hint_for_board = data_object.getMenu_list_French();
                 listFrenchWords = data_object.getMenu_list_French();
@@ -362,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
                 wordListKeyboard = data_object.getMenu_list_English();
                 hint_for_board = data_object.getMenu_list_English();
             } else {//L.C. MODE ON -- GRID WITH NUMBERS
-                wordListSudokuTable = data_object.generate_LCmodeGrid_English();
+                wordListSudokuTable = data_object.generate_LCmodeGrid();
                 wordListKeyboard = data_object.getMenu_list_English();
                 hint_for_board = data_object.getMenu_list_English();
                 listFrenchWords = data_object.getMenu_list_French();
@@ -421,8 +440,8 @@ public class MainActivity extends AppCompatActivity {
         List<String> french_list=Arrays.asList(french_long_array);
 
         //shuffle lists
-        Collections.shuffle(english_list);
-        Collections.shuffle(french_list);
+//        Collections.shuffle(english_list);
+//        Collections.shuffle(french_list);
 
         //convert arrays back to lists
         String[] converted_english=new String[size_of_each_array];
@@ -435,15 +454,26 @@ public class MainActivity extends AppCompatActivity {
             converted_french[i]=french_list.get(i);
         }
 
-        //now take the first 9 elements of arrays
         String[] english_data_clean=new String[9];
         String[] french_data_clean=new String[9];
-        english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
-        french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
+
+        //for tracking words which are difficult to recognize
+        //choosing words according to hint times.
+
+        Userdata data = new Userdata();
+        HashMap<String, Integer> map = data.getHashMap(MainActivity.this);
+        ChooseWords chooseWords = new ChooseWords();
+        french_data_clean = chooseWords.chooseFrench(map, converted_french);
+        english_data_clean = chooseWords.chooseEnglish(french_data_clean, converted_english, converted_french);
+
+        //now take the first 9 elements of arrays
+
+//        english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
+//        french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
 
 
         //now paste clean arrays of size 9 into the menu
-        data_object.setMenu_list_French(english_data_clean);
-        data_object.setMenu_list_English(french_data_clean);
+        data_object.setMenu_list_French(french_data_clean);
+        data_object.setMenu_list_English(english_data_clean);
     }
 }

@@ -41,5 +41,14 @@
     <string name="how_to2">To practice your listening comprehension \n skills, enable Listening Comprehension \n Mode to proceed with selecting a language.</string>
     <string name="how_to2_land">To practice your listening \n comprehension skills, enable \n Listening Comprehension Mode \n to proceed with selecting \n a language.</string>
     <string name="enableLC">Listening Comprehension Mode</string>
+    <string name ="gridSize_prompt">Please select grid size</string>
+    <string-array name="gridSize">
+        <item>DEFAULT: 9x9 grid</item>
+        <item>4x4 grid</item>
+        <item>6x6 grid</item>
+        <item>12x12 grid</item>
+    </string-array>
+
+
 
 </resources>

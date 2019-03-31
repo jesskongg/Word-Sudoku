@@ -1,5 +1,14 @@
 package com.example.myapplication.Model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.myapplication.Controller.MainActivity;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 public class boards_and_menu_data {
     private String[] mMenu_list_English;//={"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig"};
     private String[] mSudoku_grid_French;
@@ -217,5 +226,82 @@ public class boards_and_menu_data {
         return  number_of_columns;
     }
 
+    public void set_data_recived_from_file(String data_string, int size_of_each_array, Context context) {
+
+//        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+//        SharedPreferences.Editor editor = pref.edit();
+//
+//        int size_of_each_array=pref.getInt("line_counter",0);
+        //int size_of_each_array=16;
+
+        String[] array = data_string.split(",");
+        int array_size = array.length;
+
+        String[] english_data=new String[array_size];
+        String[] french_data=new String[array_size];
+
+        //while loop is to split one big array of data into two arrays with french and english words separately.
+        int k = 0;
+        int m = 0;
+        int h = 1;
+        while (h <= array_size) {
+            english_data[k] = array[m];
+            french_data[k] = array[h];
+            m = m + 2;
+            k = k + 1;
+            h = h + 2;
+        }
+
+        String[] english_long_array=new String[size_of_each_array];
+        String[] french_long_array=new String[size_of_each_array];
+
+        english_long_array= Arrays.copyOfRange(english_data, 0, size_of_each_array);
+        //here I chnaged variable from french data to english data
+        french_long_array=Arrays.copyOfRange(french_data, 0, size_of_each_array);
+
+
+        //convert arrays into lists
+        List<String> english_list = Arrays.asList(english_long_array);
+        List<String> french_list=Arrays.asList(french_long_array);
+
+        //shuffle lists
+//        Collections.shuffle(english_list);
+//        Collections.shuffle(french_list);
+
+        //convert arrays back to lists
+        String[] converted_english=new String[size_of_each_array];
+        String[] converted_french=new String[size_of_each_array];
+
+        //converted_english= list.toArray(english_list);
+        for( int i=0; i<size_of_each_array; i++)
+        {
+            converted_english[i]=english_list.get(i);
+            converted_french[i]=french_list.get(i);
+        }
+
+        String[] english_data_clean=new String[getNumber_of_columns()];
+        String[] french_data_clean=new String[getNumber_of_columns()];
+
+        //for tracking words which are difficult to recognize
+        //choosing words according to hint times.
+
+        Userdata data = new Userdata();
+        HashMap<String, Integer> map = data.getHashMap(context);
+        ChooseWords chooseWords = new ChooseWords();
+        french_data_clean = chooseWords.chooseFrench(getNumber_of_columns(), map, converted_french);
+        english_data_clean = chooseWords.chooseEnglish(getNumber_of_columns(), french_data_clean, converted_english, converted_french);
+
+        //now take the first 9 elements of arrays
+
+//        english_data_clean=Arrays.copyOfRange(converted_english, 0, 9);
+//        french_data_clean=Arrays.copyOfRange(converted_french, 0, 9);
+
+
+        //now paste clean arrays of size 9 into the menu
+        setMenu_list_French(french_data_clean);
+        setMenu_list_English(english_data_clean);
+    }
 }
+
+
 

@@ -8,7 +8,7 @@
     tools:context=".Controller.MainActivity">
 
     <!-- Grid view for Sudoku board-->
-    <GridView
+    <com.example.myapplication.SquareGrid
         android:id="@+id/grid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -30,11 +30,11 @@
         app:layout_constraintRight_toLeftOf="@id/guideline26"
         app:layout_constraintTop_toTopOf="parent">
 
-    </GridView>
+    </com.example.myapplication.SquareGrid>
 
 
     <!-- Grid view for menu-->
-    <GridView
+    <com.example.myapplication.SquareGrid
         android:id="@+id/grid_menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </GridView>
+    </com.example.myapplication.SquareGrid>
 
 
     <Button

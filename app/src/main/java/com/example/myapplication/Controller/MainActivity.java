@@ -154,16 +154,21 @@ public class MainActivity extends AppCompatActivity {
                 int width = (displayMetrics.widthPixels);
                 int height = (displayMetrics.heightPixels);
 
+                //variables for portrait mode cell dimensions
                 int gridWidth = width/9;
                 int gridHeight = height/16;
 
+                //variables for landscape mode cell dimensions
                 int gridWidthLand = width/16;
                 int gridHeightLand = height/11;
 
+                //check if display is in PORTRAIT orientation
                 if (width < height)
                 {
                     puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
                 }
+
+                //check if display is in LANDSCAPE orientation
                 if (width > height)
                 {
                     puzzleView.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
@@ -182,7 +187,13 @@ public class MainActivity extends AppCompatActivity {
         final ArrayAdapter menuAdapter;
         final DisplayMetrics menuDisplayMetrics = this.getResources().getDisplayMetrics();
 
-        menuAdapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListSudokuTable) {
+
+
+        gridView.setAdapter(adapter);
+        //adapter for menu
+        final ArrayAdapter menu_adapter;
+        menu_adapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListKeyboard)
+        {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View menuView = super.getView(position, convertView, parent);
@@ -190,31 +201,30 @@ public class MainActivity extends AppCompatActivity {
                 int width = (displayMetrics.widthPixels);
                 int height = (displayMetrics.heightPixels);
 
-                int menuWidth = width/9;
+                //variables for portrait mode cell dimensions
+                int menuWidth = width/3;
                 int menuHeight = height/16;
 
+                //variables for landscape mode cell dimensions
                 int menuWidthLand = width/16;
-                int menuHeightLand = height/11;
+                int menuHeightLand = height/3;
 
+                //check if display is in PORTRAIT orientation
                 if (width < height)
                 {
                     menuView.setLayoutParams(new GridView.LayoutParams(menuWidth,menuHeight));
                 }
+
+                //check if display is in LANDSCAPE orientation
                 if (width > height)
                 {
                     menuView.setLayoutParams(new GridView.LayoutParams(menuWidthLand, menuHeightLand));
                 }
 
-                menuView.setLayoutParams(new GridView.LayoutParams(menuWidth,menuHeight));
-
                 return menuView;
             }
         };
 
-        gridView.setAdapter(adapter);
-        //adapter for menu
-        final ArrayAdapter menu_adapter;
-        menu_adapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListKeyboard);
         menuView.setAdapter(menu_adapter);
 
         backSelect = (ImageButton) findViewById(R.id.back_select);

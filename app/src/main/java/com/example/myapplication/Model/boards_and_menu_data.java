@@ -25,8 +25,6 @@ public class boards_and_menu_data {
 
     private int number_of_columns;
 
-
-
     public void setMenu_list_English(String[] english_file_data)
     {
 

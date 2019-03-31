@@ -85,7 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
     //private boards_and_menu_data data_object = new boards_and_menu_data();
 
-    int load_mode_choose;
+    private int load_mode_choose;
+    private int gridLength;
+    private int subLen;
+    private int subWid;
+
 
     public static final String MyPREFERENCES = "Sudoku_pref" ;
     public static final String Length = "gridLength";
@@ -115,11 +119,27 @@ public class MainActivity extends AppCompatActivity {
 
         sharedpreferences_for_grid_var = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor_grid_var = sharedpreferences_for_grid_var.edit();
-        final int gridLength=sharedpreferences_for_grid_var.getInt(Length, 100);
-        final int subLen = sharedpreferences_for_grid_var.getInt(SubgridLength, 100);
-        final int subWid = sharedpreferences_for_grid_var.getInt(SubgridWidth, 100);
+        gridLength=sharedpreferences_for_grid_var.getInt(Length, 100);
+        subLen = sharedpreferences_for_grid_var.getInt(SubgridLength, 100);
+        subWid = sharedpreferences_for_grid_var.getInt(SubgridWidth, 100);
+
+        //if newGameFlag == 1, start a new game.
+        Intent mode = getIntent();
+        int newGameFlag = mode.getIntExtra("newGame", 1);
+        if(newGameFlag == 0){
+            try{
+                Userdata data = new Userdata();
+                int[] size = data.getLenth(MainActivity.this);
+                gridLength = size[0];
+                subLen = size[1];
+                subWid = size[2];
+            }
+            catch (SQLiteException ex){
+            }
+        }
 
         boards_and_menu_data data_object = new boards_and_menu_data(gridLength, subLen, subWid);
+
 
         //RECEIVE DATA FROM A FILE OR LOAD DEFAULT BOARD
         set_default_or_loaded(data_object);
@@ -128,19 +148,17 @@ public class MainActivity extends AppCompatActivity {
 
         set_listening_comprehension(data_object);
 
-
-        //if newGameFlag == 1, start a new game.
-        Intent mode = getIntent();
-        int newGameFlag = mode.getIntExtra("newGame", 1);
         if(newGameFlag == 0) {
             try {
                 //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
                 //NOTICE: just recover variables in MainActivity. Variables in boards_and_menu_data are not changed.
-                continue_game(gridLength);
+                continue_game();
             } catch (SQLiteException ex) {
             }
         }
 
+        Userdata data = new Userdata();
+        data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
 
         //grid puzzle
         gridView = (GridView) findViewById(R.id.grid);
@@ -269,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                     solvable_board[board_cell_clicked_position] = menu_cell_clicked_position + 1;
 
                     Userdata data = new Userdata();
-                    data.saveData(board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
+                    data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
 
                 } else //board_cell_clicked_position=-100
                 {
@@ -315,14 +333,15 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void continue_game(int gridLength){
+    public void continue_game(){
         Userdata data = new Userdata();
-        board = data.getNumber_board(gridLength, MainActivity.this);
-        solvable_board = data.getSolvable_board(gridLength, MainActivity.this);
-        wordListSudokuTable = data.getWordsTable(gridLength, MainActivity.this);
-        wordListKeyboard = data.getKeyBoard(gridLength, MainActivity.this);
-        hint_for_board = data.getKeyBoard(gridLength, MainActivity.this);
-        listFrenchWords = data.getListFrenchWords(gridLength, MainActivity.this);
+        int size[] = data.getLenth(MainActivity.this);
+        board = data.getNumber_board(size[0], MainActivity.this);
+        solvable_board = data.getSolvable_board(size[0], MainActivity.this);
+        wordListSudokuTable = data.getWordsTable(size[0], MainActivity.this);
+        wordListKeyboard = data.getKeyBoard(size[0], MainActivity.this);
+        hint_for_board = data.getKeyBoard(size[0], MainActivity.this);
+        listFrenchWords = data.getListFrenchWords(size[0], MainActivity.this);
     }
 
     public void set_listening_comprehension(boards_and_menu_data sudoku_object)

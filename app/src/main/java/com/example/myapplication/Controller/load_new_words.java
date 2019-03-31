@@ -86,6 +86,8 @@ public class load_new_words extends AppCompatActivity {
                     Toast.makeText(load_new_words.this, "Permission is given", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.setType("*/*");
+
+                    //after permission is given a user should have access
                     startActivityForResult(intent,PICKFILE_RESULT_CODE);
                 }
             }
@@ -130,50 +132,17 @@ public class load_new_words extends AppCompatActivity {
         switch(requestCode){
             case PICKFILE_RESULT_CODE:
                 if(resultCode==RESULT_OK){
-                    //FilePath = data.getData().getPath();
+
                     FilePath = data.getData().getPath();
                     Uri u = data.getData();
-
-                    try {
-                        InputStream inputStream = getContentResolver().openInputStream(u);
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                                inputStream));
-
-                        StringBuilder stringBuilder = new StringBuilder();
-                        String line=null;
-                        int i=0;
-                        //int line_counter=0;
-
-                        line_counter=0;
-                        while ((line = reader.readLine()) != null) {
-                            stringBuilder.append(line);
-                            stringBuilder.append(",");
-                            line_counter=line_counter+1;
-
-                        }
-                        //file_string=null;
-                        file_string=stringBuilder.toString();
-
-                        inputStream.close();
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    //Toast.makeText(this, file_data_aray[0], Toast.LENGTH_LONG).show();
-                    put_data_into_shared_ref(1, line_counter);
-
+                    read_and_pass_file_string_to_pref(u);
                     Intent goOpenInstr = new Intent(this, SelectLanguageMode.class);
                     startActivity(goOpenInstr);
-
                 }
 
         }
 
     }
-
 
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -191,6 +160,35 @@ public class load_new_words extends AppCompatActivity {
         }
     }
 
+
+
+    public void read_and_pass_file_string_to_pref(Uri u){
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(u);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    inputStream));
+
+            StringBuilder stringBuilder = new StringBuilder();
+            String line=null;
+            int i=0;
+            line_counter=0;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(",");
+                line_counter = line_counter + 1;
+
+            }
+            file_string=stringBuilder.toString();
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        put_data_into_shared_ref(1, line_counter);
+    }
+
     //this function puts file data into "app storage" which is accesable
     //in different activities
     public void put_data_into_shared_ref(int chapter_number, int number_of_pairs){
@@ -201,5 +199,6 @@ public class load_new_words extends AppCompatActivity {
         editor.putInt("line_counter", number_of_pairs);
         editor.commit();
     }
+
 
 }

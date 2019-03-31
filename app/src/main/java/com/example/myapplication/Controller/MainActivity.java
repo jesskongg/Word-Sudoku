@@ -366,75 +366,12 @@ public class MainActivity extends AppCompatActivity {
             String recieved_string=null;
             recieved_string = pref.getString("chapter " + chapter_number, "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
-            set_data_recived_from_file(recieved_string, sudoku_object);
+            //set_data_recived_from_file(recieved_string, sudoku_object);
+
+            //line_counter should be obtained from pref
+            int line_counter=pref.getInt("line_counter",0);
+            sudoku_object.set_data_recieved_from_file(recieved_string, line_counter);
         }
     }
 
-
-
-
-    public void set_data_recived_from_file(String data_string, boards_and_menu_data sudoku_object) {
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-
-        int size_of_each_array=pref.getInt("line_counter",0);
-        //int size_of_each_array=16;
-
-        String[] array = data_string.split(",");
-        int array_size = array.length;
-
-        String[] english_data=new String[array_size];
-        String[] french_data=new String[array_size];
-
-        //while loop is to split one big array of data into two arrays with french and english words separately.
-        int k = 0;
-        int m = 0;
-        int h = 1;
-        while (h <= array_size) {
-            english_data[k] = array[m];
-            french_data[k] = array[h];
-            m = m + 2;
-            k = k + 1;
-            h = h + 2;
-        }
-
-        String[] english_long_array=new String[size_of_each_array];
-        String[] french_long_array=new String[size_of_each_array];
-
-        english_long_array=Arrays.copyOfRange(english_data, 0, size_of_each_array);
-        //here I chnaged variable from french data to english data
-        french_long_array=Arrays.copyOfRange(french_data, 0, size_of_each_array);
-
-
-        //convert arrays into lists
-        List<String> english_list = Arrays.asList(english_long_array);
-        List<String> french_list=Arrays.asList(french_long_array);
-
-        //shuffle lists
-        Collections.shuffle(english_list);
-        Collections.shuffle(french_list);
-
-        //convert arrays back to lists
-        String[] converted_english=new String[size_of_each_array];
-        String[] converted_french=new String[size_of_each_array];
-
-        //converted_english= list.toArray(english_list);
-        for( int i=0; i<size_of_each_array; i++)
-        {
-            converted_english[i]=english_list.get(i);
-            converted_french[i]=french_list.get(i);
-        }
-
-        //now take the first 9 elements of arrays
-        //now take the first 9 elements of arrays
-        String[] english_data_clean=new String[sudoku_object.getNumber_of_columns()];
-        String[] french_data_clean=new String[sudoku_object.getNumber_of_columns()];
-        english_data_clean=Arrays.copyOfRange(converted_english, 0, sudoku_object.getNumber_of_columns());
-        french_data_clean=Arrays.copyOfRange(converted_french, 0, sudoku_object.getNumber_of_columns());
-
-        //now paste clean arrays of size 9 into the menu
-        sudoku_object.setMenu_list_French(english_data_clean);
-        sudoku_object.setMenu_list_English(french_data_clean);
-    }
 }

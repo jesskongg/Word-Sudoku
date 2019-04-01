@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.myapplication.Controller.MainActivity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -300,6 +301,29 @@ public class boards_and_menu_data {
         //now paste clean arrays of size 9 into the menu
         setMenu_list_French(french_data_clean);
         setMenu_list_English(english_data_clean);
+    }
+
+    public int getPosition(String[] wordList, String word){
+        for(int i = 0; i < wordList.length; i++){
+            if(word.equals(wordList[i])){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    public String[] mShuffle(String[] wordList){
+        String[] newWordList = new String[wordList.length];
+        ArrayList<String> list = new ArrayList<>();
+        for(int i = 0; i < wordList.length; i++){
+            list.add(wordList[i]);
+        }
+        Collections.shuffle(list);
+        for(int i = 0; i < wordList.length; i++){
+            newWordList[i] = list.get(i);
+        }
+        return newWordList;
     }
 }
 

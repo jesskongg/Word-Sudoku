@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
             //it can be recieved as an intent
             int chapter_number = 1;
             String recieved_string=null;
-            recieved_string = pref.getString("chapter " + chapter_number, "no");
+            recieved_string = pref.getString("chapter ", "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
 
             int line_counter=pref.getInt("line_counter",0);

@@ -9,8 +9,7 @@
     <string name="check">Check your answers</string>
     <string name="hint">Tap on the box again for a hint!</string>
     <string name="back_select">Go Back to Select Language Mode</string>
-    <string name="back_select_information">Tapping this button again will erase your progress,
-        and take you back to the mode selection page.</string>
+    <string name="back_select_information">Tapping this button again will take you back to the mode selection page.</string>
 
     <!--Welcome Page -->
     <string name="welcome">Sudoku</string>

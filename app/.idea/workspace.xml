@@ -22,13 +22,9 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c80af5c6-2457-4485-ba20-66c13d9c611c" name="Default Changelist" comment="">
+    <list default="true" id="c80af5c6-2457-4485-ba20-66c13d9c611c" name="Default Changelist" comment="Update branch with new master code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-land/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-land/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,21 +63,21 @@
       <usages-collector id="statistics.vcs.git.usages">
         <counts>
           <entry key="git.branch.checkout.local" value="1" />
-          <entry key="git.branch.merge" value="16" />
+          <entry key="git.branch.merge" value="17" />
           <entry key="git.checkout.as.new.branch" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="5019" />
-          <entry key="txt" value="476" />
+          <entry key="java" value="5049" />
+          <entry key="txt" value="556" />
           <entry key="xml" value="4676" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5019" />
-          <entry key="PLAIN_TEXT" value="476" />
+          <entry key="JAVA" value="5049" />
+          <entry key="PLAIN_TEXT" value="556" />
           <entry key="XML" value="4676" />
         </counts>
       </usages-collector>
@@ -134,30 +130,30 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="210" column="54" selection-start-line="210" selection-start-column="54" selection-end-line="210" selection-end-column="54" />
+            <state relative-caret-position="581">
+              <caret line="284" column="63" selection-start-line="284" selection-start-column="63" selection-end-line="284" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10775#11284#0" expanded="true" />
-                <element signature="e#11060#11092#0" expanded="true" />
-                <element signature="e#11192#11376#0" expanded="true" />
-                <element signature="e#11375#11376#0" expanded="true" />
-                <element signature="e#11283#11284#0" expanded="true" />
-                <element signature="e#11329#14074#0" expanded="true" />
-                <element signature="e#12773#14030#0" expanded="true" />
-                <element signature="e#14029#14030#0" expanded="true" />
-                <element signature="e#14073#14074#0" expanded="true" />
-                <element signature="e#14119#15336#0" expanded="true" />
-                <element signature="e#15335#15336#0" expanded="true" />
-                <element signature="e#15452#16173#0" expanded="true" />
-                <element signature="e#15990#16008#0" expanded="true" />
-                <element signature="e#16173#16192#0" expanded="true" />
-                <element signature="e#16172#16173#0" expanded="true" />
-                <element signature="e#17868#18113#0" expanded="true" />
-                <element signature="e#18112#18113#0" expanded="true" />
+                <element signature="e#11346#11855#0" expanded="true" />
+                <element signature="e#11513#11545#0" expanded="true" />
+                <element signature="e#11645#11829#0" expanded="true" />
+                <element signature="e#11828#11829#0" expanded="true" />
+                <element signature="e#11854#11855#0" expanded="true" />
+                <element signature="e#11900#14645#0" expanded="true" />
+                <element signature="e#13344#14601#0" expanded="true" />
+                <element signature="e#14600#14601#0" expanded="true" />
+                <element signature="e#14644#14645#0" expanded="true" />
+                <element signature="e#14690#15919#0" expanded="true" />
+                <element signature="e#15918#15919#0" expanded="true" />
+                <element signature="e#16035#16756#0" expanded="true" />
+                <element signature="e#16455#16473#0" expanded="true" />
+                <element signature="e#16638#16657#0" expanded="true" />
+                <element signature="e#16755#16756#0" expanded="true" />
+                <element signature="e#18356#18601#0" expanded="true" />
+                <element signature="e#18600#18601#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -216,7 +212,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/res/layout-land/activity_main.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
@@ -309,8 +305,8 @@
         <option value="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_main.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_main.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout-land/activity_main.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -511,7 +507,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
-    <property name="device.picker.selection" value="Pixel_C_API_28" />
+    <property name="device.picker.selection" value="3100f299140a9400" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -777,7 +773,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554075615073</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Make additional changes to MainActivity and formatting in XML files">
+      <created>1554088119836</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1554088119836</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -833,7 +836,7 @@
       <window_info anchor="right" id="Gradle" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Preview" order="4" sideWeight="0.50265956" side_tool="true" visible="true" weight="0.5324814" />
+      <window_info anchor="right" id="Preview" order="4" sideWeight="0.50265956" side_tool="true" weight="0.5324814" />
       <window_info anchor="right" id="Device File Explorer" order="5" sideWeight="0.4973404" weight="0.5324814" />
     </layout>
   </component>
@@ -1232,33 +1235,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="210" column="54" selection-start-line="210" selection-start-column="54" selection-end-line="210" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10775#11284#0" expanded="true" />
-            <element signature="e#11060#11092#0" expanded="true" />
-            <element signature="e#11192#11376#0" expanded="true" />
-            <element signature="e#11375#11376#0" expanded="true" />
-            <element signature="e#11283#11284#0" expanded="true" />
-            <element signature="e#11329#14074#0" expanded="true" />
-            <element signature="e#12773#14030#0" expanded="true" />
-            <element signature="e#14029#14030#0" expanded="true" />
-            <element signature="e#14073#14074#0" expanded="true" />
-            <element signature="e#14119#15336#0" expanded="true" />
-            <element signature="e#15335#15336#0" expanded="true" />
-            <element signature="e#15452#16173#0" expanded="true" />
-            <element signature="e#15990#16008#0" expanded="true" />
-            <element signature="e#16173#16192#0" expanded="true" />
-            <element signature="e#16172#16173#0" expanded="true" />
-            <element signature="e#17868#18113#0" expanded="true" />
-            <element signature="e#18112#18113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_main.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -1279,6 +1255,33 @@
           <folding>
             <element signature="e#2766#2781#0" expanded="true" />
             <element signature="e#3580#3601#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="284" column="63" selection-start-line="284" selection-start-column="63" selection-end-line="284" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#11346#11855#0" expanded="true" />
+            <element signature="e#11513#11545#0" expanded="true" />
+            <element signature="e#11645#11829#0" expanded="true" />
+            <element signature="e#11828#11829#0" expanded="true" />
+            <element signature="e#11854#11855#0" expanded="true" />
+            <element signature="e#11900#14645#0" expanded="true" />
+            <element signature="e#13344#14601#0" expanded="true" />
+            <element signature="e#14600#14601#0" expanded="true" />
+            <element signature="e#14644#14645#0" expanded="true" />
+            <element signature="e#14690#15919#0" expanded="true" />
+            <element signature="e#15918#15919#0" expanded="true" />
+            <element signature="e#16035#16756#0" expanded="true" />
+            <element signature="e#16455#16473#0" expanded="true" />
+            <element signature="e#16638#16657#0" expanded="true" />
+            <element signature="e#16755#16756#0" expanded="true" />
+            <element signature="e#18356#18601#0" expanded="true" />
+            <element signature="e#18600#18601#0" expanded="true" />
           </folding>
         </state>
       </provider>

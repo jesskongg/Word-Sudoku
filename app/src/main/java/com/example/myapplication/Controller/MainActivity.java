@@ -273,9 +273,16 @@ public class MainActivity extends AppCompatActivity {
 
                 if (gridLength == 4) {
                     gridWidth = width / (gridLength);
-                    gridHeight = width / (gridLength * 3);
+                    gridHeight = width / (gridLength * 2);
                     gridHeightLand = height/(gridLength);
                     gridWidthLand = gridHeightLand;
+                }
+
+                if (gridLength == 12) {
+                    gridWidth = width / (gridLength/2);
+                    gridHeight = width / (gridLength);
+                    gridHeightLand = height/(gridLength);
+                    gridWidthLand = gridHeightLand + (gridLength*2);
                 }
 
                 int orientation = getResources().getConfiguration().orientation;

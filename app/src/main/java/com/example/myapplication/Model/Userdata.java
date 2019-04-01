@@ -16,7 +16,7 @@ public class Userdata {
 
     }
 
-    public void saveData(int length, int[] number_board, int[] solvable_board, String[] words_table, String[] key_board, String[] list_French_words, Context context) {
+    public void saveData(int length, int[] number_board, int[] solvable_board, String[] words_table, String[] key_board, String[] hint_board, String[] list_French_words, Context context) {
 //        if (board.length != 81) {
 //            throw new IllegalArgumentException();
 //        } else {
@@ -45,6 +45,7 @@ public class Userdata {
                 String index = Integer.toString(i);
                 values2.put("words_index", index);
                 values2.put("key_words", key_board[i]);
+                values2.put("hint_words", hint_board[i]);
                 values2.put("French_words", " ");
                 db.insert("wordsData", null, values2);
             }
@@ -55,6 +56,7 @@ public class Userdata {
                 String index = Integer.toString(i);
                 values2.put("words_index", index);
                 values2.put("key_words", key_board[i]);
+                values2.put("hint_words", hint_board[i]);
                 values2.put("French_words", list_French_words[i]);
                 db.insert("wordsData", null, values2);
             }
@@ -71,6 +73,18 @@ public class Userdata {
 //
 //
 //        }
+    }
+
+    public void saveLC(int LCmode, Context context) {
+        mContext = context.getApplicationContext();
+
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        db.delete("LCmode", null, null);
+        ContentValues values = new ContentValues();
+        String mode = Integer.toString(LCmode);
+        values.put("LC_mode", mode);
+        db.insert("LCmode", null, values);
+
     }
 
     public void record_hint_times(String word, Context context) {
@@ -98,6 +112,26 @@ public class Userdata {
         }
         cursor.close();
 
+    }
+
+    public int getLC(Context context){
+        int LC = 0;
+        mContext = context.getApplicationContext();
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        Cursor cursor = db.query("LCmode", new String[]{"LC_mode"}, null, null, null, null, "LC_mode");
+        String number;
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                number = cursor.getString(cursor.getColumnIndex("LC_mode"));
+                LC = Integer.valueOf(number).intValue();
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return LC;
     }
 
     public int[] getLenth(Context context){
@@ -265,6 +299,28 @@ public class Userdata {
         }
 
         return key_words;
+    }
+
+    public String[] getHintBoard(int gridLength, Context context){
+        String[] hint_words = new String[gridLength];
+
+        int i = 0;
+        mContext = context.getApplicationContext();
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        Cursor cursor = db.query("wordsData", new String[]{"words_index", "hint_words"}, null, null, null, null, "words_index");
+//        String number;
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                hint_words[i] = cursor.getString(cursor.getColumnIndex("hint_words"));
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return hint_words;
     }
 
     public String[] getListFrenchWords(int gridLength, Context context){

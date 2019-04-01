@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
 
         sharedpreferences_for_grid_var = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor_grid_var = sharedpreferences_for_grid_var.edit();
-        gridLength=sharedpreferences_for_grid_var.getInt(Length, 100);
-        subLen = sharedpreferences_for_grid_var.getInt(SubgridLength, 100);
-        subWid = sharedpreferences_for_grid_var.getInt(SubgridWidth, 100);
+        gridLength=sharedpreferences_for_grid_var.getInt(Length, 9);
+        subLen = sharedpreferences_for_grid_var.getInt(SubgridLength, 3);
+        subWid = sharedpreferences_for_grid_var.getInt(SubgridWidth, 3);
 
         //if newGameFlag == 1, start a new game.
         Intent mode = getIntent();
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        boards_and_menu_data data_object = new boards_and_menu_data(gridLength, subLen, subWid);
+        final boards_and_menu_data data_object = new boards_and_menu_data(gridLength, subLen, subWid);
 
 
         //RECEIVE DATA FROM A FILE OR LOAD DEFAULT BOARD
@@ -173,7 +173,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Userdata data = new Userdata();
-        data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
+        data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, hint_for_board, listFrenchWords, MainActivity.this);
+        data.saveLC(LC_enabled, MainActivity.this);
 
         //grid puzzle
         gridView = (GridView) findViewById(R.id.grid);
@@ -340,10 +341,11 @@ public class MainActivity extends AppCompatActivity {
                     wordListSudokuTable[board_cell_clicked_position] = received_text;
                     adapter.notifyDataSetChanged();
                     //array stores all user word inputs in the form of numbers
+                    menu_cell_clicked_position = data_object.getPosition(hint_for_board, received_text);
                     solvable_board[board_cell_clicked_position] = menu_cell_clicked_position + 1;
 
                     Userdata data = new Userdata();
-                    data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, listFrenchWords, MainActivity.this);
+                    data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, hint_for_board, listFrenchWords, MainActivity.this);
 
                 } else //board_cell_clicked_position=-100
                 {
@@ -396,8 +398,9 @@ public class MainActivity extends AppCompatActivity {
         solvable_board = data.getSolvable_board(size[0], MainActivity.this);
         wordListSudokuTable = data.getWordsTable(size[0], MainActivity.this);
         wordListKeyboard = data.getKeyBoard(size[0], MainActivity.this);
-        hint_for_board = data.getKeyBoard(size[0], MainActivity.this);
+        hint_for_board = data.getHintBoard(size[0], MainActivity.this);
         listFrenchWords = data.getListFrenchWords(size[0], MainActivity.this);
+        LC_enabled = data.getLC(MainActivity.this);
     }
 
     public void set_listening_comprehension(boards_and_menu_data sudoku_object)
@@ -427,11 +430,13 @@ public class MainActivity extends AppCompatActivity {
             if (LC_enabled == 0) { //L.C. mode OFF
                 wordListSudokuTable = sudoku_object.generate_get_grid_English();
                 wordListKeyboard = sudoku_object.getMenu_list_French();
+                wordListKeyboard = sudoku_object.mShuffle(wordListKeyboard);
                 hint_for_board = sudoku_object.getMenu_list_French();
                 listFrenchWords = sudoku_object.getMenu_list_French();
             } else { //L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
                 wordListKeyboard = sudoku_object.getMenu_list_French();
+                wordListKeyboard = sudoku_object.mShuffle(wordListKeyboard);
                 hint_for_board = sudoku_object.getMenu_list_French();
                 listFrenchWords = sudoku_object.getMenu_list_French();
             }
@@ -441,11 +446,13 @@ public class MainActivity extends AppCompatActivity {
             if (LC_enabled == 0) { //L.C. mode OFF
                 wordListSudokuTable = sudoku_object.generate_get_grid_French();
                 wordListKeyboard = sudoku_object.getMenu_list_English();
+                wordListKeyboard = sudoku_object.mShuffle(wordListKeyboard);
                 hint_for_board = sudoku_object.getMenu_list_English();
                 listFrenchWords = sudoku_object.getMenu_list_French();
             } else {//L.C. MODE ON -- GRID WITH NUMBERS
                 wordListSudokuTable = sudoku_object.generate_LCmodeGrid();
                 wordListKeyboard = sudoku_object.getMenu_list_English();
+                wordListKeyboard = sudoku_object.mShuffle(wordListKeyboard);
                 hint_for_board = sudoku_object.getMenu_list_English();
                 listFrenchWords = sudoku_object.getMenu_list_French();
             }

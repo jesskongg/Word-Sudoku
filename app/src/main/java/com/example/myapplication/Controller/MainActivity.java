@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
 
         //menu grid
-        menuView = (GridView) findViewById(R.id.grid_menu);
         if (gridLength == 4 || gridLength == 6) {
             menuView.setNumColumns(2);
             menuView.setColumnWidth(1);
@@ -190,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
             menuView.setNumColumns(4);
         }
 
-        textMenu = (TextView) findViewById(R.id.menu_cell);
+        textMenu = findViewById(R.id.menu_cell);
+        menuView = (GridView) findViewById(R.id.grid_menu);
 
 
         //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
@@ -226,9 +226,18 @@ public class MainActivity extends AppCompatActivity {
                 int gridHeightLand = height/(gridLength+(gridLength/4));
                 int gridWidthLand = gridHeightLand+20;
 
-                if (gridLength == 4 || gridLength == 6) {
+                //adjusting grid height and width to accommodate 4x4 and 6x6 grids
+                if (gridLength == 4) {
                     gridWidth = width/(gridLength);
                     gridHeight = gridWidth-(gridLength*5);
+
+                    gridHeightLand = height/(gridLength+(gridLength/3));
+                    gridWidthLand = gridHeightLand+29;
+                }
+
+                if (gridLength == 6) {
+                    gridWidth = width/(gridLength);
+                    gridHeight = gridWidth-(gridLength*3);
 
                     gridHeightLand = height/(gridLength+(gridLength/3));
                     gridWidthLand = gridHeightLand+29;

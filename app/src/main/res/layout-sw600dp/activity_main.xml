@@ -10,21 +10,22 @@
     <!-- Grid view for Sudoku board-->
     <com.example.myapplication.SquareGrid
         android:id="@+id/grid"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
 
-        android:configChanges="orientation"
         android:gravity="center"
         android:horizontalSpacing="0dip"
         android:numColumns="9"
-
         android:verticalSpacing="0dip"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/grid_menu"
         app:layout_constraintRight_toRightOf="parent"
@@ -48,7 +49,7 @@
         android:layout_marginRight="8dp"
 
         android:gravity="center"
-        android:horizontalSpacing="2dip"
+        android:horizontalSpacing="10dip"
         android:verticalSpacing="8dip"
         android:numColumns="3"
         android:stretchMode="columnWidth"

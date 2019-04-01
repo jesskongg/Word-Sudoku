@@ -181,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
 
         //menu grid
+        textMenu = findViewById(R.id.menu_cell);
+        menuView = (GridView) findViewById(R.id.grid_menu);
         if (gridLength == 4 || gridLength == 6) {
             menuView.setNumColumns(2);
             menuView.setColumnWidth(1);
@@ -189,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
             menuView.setNumColumns(4);
         }
 
-        textMenu = findViewById(R.id.menu_cell);
-        menuView = (GridView) findViewById(R.id.grid_menu);
 
 
         //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)

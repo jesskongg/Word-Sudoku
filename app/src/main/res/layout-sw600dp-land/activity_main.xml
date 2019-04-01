@@ -8,62 +8,60 @@
     tools:context=".Controller.MainActivity">
 
     <!-- Grid view for Sudoku board-->
-    <GridView
+    <com.example.myapplication.SquareGrid
         android:id="@+id/grid"
-        android:layout_width="507dp"
-        android:layout_height="451dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+
         android:gravity="center"
         android:horizontalSpacing="0dip"
         android:numColumns="9"
         android:verticalSpacing="0dip"
-        app:layout_constraintBottom_toTopOf="@+id/guideline32"
-        app:layout_constraintEnd_toStartOf="@+id/guideline31"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="@+id/guideline29"
-        app:layout_constraintTop_toTopOf="@+id/guideline59">
 
-    </GridView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline26"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.example.myapplication.SquareGrid>
 
 
     <!-- Grid view for menu-->
-    <GridView
+    <com.example.myapplication.SquareGrid
         android:id="@+id/grid_menu"
-        android:layout_width="403dp"
-        android:layout_height="292dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:horizontalSpacing="0dip"
-        android:numColumns="3"
-        android:verticalSpacing="0dip"
-        app:layout_constraintBottom_toTopOf="@+id/guideline60"
-        app:layout_constraintEnd_toStartOf="@+id/guideline30"
-        app:layout_constraintStart_toStartOf="@+id/guideline31"
-        app:layout_constraintTop_toTopOf="@+id/guideline59"
-        app:layout_constraintVertical_bias="1.0">
 
-    </GridView>
+        android:horizontalSpacing="10dip"
+        android:verticalSpacing="10dip"
+        android:gravity="center"
+        android:numColumns="3"
+
+        app:layout_constraintBottom_toTopOf="@id/checkBoard"
+        app:layout_constraintLeft_toRightOf="@id/guideline26"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.example.myapplication.SquareGrid>
 
 
     <Button
         android:id="@+id/checkBoard"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="0dp"
 
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -75,25 +73,23 @@
         android:background="@drawable/round_buttons"
         android:text="@string/check"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline32"
-        app:layout_constraintEnd_toStartOf="@+id/guideline33"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline31"
-        app:layout_constraintTop_toTopOf="@+id/guideline60"
-        app:layout_constraintVertical_bias="0.0" />
+
+        app:layout_constraintTop_toBottomOf="@id/guideline28"
+        app:layout_constraintBottom_toBottomOf="@id/grid"
+        app:layout_constraintLeft_toRightOf="@id/guideline26"
+        app:layout_constraintRight_toLeftOf="@id/back_select" />
 
 
     <ImageButton
         android:id="@+id/back_select"
-
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="0dp"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:adjustViewBounds="true"
@@ -101,98 +97,32 @@
         android:background="@drawable/round_buttons"
         android:contentDescription="@string/back_select"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/guideline32"
-        app:layout_constraintEnd_toStartOf="@+id/guideline30"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline33"
-        app:layout_constraintTop_toTopOf="@+id/guideline60"
-        app:layout_constraintVertical_bias="0.0"
+
+        app:layout_constraintTop_toBottomOf="@id/guideline28"
+        app:layout_constraintBottom_toBottomOf="@id/grid"
+        app:layout_constraintLeft_toRightOf="@id/checkBoard"
+        app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.0" />
-
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.85" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.60" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="1.0" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent=".015" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.96" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.56" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline33"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.7705078" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline41"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.615" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline58"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.20" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline59"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.10" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline60"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.99" />
 
 </android.support.constraint.ConstraintLayout>

@@ -3,12 +3,14 @@ package com.example.myapplication.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteException;
 import android.service.autofill.UserData;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,6 +27,7 @@ import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
 import com.example.myapplication.Model.board_checker;
+import com.example.myapplication.SquareGrid;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -107,8 +111,19 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
         savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
         savedInstanceState.putIntArray(KEY_BOARD, board);
-
     }
+
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            setContentView(R.layout.activity_main);
+//        }
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            setContentView(R.layout.activity_main);
+//        }
+//    }
+
 
 
     @Override
@@ -176,11 +191,12 @@ public class MainActivity extends AppCompatActivity {
             board = savedInstanceState.getIntArray(KEY_BOARD);
         }
 
+
         //adapter for puzzle grid
-        final ArrayAdapter adapter;
+        final ArrayAdapter<String> adapter;
 
         final DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        adapter = new ArrayAdapter(this, R.layout.cell_layout, wordListSudokuTable){
+        adapter = new ArrayAdapter<String>(this, R.layout.cell_layout, wordListSudokuTable){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -190,23 +206,63 @@ public class MainActivity extends AppCompatActivity {
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
 
-                int width = (displayMetrics.widthPixels)/gridLength;
-                //hieght is a bit less than width to allow for space for menu and buttons
-                int height=width-18;
-                //=(displayMetrics.heightPixels)/(columns_number*2-4);
-                view.setLayoutParams(new GridView.LayoutParams(width, height));
+                int width = (displayMetrics.widthPixels);
+                int height = (displayMetrics.heightPixels);
 
+                //variables for portrait mode cell dimensions
+                int gridWidth = width/gridLength;
+                int gridHeight = gridWidth-(gridLength);
 
+                //variables for landscape mode cell dimensions
+                int gridHeightLand = height/(gridLength+(gridLength/4));
+                int gridWidthLand = gridHeightLand+20;
+
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // In landscape
+                    view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
+                } else {
+                    // In portrait
+                    view.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
+                }
 
                 return view;
             }
         };
 
-
         gridView.setAdapter(adapter);
-        //adapter for menu
-        final ArrayAdapter menu_adapter;
-        menu_adapter = new ArrayAdapter(this, R.layout.cell_menu_layout, wordListKeyboard);
+
+        //adapter for menu grid
+        final ArrayAdapter<String> menu_adapter;
+        menu_adapter = new ArrayAdapter<String>(this, R.layout.cell_menu_layout, wordListKeyboard) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View menuView = super.getView(position, convertView, parent);
+
+                int width = (displayMetrics.widthPixels);
+                int height = (displayMetrics.heightPixels);
+
+                //variables for portrait mode cell dimensions
+                int gridWidth = width/(gridLength/2);
+                int gridHeight = width/(gridLength*2);
+
+                //variables for landscape mode cell dimensions
+                int gridHeightLand = height/(gridLength+(gridLength/6));
+                int gridWidthLand = gridHeightLand+(gridHeightLand/2);
+
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // In landscape
+                    menuView.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
+                } else {
+                    // In portrait
+                    menuView.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
+                }
+
+                return menuView;
+            }
+        };
+
         menuView.setAdapter(menu_adapter);
 
         backSelect = (ImageButton) findViewById(R.id.back_select);

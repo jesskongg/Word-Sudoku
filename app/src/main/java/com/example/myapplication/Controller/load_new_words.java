@@ -160,8 +160,6 @@ public class load_new_words extends AppCompatActivity {
         }
     }
 
-
-
     public void read_and_pass_file_string_to_pref(Uri u){
         try {
             InputStream inputStream = getContentResolver().openInputStream(u);
@@ -172,13 +170,21 @@ public class load_new_words extends AppCompatActivity {
             String line=null;
             int i=0;
             line_counter=0;
+            /*
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
                 stringBuilder.append(",");
                 line_counter = line_counter + 1;
 
             }
-            file_string=stringBuilder.toString();
+            */
+            Userdata here=new Userdata();
+            //it takes file reader and string builder as an input
+            //reads file data into a string and sends that into shared pref
+            //reads number of lines inside a file and sends that into shared pref
+            file_string=here.read_and_pass_file_string_to_pref(reader, stringBuilder);
+            line_counter=here.number_of_lines_inside_a_file();
+            //file_string=stringBuilder.toString();
             inputStream.close();
 
         } catch (FileNotFoundException e) {
@@ -187,15 +193,16 @@ public class load_new_words extends AppCompatActivity {
             e.printStackTrace();
         }
         put_data_into_shared_ref(1, line_counter);
-    }
 
+    }
     //this function puts file data into "app storage" which is accesable
     //in different activities
     public void put_data_into_shared_ref(int chapter_number, int number_of_pairs){
-        editor.putString("chapter "+chapter_number, file_string); // Storing string
+        editor.putString("chapter ", file_string); // Storing string
         editor.commit();
         //load mode
         editor.putInt("load_mode_chose", 200);
+        editor.commit();
         editor.putInt("line_counter", number_of_pairs);
         editor.commit();
     }

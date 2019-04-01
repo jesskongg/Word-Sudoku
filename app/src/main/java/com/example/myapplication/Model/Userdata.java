@@ -2,15 +2,26 @@ package com.example.myapplication.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.net.Uri;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Userdata {
     private Context mContext;
     private SQLiteDatabase db;
+
+    //variables for reading file data
+
+    //number of lines is 0
+    int line_counter=0;
+    String file_string;
+
 
     public void createTable(){
 
@@ -304,15 +315,48 @@ public class Userdata {
                 cursor.moveToNext();
             }
         } finally {
-            cursor.close();
+
         }
 
         return map;
     }
+
 
     public void deleteHashMap(Context context){
         mContext = context.getApplicationContext();
         db = new UserDataHelper(mContext).getWritableDatabase();
         db.delete("hashMap", null, null);
     }
+
+
+    //this function takes file path URI and then reads a file and puts that into shared ref
+    public String read_and_pass_file_string_to_pref(BufferedReader reader, StringBuilder stringBuilder) throws IOException {
+        String line;
+
+
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+            stringBuilder.append(",");
+            line_counter = line_counter + 1;
+            file_string=stringBuilder.toString();
+
+        }
+
+        return file_string;
+    }
+
+
+
+    public int number_of_lines_inside_a_file()
+    {
+        return line_counter;
+    }
+
+
+
+
+
+
+
+
 }

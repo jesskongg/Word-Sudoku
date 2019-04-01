@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 int gridWidthLand = gridHeightLand+20;
 
                 //adjusting grid height and width to accommodate 4x4 and 6x6 grids
-                if (gridLength == 4) {
+                if (gridLength == 4 || gridLength == 6) {
                     gridWidth = width/(gridLength);
                     gridHeight = gridWidth-(gridLength*5);
 
@@ -235,13 +235,13 @@ public class MainActivity extends AppCompatActivity {
                     gridWidthLand = gridHeightLand+29;
                 }
 
-                if (gridLength == 6) {
-                    gridWidth = width/(gridLength);
-                    gridHeight = gridWidth-(gridLength*3);
-
-                    gridHeightLand = height/(gridLength+(gridLength/3));
-                    gridWidthLand = gridHeightLand+29;
-                }
+//                if (gridLength == 6) {
+//                    gridWidth = width/(gridLength);
+//                    gridHeight = gridWidth-(gridLength*3);
+//
+//                    gridHeightLand = height/(gridLength+(gridLength/3));
+//                    gridWidthLand = gridHeightLand+29;
+//                }
 
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {

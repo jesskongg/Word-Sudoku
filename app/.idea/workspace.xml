@@ -69,15 +69,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="5439" />
-          <entry key="txt" value="611" />
+          <entry key="java" value="5475" />
+          <entry key="txt" value="649" />
           <entry key="xml" value="4693" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5439" />
-          <entry key="PLAIN_TEXT" value="611" />
+          <entry key="JAVA" value="5475" />
+          <entry key="PLAIN_TEXT" value="649" />
           <entry key="XML" value="4693" />
         </counts>
       </usages-collector>
@@ -95,8 +95,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="239" column="56" selection-start-line="239" selection-start-column="56" selection-end-line="239" selection-end-column="56" />
+            <state relative-caret-position="446">
+              <caret line="239" column="52" lean-forward="true" selection-start-line="239" selection-start-column="52" selection-end-line="239" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#11346#11855#0" expanded="true" />
@@ -489,7 +489,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
-    <property name="device.picker.selection" value="Nexus_5X_API_24" />
+    <property name="device.picker.selection" value="3100f299140a9400" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -776,7 +776,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554090152398</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Fix bug in main activity">
+      <created>1554090670957</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1554090670957</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -849,7 +856,8 @@
     <MESSAGE value="Merge master into branch" />
     <MESSAGE value="Make additional changes to MainActivity and formatting in XML files" />
     <MESSAGE value="Update button sizing in MainActivity" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update button sizing in MainActivity" />
+    <MESSAGE value="Fix bug in main activity" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug in main activity" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_instructions.xml">
@@ -1258,8 +1266,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/myapplication/Controller/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="239" column="56" selection-start-line="239" selection-start-column="56" selection-end-line="239" selection-end-column="56" />
+        <state relative-caret-position="446">
+          <caret line="239" column="52" lean-forward="true" selection-start-line="239" selection-start-column="52" selection-end-line="239" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#11346#11855#0" expanded="true" />

@@ -181,8 +181,17 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
 
         //menu grid
+        textMenu = findViewById(R.id.menu_cell);
         menuView = (GridView) findViewById(R.id.grid_menu);
-        textMenu = (TextView) findViewById(R.id.menu_cell);
+        if (gridLength == 4 || gridLength == 6) {
+            menuView.setNumColumns(2);
+            menuView.setColumnWidth(1);
+        }
+        if (gridLength == 12) {
+            menuView.setNumColumns(4);
+        }
+
+
 
         //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
         if (savedInstanceState != null) {
@@ -210,17 +219,37 @@ public class MainActivity extends AppCompatActivity {
                 int height = (displayMetrics.heightPixels);
 
                 //variables for portrait mode cell dimensions
-                int gridWidth = width/gridLength;
-                int gridHeight = gridWidth-(gridLength);
+                int gridWidth = width/(gridLength);
+                int gridHeight = gridWidth;
 
                 //variables for landscape mode cell dimensions
                 int gridHeightLand = height/(gridLength+(gridLength/4));
                 int gridWidthLand = gridHeightLand+20;
 
+                //adjusting grid height and width to accommodate 4x4 and 6x6 grids
+                if (gridLength == 4 || gridLength == 6) {
+                    gridWidth = width/(gridLength);
+                    gridHeight = gridWidth-(gridLength*5);
+
+                    gridHeightLand = height/(gridLength+(gridLength/3));
+                    gridWidthLand = gridHeightLand+29;
+                }
+
+//                if (gridLength == 6) {
+//                    gridWidth = width/(gridLength);
+//                    gridHeight = gridWidth-(gridLength*3);
+//
+//                    gridHeightLand = height/(gridLength+(gridLength/3));
+//                    gridWidthLand = gridHeightLand+29;
+//                }
+
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     // In landscape
                     view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
+//                    if (gridLength == 4){
+//                        view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand-20));
+//                    }
                 } else {
                     // In portrait
                     view.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
@@ -249,6 +278,21 @@ public class MainActivity extends AppCompatActivity {
                 //variables for landscape mode cell dimensions
                 int gridHeightLand = height/(gridLength+(gridLength/6));
                 int gridWidthLand = gridHeightLand+(gridHeightLand/2);
+
+
+                if (gridLength == 4) {
+                    gridWidth = width / (gridLength);
+                    gridHeight = width / (gridLength * 2);
+                    gridHeightLand = height/(gridLength);
+                    gridWidthLand = gridHeightLand;
+                }
+
+                if (gridLength == 12) {
+                    gridWidth = width / (gridLength/2);
+                    gridHeight = width / (gridLength);
+                    gridHeightLand = height/(gridLength);
+                    gridWidthLand = gridHeightLand + (gridLength*2);
+                }
 
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {

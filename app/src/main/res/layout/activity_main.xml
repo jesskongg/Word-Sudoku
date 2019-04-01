@@ -49,12 +49,11 @@
         android:layout_marginRight="8dp"
 
         android:gravity="center"
-        android:horizontalSpacing="2dip"
+        android:horizontalSpacing="10dip"
         android:verticalSpacing="8dip"
         android:numColumns="3"
-        android:stretchMode="columnWidth"
 
-        app:layout_constraintBottom_toTopOf="@id/guideline63"
+        app:layout_constraintBottom_toTopOf="@id/checkBoard"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

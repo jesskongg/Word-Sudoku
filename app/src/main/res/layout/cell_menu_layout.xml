@@ -9,4 +9,5 @@
     android:background="@drawable/grid_menu_shape"
     android:textColor="#FFFFFF"
     android:gravity="center"
-    android:textSize="14sp"/>
+    android:textSize="14sp"
+    android:autoSizeMaxTextSize="20sp"/>

@@ -30,7 +30,7 @@ public class boards_and_menu_data {
     public void setMenu_list_English(String[] english_file_data)
     {
 
-        if(english_file_data.length < number_of_columns){
+        if(english_file_data.length != number_of_columns){
             throw new IllegalArgumentException();
         }
         else {
@@ -44,7 +44,7 @@ public class boards_and_menu_data {
     public void setMenu_list_French(String[] french_file_data)
     {
 
-        if(french_file_data.length < number_of_columns){
+        if(french_file_data.length != number_of_columns){
             throw new IllegalArgumentException();
         }
         else {

@@ -9,9 +9,9 @@ public class board_checker {
 
     public board_checker(int[] board1)
     {
-//        if(board1.length != 81){
-//            throw new IllegalArgumentException();
-//        }
+        if(board1.length != 16 && board1.length != 36 && board1.length != 81 && board1.length != 144){
+            throw new IllegalArgumentException();
+        }
         //this.board=new int [81];
         this.board=board1;
         //this.number_of_columns=number_of_columns;
@@ -20,6 +20,10 @@ public class board_checker {
 
     public boolean checker(int length, int subLen, int subWid)
     {
+        if((length != 4 || subLen != 2 || subWid != 2) && (length != 6 || subLen != 2 || subWid != 3) && (length != 9 || subLen != 3 || subWid != 3) && (length != 12 || subLen != 3 || subWid != 4)){
+            throw new IllegalArgumentException();
+        }
+
         int sum = 0;
         for(int i = 1; i < length + 1; i++){
             sum += i;

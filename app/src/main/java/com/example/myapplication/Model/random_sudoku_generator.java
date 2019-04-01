@@ -10,9 +10,9 @@ import java.util.Random;
 public class random_sudoku_generator{
 
     public static ArrayList<Integer> get_possible_values(int[] board, int position, int length, int subLen, int subWid){
-//        if(board.length != 81 || position < 0 || position > 80){
-//            throw new IllegalArgumentException();
-//        }
+        if(board.length != length*length || position < 0 || position > length*length){
+            throw new IllegalArgumentException();
+        }
 
         HashSet<Integer> set = new HashSet<>();
 

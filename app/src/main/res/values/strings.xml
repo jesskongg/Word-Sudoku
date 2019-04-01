@@ -31,6 +31,7 @@
     <string name="default_puzzle">Default Puzzle</string>
     <string name="default_description">Start playing with our default set of words</string>
     <string name="load_description">Upload your own .csv file using the format: \n Column 1 - Words in English \n Column 2 - Words in French \n and play a game using those words</string>
+    <string name="continue_description">Continue your last game</string>
 
     <!--Language Selector Page-->
     <string name="select_lang">Select Language Mode</string>

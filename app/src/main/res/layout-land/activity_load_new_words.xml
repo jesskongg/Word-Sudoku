@@ -46,7 +46,7 @@
     <Button
         android:id="@+id/old_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
     <Button
         android:id="@+id/load_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -87,7 +87,7 @@
     <Button
         android:id="@+id/continue_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -107,7 +107,7 @@
     <TextView
         android:id="@+id/textView11"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -126,7 +126,7 @@
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -142,6 +142,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline57"
         app:layout_constraintTop_toTopOf="@+id/guideline54" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/continue_description"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/guideline55"
+        app:layout_constraintBottom_toTopOf="@+id/guideline62"
+        app:layout_constraintStart_toStartOf="@+id/guideline57"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline52"
@@ -172,14 +192,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.76" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline62"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.96" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline56"

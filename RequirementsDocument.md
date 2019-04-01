@@ -899,6 +899,6 @@ As a user, I want some more options for language modes.
 *Scenario 1*
 * Given: that the user has selected "PLAY"
 * When:  the user selects "DEFAULT PUZZLE" on the "Game Mode" page
-* Then: the user is directed to the 'Select Language Mode' page and can see some more options for language modes
+* Then: the user is directed to the 'Select Language Mode' page and can see some more options for language modes (i.e. English -> Spanish and Spanish -> English)
 
 --------------------------------------------------------------------------------

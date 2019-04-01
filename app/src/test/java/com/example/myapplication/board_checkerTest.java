@@ -9,12 +9,15 @@ import static org.junit.Assert.*;
 public class board_checkerTest {
     @Test
     public void testCreate(){
-        int[] testBoard = new int[81];
-        for(int i = 0; i < 81; i++){
-            testBoard[i] = 0;
+        int[] len = new int[]{16, 36, 81, 144};
+        for(int k = 0; k < 4; k++) {
+            int[] testBoard = new int[len[k]];
+            for (int i = 0; i < len[k]; i++) {
+                testBoard[i] = 0;
+            }
+            board_checker boardChecker = new board_checker(testBoard);
+            assertArrayEquals(testBoard, boardChecker.getBoard());
         }
-        board_checker boardChecker = new board_checker(testBoard);
-        assertArrayEquals(testBoard, boardChecker.getBoard());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -35,7 +38,7 @@ public class board_checkerTest {
                                     2, 8, 6, 1, 9, 7, 5, 3, 4,
                                     3, 5, 9, 8, 4, 2, 7, 6, 1};
         board_checker boardChecker = new board_checker(testBoard);
-        assertTrue(boardChecker.checker());
+        assertTrue(boardChecker.checker(9, 3, 3));
     }
 
     @Test
@@ -45,14 +48,14 @@ public class board_checkerTest {
             testBoard[i] = i;
         }
         board_checker boardChecker = new board_checker(testBoard);
-        assertFalse(boardChecker.checker());
+        assertFalse(boardChecker.checker(9, 3, 3));
 
         //another case
         for(int i = 0; i < 81; i++){
             testBoard[i] = 0;
         }
         board_checker boardChecker1 = new board_checker(testBoard);
-        assertFalse(boardChecker1.checker());
+        assertFalse(boardChecker1.checker(9, 3, 3));
 
         //another case
         testBoard = new int[]{5, 9, 4, 3, 6, 8, 2, 1, 7,
@@ -66,7 +69,17 @@ public class board_checkerTest {
                 3, 5, 9, 8, 4, 2, 7, 6, 1};
         testBoard[41] = 9;
         board_checker boardChecker2 = new board_checker(testBoard);
-        assertFalse(boardChecker1.checker());
+        assertFalse(boardChecker1.checker(9, 3, 3));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCheckerThrows(){
+        int[] testBoard = new int[81];
+        for(int i = 0; i < 81; i++){
+            testBoard[i] = i;
+        }
+        board_checker boardChecker = new board_checker(testBoard);
+        assertFalse(boardChecker.checker(9, 2, 3));
     }
 
 

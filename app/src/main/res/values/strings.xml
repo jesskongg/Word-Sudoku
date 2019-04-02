@@ -1,7 +1,7 @@
 <resources>
 
     <!--main activity sudoku grid puzzle-->
-    <string name="app_name">Sudoku</string>
+    <string name="app_name">Wudoku</string>
     <string name="chooseWord">Tap on a word</string>
     <string name="chooseCell">Tap on a cell first</string>
     <string name="boardTrue">You did it!</string>
@@ -9,10 +9,10 @@
     <string name="check">Check your answers</string>
     <string name="hint">Tap on the box again for a hint!</string>
     <string name="back_select">Go Back to Select Language Mode</string>
-    <string name="back_select_information">Tapping this button again will take you back to the mode selection page.</string>
+    <string name="back_select_information">Tapping this button again will take you back to the mode selection page</string>
 
     <!--Welcome Page -->
-    <string name="welcome">Sudoku</string>
+    <string name="welcome">Wudoku</string>
     <string name="start_button">Play</string>
     <string name="help_button">Instructions</string>
 
@@ -20,8 +20,8 @@
     <string name="instructions">Instructions</string>
     <string name="description1">Fill in the grid with words such that every row, column and 3x3 grid contains one of each of the 9 words translated into the either French or English (depending on the mode that you choose).</string>
     <string name="description2">If ENGLISH>FRENCH mode is selected, enter the French equivalents of the 9 English words already on the board. If FRENCH->ENGLISH mode is selected, enter the English equivalents of the 9 French words already on the board.</string>
-    <string name="hint_description">To unlock hints, tap on pre-filled squares of the Sudoku puzzle.</string>
-    <string name="description3">The game is complete once all 81 squares have been filled, and the answer has been verified as correct after clicking on the ‘Check Answers’ button.</string>
+    <string name="hint_description">To unlock hints, tap on pre-filled squares of the Sudoku puzzle</string>
+    <string name="description3">The game is complete once all 81 squares have been filled, and the answer has been verified as correct after clicking on the ‘Check Answers’ button</string>
     <string name="good_luck">Good luck!</string>
     <string name="back_main">Go Back to Main Menu</string>
 
@@ -37,11 +37,11 @@
     <string name="select_lang">Select Language Mode</string>
     <string name="mode_1"> ENGLISH > FRENCH</string>
     <string name="mode_2"> FRENCH > ENGLISH</string>
-    <string name="how_to">Please select a language mode to begin your Sudoku puzzle.</string>
+    <string name="how_to">Choose a language mode to begin your Sudoku puzzle</string>
     <string name="how_to2">To practice your listening comprehension \n skills, enable Listening Comprehension \n Mode to proceed with selecting a language.</string>
     <string name="how_to2_land">To practice your listening \n comprehension skills, enable \n Listening Comprehension Mode \n to proceed with selecting \n a language.</string>
     <string name="enableLC">Listening Comprehension Mode</string>
-    <string name ="gridSize_prompt">Please select grid size</string>
+    <string name ="gridSize_prompt">Grid Size Options</string>
     <string-array name="gridSize">
         <item>DEFAULT: 9x9 grid</item>
         <item>4x4 grid</item>

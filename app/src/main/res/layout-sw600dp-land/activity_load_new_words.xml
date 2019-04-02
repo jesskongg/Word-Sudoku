@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/turquoise"
+    android:background="@color/white"
     tools:context=".Controller.MainMenu">
 
     <TextView
@@ -23,7 +23,7 @@
         android:text="@string/game_mode"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimary"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline53"
@@ -37,11 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17sp"
-        android:layout_marginLeft="17sp"
         android:layout_marginBottom="26sp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/help_button"
-        app:layout_constraintStart_toStartOf="@+id/help_button" />
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/old_button"
@@ -117,9 +116,8 @@
         android:gravity="center"
         android:text="@string/default_description"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline54"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline57"
@@ -137,9 +135,8 @@
         android:gravity="center"
         android:text="@string/load_description"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline55"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline57"
@@ -157,9 +154,8 @@
         android:gravity="center"
         android:text="@string/continue_description"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/guideline55"
         app:layout_constraintBottom_toTopOf="@+id/guideline62"
         app:layout_constraintStart_toStartOf="@+id/guideline57"

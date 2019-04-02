@@ -215,6 +215,17 @@ public class MainActivity extends AppCompatActivity {
                 {
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
+//              For Final Iteration
+//                TextView grid_text = (TextView) view;
+//                if (gridLength == 4 || gridLength == 6) {
+//                    grid_text.setTextSize(30);
+//                }
+//                if (gridLength == 9) {
+//                    grid_text.setTextSize(20);
+//                }
+//                if (gridLength == 12) {
+//                    grid_text.setTextSize(14);
+//                }
 
                 int width = (displayMetrics.widthPixels);
                 int height = (displayMetrics.heightPixels);

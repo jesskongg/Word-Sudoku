@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/turquoise"
+    android:background="@color/white"
     tools:context=".Controller.MainActivity">
 
     <!-- Sudoku Grid -->
@@ -109,7 +109,6 @@
         app:layout_constraintTop_toBottomOf="@id/guideline63"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_menu_revert" />
-
 
 
     <android.support.constraint.Guideline

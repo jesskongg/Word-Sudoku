@@ -6,12 +6,12 @@
     android:shape="rectangle">
 
     <!-- View background color-->
-    <solid android:color="#355E3B" />
+    <solid android:color="@color/lightGreen" />
 
     <!-- View border color and width -->
     <stroke
         android:width="2dip"
-        android:color="#FFFFFF"/>
+        android:color="@color/colorPrimary"/>
 
     <!--<padding-->
         <!--android:bottom="2dp"-->

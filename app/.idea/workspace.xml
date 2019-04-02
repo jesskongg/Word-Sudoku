@@ -22,26 +22,12 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c80af5c6-2457-4485-ba20-66c13d9c611c" name="Default Changelist" comment="">
+    <list default="true" id="c80af5c6-2457-4485-ba20-66c13d9c611c" name="Default Changelist" comment="Change colour scheme of app and improve background">
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/bottom_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/bottom_right_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/top_left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/top_left_11.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-land/activity_instructions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-land/activity_instructions.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-land/activity_load_new_words.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-land/activity_load_new_words.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-land/activity_main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-land/activity_main_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-land/activity_select_language_mode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-land/activity_select_language_mode.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_instructions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_instructions.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_load_new_words.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_load_new_words.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_main_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_select_language_mode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp-land/activity_select_language_mode.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_instructions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_instructions.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_load_new_words.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_load_new_words.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_main_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_select_language_mode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout-sw600dp/activity_select_language_mode.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_instructions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_instructions.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_load_new_words.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_load_new_words.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_main_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_select_language_mode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_select_language_mode.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,21 +71,21 @@
           <entry key="git.branch.checkout.local" value="1" />
           <entry key="git.branch.checkout.remote" value="2" />
           <entry key="git.branch.create.new" value="1" />
-          <entry key="git.branch.merge" value="19" />
+          <entry key="git.branch.merge" value="20" />
           <entry key="git.checkout.as.new.branch" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="5747" />
-          <entry key="txt" value="742" />
+          <entry key="txt" value="811" />
           <entry key="xml" value="6665" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="5747" />
-          <entry key="PLAIN_TEXT" value="742" />
+          <entry key="PLAIN_TEXT" value="811" />
           <entry key="XML" value="6665" />
         </counts>
       </usages-collector>
@@ -140,7 +126,7 @@
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+              <caret line="111" selection-start-line="111" selection-end-line="111" />
             </state>
           </provider>
         </entry>
@@ -313,6 +299,20 @@
   <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -546,6 +546,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="IntelliLang.Configuration" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -858,7 +859,21 @@
       <option name="project" value="LOCAL" />
       <updated>1554193790181</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Make UI changes">
+      <created>1554247858683</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1554247858683</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Change colour scheme of app and improve background">
+      <created>1554247900522</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1554247900522</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -889,7 +904,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.22103004" />
@@ -934,7 +948,8 @@
     <MESSAGE value="Fix bug in main activity" />
     <MESSAGE value="Make formatting changes to game mode page" />
     <MESSAGE value="Make UI changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make UI changes" />
+    <MESSAGE value="Change colour scheme of app and improve background" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change colour scheme of app and improve background" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/test/java/com/example/myapplication/ExampleUnitTest.java">
@@ -1315,7 +1330,7 @@
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
-          <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
         </state>
       </provider>
     </entry>

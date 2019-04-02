@@ -108,6 +108,7 @@
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:theme="@style/SwitchTheme"
         app:layout_constraintBottom_toTopOf="@+id/guideline50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

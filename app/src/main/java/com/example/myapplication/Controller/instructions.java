@@ -8,12 +8,23 @@ import android.widget.ImageButton;
 
 import com.example.myapplication.Controller.MainMenu;
 import com.example.myapplication.R;
+import com.example.myapplication.View.SharedPref;
 
 
 public class instructions extends AppCompatActivity {
     private ImageButton exitbutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final SharedPref sharedPref;
+
+        sharedPref = new SharedPref(this);
+
+        if(sharedPref.loadNightModeState()) {
+            setTheme(R.style.DarkMode);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
 

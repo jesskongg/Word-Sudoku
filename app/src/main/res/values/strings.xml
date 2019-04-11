@@ -10,11 +10,13 @@
     <string name="hint">Tap on the box again for a hint!</string>
     <string name="back_select">Go Back to Select Language Mode</string>
     <string name="back_select_information">Tapping this button again will take you back to the mode selection page</string>
+    <string name="pause">Pause</string>
 
     <!--Welcome Page -->
     <string name="welcome">Wudoku</string>
     <string name="start_button">Play</string>
     <string name="help_button">Instructions</string>
+    <string name="dark_mode">Dark Mode</string>
 
     <!-- Instructions Page-->
     <string name="instructions">Instructions</string>

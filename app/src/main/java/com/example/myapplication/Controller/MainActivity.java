@@ -5,35 +5,33 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteException;
-import android.service.autofill.UserData;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
-import com.example.myapplication.Model.ChooseWords;
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
 import com.example.myapplication.Model.board_checker;
-import com.example.myapplication.SquareGrid;
+import com.example.myapplication.View.SharedPref;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -62,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
     private GridView menuView;
     private TextView textMenu;
 
+    //puzzle timer variables
+    private Chronometer timer;
+    private long pauseOffset;
+    private boolean running;
+    ImageButton pause;
+
+    //dark mode variables
+    private Switch dayNight;
+
     //variables for grid-menu communication
     private String received_text = " ";
     private int board_cell_clicked_position;
@@ -83,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
     private String hint_for_board[];
     private String listFrenchWords[]; // for L.C. mode
 
-    private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig", "egg", "black","white"};
-    private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue", "oeuf","noir","blanc"};
+    private String[] mMenu_list_English = {"pink", "blue", "red", "green", "grey", "peach", "pear", "plum", "fig", "egg", "black", "white"};
+    private String[] mMenu_list_French = {"rose", "bleu", "rouge", "vert", "gris", "pêche", "poire", "prune", "figue", "oeuf", "noir", "blanc"};
 
     //private boards_and_menu_data data_object = new boards_and_menu_data();
 
@@ -94,13 +101,11 @@ public class MainActivity extends AppCompatActivity {
     private int subWid;
 
 
-    public static final String MyPREFERENCES = "Sudoku_pref" ;
+    public static final String MyPREFERENCES = "Sudoku_pref";
     public static final String Length = "gridLength";
     public static final String SubgridLength = "subgridLength";
     public static final String SubgridWidth = "subgridWidth";
     SharedPreferences sharedpreferences_for_grid_var;
-
-
 
 
     @Override
@@ -113,43 +118,40 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putIntArray(KEY_BOARD, board);
     }
 
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            setContentView(R.layout.activity_main);
-//        }
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            setContentView(R.layout.activity_main);
-//        }
-//    }
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //restore state of dark/light mode selection that user selected before closing app
+        final SharedPref sharedPref;
+
+        sharedPref = new SharedPref(this);
+
+        if(sharedPref.loadNightModeState()) {
+            setTheme(R.style.DarkMode);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "entered onCreate");
 
         sharedpreferences_for_grid_var = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor_grid_var = sharedpreferences_for_grid_var.edit();
-        gridLength=sharedpreferences_for_grid_var.getInt(Length, 9);
+        gridLength = sharedpreferences_for_grid_var.getInt(Length, 9);
         subLen = sharedpreferences_for_grid_var.getInt(SubgridLength, 3);
         subWid = sharedpreferences_for_grid_var.getInt(SubgridWidth, 3);
 
         //if newGameFlag == 1, start a new game.
         Intent mode = getIntent();
         int newGameFlag = mode.getIntExtra("newGame", 1);
-        if(newGameFlag == 0){
-            try{
+        if (newGameFlag == 0) {
+            try {
                 Userdata data = new Userdata();
                 int[] size = data.getLenth(MainActivity.this);
                 gridLength = size[0];
                 subLen = size[1];
                 subWid = size[2];
-            }
-            catch (SQLiteException ex){
+            } catch (SQLiteException ex) {
             }
         }
 
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
         set_listening_comprehension(data_object);
 
-        if(newGameFlag == 0) {
+        if (newGameFlag == 0) {
             try {
                 //Load data from SQL, if it failed, which means the app is used first time, and this step will be skipped.
                 //NOTICE: just recover variables in MainActivity. Variables in boards_and_menu_data are not changed.
@@ -193,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
         if (savedInstanceState != null) {
             wordListSudokuTable = savedInstanceState.getStringArray(KEY_WORDS);
@@ -201,18 +202,45 @@ public class MainActivity extends AppCompatActivity {
             board = savedInstanceState.getIntArray(KEY_BOARD);
         }
 
+        //timer
+        timer = findViewById(R.id.timer);
+        timer.start();
+        running = true;
+        pause = findViewById(R.id.pause);
+        pause.setOnClickListener(imgButtonHandler);
+
+
+        //dark mode switch
+        dayNight = (Switch) findViewById(R.id.dayNight);
+        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {
+            dayNight.setChecked(true);
+        }
+
+        dayNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    restartApp();
+                }
+                else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    restartApp();
+                }
+            }
+        });
+
 
         //adapter for puzzle grid
         final ArrayAdapter<String> adapter;
 
         final DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        adapter = new ArrayAdapter<String>(this, R.layout.cell_layout, wordListSudokuTable){
+        adapter = new ArrayAdapter<String>(this, R.layout.cell_layout, wordListSudokuTable) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
-                if (board[position]==0 && solvable_board[position]!=0)
-                {
+                if (board[position] == 0 && solvable_board[position] != 0) {
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
 //              For Final Iteration
@@ -231,20 +259,20 @@ public class MainActivity extends AppCompatActivity {
                 int height = (displayMetrics.heightPixels);
 
                 //variables for portrait mode cell dimensions
-                int gridWidth = width/(gridLength);
+                int gridWidth = width / (gridLength);
                 int gridHeight = gridWidth;
 
                 //variables for landscape mode cell dimensions
-                int gridHeightLand = height/(gridLength+(gridLength/4));
-                int gridWidthLand = gridHeightLand+20;
+                int gridHeightLand = height / (gridLength + (gridLength / 4));
+                int gridWidthLand = gridHeightLand + 20;
 
                 //adjusting grid height and width to accommodate 4x4 and 6x6 grids
                 if (gridLength == 4 || gridLength == 6) {
-                    gridWidth = width/(gridLength);
-                    gridHeight = gridWidth-(gridLength*5);
+                    gridWidth = width / (gridLength);
+                    gridHeight = gridWidth - (gridLength * 5);
 
-                    gridHeightLand = height/(gridLength+(gridLength/3));
-                    gridWidthLand = gridHeightLand+29;
+                    gridHeightLand = height / (gridLength + (gridLength / 3));
+                    gridWidthLand = gridHeightLand + 29;
                 }
 
 //                if (gridLength == 6) {
@@ -264,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
 //                    }
                 } else {
                     // In portrait
-                    view.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
+                    view.setLayoutParams(new GridView.LayoutParams(gridWidth, gridHeight));
                 }
 
                 return view;
@@ -284,26 +312,26 @@ public class MainActivity extends AppCompatActivity {
                 int height = (displayMetrics.heightPixels);
 
                 //variables for portrait mode cell dimensions
-                int gridWidth = width/(gridLength/2);
-                int gridHeight = width/(gridLength*2);
+                int gridWidth = width / (gridLength / 2);
+                int gridHeight = width / (gridLength * 2);
 
                 //variables for landscape mode cell dimensions
-                int gridHeightLand = height/(gridLength+(gridLength/6));
-                int gridWidthLand = gridHeightLand+(gridHeightLand/2);
+                int gridHeightLand = height / (gridLength + (gridLength / 6));
+                int gridWidthLand = gridHeightLand + (gridHeightLand / 2);
 
 
                 if (gridLength == 4) {
                     gridWidth = width / (gridLength);
                     gridHeight = width / (gridLength * 2);
-                    gridHeightLand = height/(gridLength);
+                    gridHeightLand = height / (gridLength);
                     gridWidthLand = gridHeightLand;
                 }
 
                 if (gridLength == 12) {
-                    gridWidth = width / (gridLength/2);
+                    gridWidth = width / (gridLength / 2);
                     gridHeight = width / (gridLength);
-                    gridHeightLand = height/(gridLength);
-                    gridWidthLand = gridHeightLand + (gridLength*2);
+                    gridHeightLand = height / (gridLength);
+                    gridWidthLand = gridHeightLand + (gridLength * 2);
                 }
 
                 int orientation = getResources().getConfiguration().orientation;
@@ -312,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
                     menuView.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
                 } else {
                     // In portrait
-                    menuView.setLayoutParams(new GridView.LayoutParams(gridWidth,gridHeight));
+                    menuView.setLayoutParams(new GridView.LayoutParams(gridWidth, gridHeight));
                 }
 
                 return menuView;
@@ -368,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), hint_text, Toast.LENGTH_SHORT).show();
 
                             Userdata data = new Userdata();
-                            String frenchWord = listFrenchWords[board[current_position]-1];
+                            String frenchWord = listFrenchWords[board[current_position] - 1];
                             data.record_hint_times(frenchWord, MainActivity.this);
 
                             //any subsequent clicks on a pre-filled cell (with #) will still pronounce word in French!
@@ -410,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button checkBoard = (Button) findViewById(R.id.checkBoard);
+        final ImageButton checkBoard = (ImageButton) findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -446,7 +474,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void continue_game(){
+    public void continue_game() {
         Userdata data = new Userdata();
         int size[] = data.getLenth(MainActivity.this);
         board = data.getNumber_board(size[0], MainActivity.this);
@@ -458,8 +486,7 @@ public class MainActivity extends AppCompatActivity {
         LC_enabled = data.getLC(MainActivity.this);
     }
 
-    public void set_listening_comprehension(boards_and_menu_data sudoku_object)
-    {
+    public void set_listening_comprehension(boards_and_menu_data sudoku_object) {
         //listening comprehension
         Intent mode = getIntent();
         langMode = mode.getIntExtra("language", 0);
@@ -478,6 +505,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     // SET-UP GRIDS based on the Language Mode selected as well as Listening Comprehension mode (enabled or disabled)
     private void setWordList(int caseNumber, int LC_enabled, boards_and_menu_data sudoku_object) {
         // CASE NUMBER =1 --> LANGUAGE MODE = ENGLISH TO FRENCH
@@ -520,8 +548,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goSelect);
     }
 
-    public void set_default_or_loaded(boards_and_menu_data sudoku_object)
-    {
+    public void set_default_or_loaded(boards_and_menu_data sudoku_object) {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
         load_mode_choose = pref.getInt("load_mode_chose", 0);
@@ -529,11 +556,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (load_mode_choose == 100) {
 
-            String[] mMenu_list_English_cut=new String[sudoku_object.getNumber_of_columns()];
-            mMenu_list_English_cut=Arrays.copyOfRange(mMenu_list_English, 0, sudoku_object.getNumber_of_columns());
+            String[] mMenu_list_English_cut = new String[sudoku_object.getNumber_of_columns()];
+            mMenu_list_English_cut = Arrays.copyOfRange(mMenu_list_English, 0, sudoku_object.getNumber_of_columns());
 
-            String[] mMenu_list_French_cut= new String[sudoku_object.getNumber_of_columns()];
-            mMenu_list_French_cut=Arrays.copyOfRange(mMenu_list_French, 0, sudoku_object.getNumber_of_columns() );
+            String[] mMenu_list_French_cut = new String[sudoku_object.getNumber_of_columns()];
+            mMenu_list_French_cut = Arrays.copyOfRange(mMenu_list_French, 0, sudoku_object.getNumber_of_columns());
 
             sudoku_object.setMenu_list_English(mMenu_list_English_cut);
             sudoku_object.setMenu_list_French(mMenu_list_French_cut);
@@ -543,17 +570,37 @@ public class MainActivity extends AppCompatActivity {
             //it can be recieved as an intent
             //it can be recieved as an intent
             int chapter_number = 1;
-            String recieved_string=null;
+            String recieved_string = null;
             recieved_string = pref.getString("chapter ", "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
 
-            int line_counter=pref.getInt("line_counter",0);
+            int line_counter = pref.getInt("line_counter", 0);
             sudoku_object.set_data_recived_from_file(recieved_string, line_counter, MainActivity.this);
         }
     }
 
+    //play and pause timer
+    View.OnClickListener imgButtonHandler = new View.OnClickListener() {
 
+        public void onClick(View v) {
+            if (running) {
+                timer.stop();
+                pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+                running = false;
+                pause.setBackgroundResource(R.drawable.play);
+            } else {
+                timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                timer.start();
+                running = true;
+                pause.setBackgroundResource(R.drawable.pause);
+            }
+        }
+    };
 
-
-
+    //dark/light mode
+    public void restartApp() {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

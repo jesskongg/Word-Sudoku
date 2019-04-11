@@ -6,8 +6,9 @@
     android:id="@+id/menu_cell"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:autoSizeMaxTextSize="20sp"
     android:background="@drawable/grid_menu_shape"
-    android:textColor="@color/black"
+    android:fontFamily="@font/dosis_medium"
     android:gravity="center"
-    android:textSize="14sp"
-    android:autoSizeMaxTextSize="20sp"/>
+    android:textColor="@color/black"
+    android:textSize="14sp" />

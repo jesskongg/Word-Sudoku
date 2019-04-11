@@ -15,6 +15,7 @@ import android.widget.Switch;
 
 import com.example.myapplication.Controller.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.View.SharedPref;
 
 public class SelectLanguageMode extends AppCompatActivity {
 
@@ -42,6 +43,16 @@ public class SelectLanguageMode extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final SharedPref sharedPref;
+
+        sharedPref = new SharedPref(this);
+
+        if(sharedPref.loadNightModeState()) {
+            setTheme(R.style.DarkMode);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_language_mode);
 

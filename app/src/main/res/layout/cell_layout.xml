@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:layout_marginTop="0dp"
     android:background="@drawable/cell_shape"
-    android:textColor="#535151"
+    android:fontFamily="@font/dosis_medium"
     android:gravity="center"
-    android:textSize="14sp"/>
+    android:textColor="?attr/textColour"
+    android:textSize="14sp" />
 
 

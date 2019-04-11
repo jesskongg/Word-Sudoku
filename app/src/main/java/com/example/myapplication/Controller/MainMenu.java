@@ -16,7 +16,6 @@ public class MainMenu extends AppCompatActivity {
     private Button newGameButton;
     private ImageButton shareButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,6 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-
     public void shareInfo(){
         Intent share;
         share = new Intent(android.content.Intent.ACTION_SEND);
@@ -60,8 +58,6 @@ public class MainMenu extends AppCompatActivity {
         share.putExtra(Intent.EXTRA_TEXT, "I'm learning new languages with Wudoku!");//+ "My current score is " + score);
         startActivity(Intent.createChooser(share, "Share via"));
     }
-
-
 
     // Button for user to proceed to choosing their language mode
     public void openSelectLoadMode() {

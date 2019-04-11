@@ -43,28 +43,22 @@ public class MainMenu extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent share;
-                share = new Intent(android.content.Intent.ACTION_SEND);
-                share.setType("text/plain");
-                //int score =0;
-                share.putExtra(Intent.EXTRA_SUBJECT, "Wudoku");
-                share.putExtra(Intent.EXTRA_TEXT, "I'm learning new languages with Wudoku!");//+ "My current score is " + score);
-                startActivity(Intent.createChooser(share, "Share via"));
+                shareInfo();
             }
         });
-        /*shareButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                Intent share = new Intent(Intent.ACTION_SEND);
-                //share.setType("text/plain");
-                int score =0;
-                share.putExtra(Intent.EXTRA_SUBJECT, "Wudoku");
-                share.putExtra(Intent.EXTRA_TEXT, "°I'm learning new languages with Wudoku!" + "My current score is " + score);
-                startActivity(Intent.createChooser(share, "Share via"));
-            }
-        }); */
 
+
+    }
+
+
+    public void shareInfo(){
+        Intent share;
+        share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        //int score =0;
+        share.putExtra(Intent.EXTRA_SUBJECT, "Wudoku");
+        share.putExtra(Intent.EXTRA_TEXT, "I'm learning new languages with Wudoku!");//+ "My current score is " + score);
+        startActivity(Intent.createChooser(share, "Share via"));
     }
 
 

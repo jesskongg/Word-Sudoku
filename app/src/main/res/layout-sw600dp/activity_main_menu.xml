@@ -126,7 +126,7 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/share_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="52dp"

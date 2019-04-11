@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Controller.MainActivity">
+    tools:context=".Controller.MainActivity"
+    android:id="@+id/mainLayout_land">
 
     <!-- Grid view for Sudoku board-->
     <com.example.myapplication.SquareGrid

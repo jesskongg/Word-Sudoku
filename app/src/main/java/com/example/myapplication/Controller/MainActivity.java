@@ -26,7 +26,7 @@ import com.example.myapplication.Model.ChooseWords;
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
-import com.example.myapplication.Model.board_checker;
+
 import com.example.myapplication.SquareGrid;
 
 import java.util.Arrays;
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Userdata data = new Userdata();
+        final Userdata data = new Userdata();
         data.saveData(gridLength, board, solvable_board, wordListSudokuTable, wordListKeyboard, hint_for_board, listFrenchWords, MainActivity.this);
         data.saveLC(LC_enabled, MainActivity.this);
 
@@ -414,9 +414,8 @@ public class MainActivity extends AppCompatActivity {
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                board_checker checkBoard_object = new board_checker(solvable_board);
                 boolean isCorrect;
-                isCorrect = checkBoard_object.checker(gridLength, subLen, subWid);
+                isCorrect = data_object.checker(solvable_board, gridLength, subLen, subWid);
 
                 if (isCorrect == true) {
                     Toast.makeText(MainActivity.this,
@@ -542,12 +541,15 @@ public class MainActivity extends AppCompatActivity {
         if (load_mode_choose == 200) {
             //it can be recieved as an intent
             //it can be recieved as an intent
-            int chapter_number = 1;
-            String recieved_string=null;
-            recieved_string = pref.getString("chapter ", "no");
+            Userdata data = new Userdata();
+            String chapterName = pref.getString("chapterName", "no");
+            String recieved_string = data.getChapterWords(chapterName, MainActivity.this);
+            int line_counter = data.getLineCounter(chapterName, MainActivity.this);
+//            String recieved_string=null;
+//            recieved_string = pref.getString("chapter ", "no");
             //recieved_data[i]=pref.getString("chapter "+chapter_number+" line number is "+i, "no");
 
-            int line_counter=pref.getInt("line_counter",0);
+//            int line_counter=pref.getInt("line_counter",0);
             sudoku_object.set_data_recived_from_file(recieved_string, line_counter, MainActivity.this);
         }
     }

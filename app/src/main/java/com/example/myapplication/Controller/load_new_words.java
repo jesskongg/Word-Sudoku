@@ -75,43 +75,45 @@ public class load_new_words extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //ask for permission to access external files
-                defaultPermission=isStoragePermissionGranted();
-
-                Userdata data = new Userdata();
-                data.deleteHashMap(load_new_words.this);
-
-                if (defaultPermission==true || grantedPermission==true )
-                {
-                    Toast.makeText(load_new_words.this, "Permission is given", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("*/*");
-
-                    //after permission is given a user should have access
-                    startActivityForResult(intent,PICKFILE_RESULT_CODE);
-                }
+                Intent aaa = new Intent(v.getContext(), chapters.class);
+                startActivity(aaa);
+//                //ask for permission to access external files
+//                defaultPermission=isStoragePermissionGranted();
+//
+//                Userdata data = new Userdata();
+//                data.deleteHashMap(load_new_words.this);
+//
+//                if (defaultPermission==true || grantedPermission==true )
+//                {
+//                    Toast.makeText(load_new_words.this, "Permission is given", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("*/*");
+//
+//                    //after permission is given a user should have access
+//                    startActivityForResult(intent,PICKFILE_RESULT_CODE);
+//                }
             }
         });
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            grantedPermission=true;
-            Toast.makeText(load_new_words.this, "Please click the button again to load your own .csv file", Toast.LENGTH_LONG).show();
-
-        }
-        else
-        {
-            //modification-polina
-            grantedPermission=false;
-            Toast.makeText(load_new_words.this, "Permission is denied.File cannot be loaded", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+//            grantedPermission=true;
+//            Toast.makeText(load_new_words.this, "Please click the button again to load your own .csv file", Toast.LENGTH_LONG).show();
+//
+//        }
+//        else
+//        {
+//            //modification-polina
+//            grantedPermission=false;
+//            Toast.makeText(load_new_words.this, "Permission is denied.File cannot be loaded", Toast.LENGTH_SHORT).show();
+//        }
+//
+//
+//    }
 
     public void openSelectLanguageMode() {
         //THIS SHOULD BE CHANGE TO LOAD_NEW_WORDS FILE

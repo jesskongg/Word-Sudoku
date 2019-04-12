@@ -37,6 +37,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controller.SelectLanguageMode" />
+        <activity android:name=".Controller.chapters" />
     </application>
 
 </manifest>

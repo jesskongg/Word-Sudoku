@@ -17,6 +17,7 @@ public class UserDataHelper extends SQLiteOpenHelper {
         db.execSQL("create table hashMap(words String primary key, times String)");
         db.execSQL("create table boardSize(length String primary key)");
         db.execSQL("create table LCmode(LC_mode String primary key)");
+        db.execSQL("create table userWords(chapterName String primary key, words String, number_of_pairs String)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

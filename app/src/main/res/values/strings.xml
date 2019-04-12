@@ -53,5 +53,8 @@
 
 
     <string name="continue_text">Continue Game</string>
+    <string name="add">Add New Chapters</string>
+    <string name="delete">Delete</string>
+    <string name="chapter_description">Add button would add a new chapter. Tap Delete Button once and tap a chapter would delete it. Chapter name without words file in it will not be saved</string>
 
 </resources>

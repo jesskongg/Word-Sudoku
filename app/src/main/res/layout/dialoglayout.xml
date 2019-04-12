@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/chapterName"
+        android:background="@drawable/cell_shape"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:autofillHints="Chapter Name"/>
+
+</android.support.constraint.ConstraintLayout>

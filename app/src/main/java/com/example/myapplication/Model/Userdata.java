@@ -10,6 +10,7 @@ import android.net.Uri;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Userdata {
@@ -371,7 +372,7 @@ public class Userdata {
                 cursor.moveToNext();
             }
         } finally {
-
+            cursor.close();
         }
 
         return map;
@@ -410,7 +411,89 @@ public class Userdata {
 
 
 
+    public void saveChapterWords(String name, String words, int pairs, Context context){
+        mContext = context.getApplicationContext();
 
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("chapterName", name);
+        values.put("words", words);
+        String sPairs = Integer.toString(pairs);
+        values.put("number_of_pairs", sPairs);
+        db.insert("userWords", null, values);
+    }
+
+    public void deleteChapterWords(String name, Context context){
+        mContext = context.getApplicationContext();
+
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        db.delete("userWords", "chapterName=?", new String[]{name});
+    }
+
+    public String getChapterWords(String name, Context context){
+        String words = null;
+
+        mContext = context.getApplicationContext();
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        Cursor cursor = db.query("userWords", new String[]{"chapterName", "words"}, null, null, null, null, "chapterName");
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String mName = cursor.getString(cursor.getColumnIndex("chapterName"));
+                if(mName.equals(name)){
+                    words = cursor.getString(cursor.getColumnIndex("words"));
+                }
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return words;
+    }
+
+    public int getLineCounter(String name, Context context){
+        int num = 0;
+
+        mContext = context.getApplicationContext();
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        Cursor cursor = db.query("userWords", new String[]{"chapterName", "number_of_pairs"}, null, null, null, null, "chapterName");
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String mName = cursor.getString(cursor.getColumnIndex("chapterName"));
+                if(mName.equals(name)){
+                    String sNum = cursor.getString(cursor.getColumnIndex("number_of_pairs"));
+                    num = Integer.valueOf(sNum).intValue();
+                }
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return num;
+    }
+
+    public ArrayList<String> getChapterList(Context context){
+        ArrayList<String> list = new ArrayList<>();
+
+        mContext = context.getApplicationContext();
+        db = new UserDataHelper(mContext).getWritableDatabase();
+        Cursor cursor = db.query("userWords", new String[]{"chapterName"}, null, null, null, null, "chapterName");
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String mName = cursor.getString(cursor.getColumnIndex("chapterName"));
+                list.add(mName);
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return list;
+    }
 
 
 

@@ -53,7 +53,7 @@ public class MainMenu extends AppCompatActivity {
         });
 
         //dark mode switch
-        dayNight = (Switch) findViewById(R.id.dayNight);
+        dayNight = findViewById(R.id.dayNight);
         if (sharedPref.loadNightModeState()) {
             dayNight.setChecked(true);
         }

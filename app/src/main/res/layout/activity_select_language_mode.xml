@@ -154,7 +154,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline30" />
 
-
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="209dp"
@@ -168,7 +167,6 @@
         android:textAlignment="center"
         android:textColor="?attr/textColour"
         android:textSize="20sp"
-        android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

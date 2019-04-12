@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
+import com.example.myapplication.Model.ChronometerWithPause;
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_SOLVABLEBOARD = "solvable_board";
     private static final String KEY_BOARD = "board";
     private static final String KEY_COLOUR = "cell_colour";
+    private static final String KEY_TIME = "key_time";
+    private static final String KEY_RUNNING = "running";
 
     //puzzle variables
     private GridView gridView;
@@ -62,9 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
     //puzzle timer variables
     private Chronometer timer;
+    //    private ChronometerWithPause timer;
     private long pauseOffset;
     private boolean running;
     ImageButton pause;
+    private long currTime;
+    private boolean currRunning;
 
     //dark mode variables
     private Switch dayNight;
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean menu_cell_clicked = false;
     private boolean grid_cell_clicked = false;
 
-    private ImageButton backSelect;
+    private Button backSelect;
 
     //number board variables
 
@@ -116,7 +122,55 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
         savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
         savedInstanceState.putIntArray(KEY_BOARD, board);
+        savedInstanceState.putLong(KEY_TIME, timer.getBase());
+        savedInstanceState.putBoolean(KEY_RUNNING, running);
+//        timer.saveInstanceState(savedInstanceState);
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        currTime = timer.getBase();
+        currRunning = running;
+        currTime = savedInstanceState.getLong(KEY_TIME);
+        currRunning = savedInstanceState.getBoolean(KEY_RUNNING);
+
+        if (currRunning) {
+            timer.setBase(currTime);
+            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+//            running = false;
+//            pause.setBackgroundResource(R.drawable.round_play_arrow_24);
+//            timer.start();
+        }
+        else {
+            timer.setBase(currTime);
+            timer.stop();
+//            timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            pause.setBackgroundResource(R.drawable.round_play_arrow_24);
+
+            if (running) {
+
+                View.OnClickListener imgButtonHandler = new View.OnClickListener() {
+
+                    public void onClick(View v) {
+                        if (running) {
+                            timer.stop();
+                            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+                            running = false;
+                            pause.setBackgroundResource(R.drawable.round_play_arrow_24);
+                        } else {
+                            timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                            timer.start();
+                            running = true;
+                            pause.setBackgroundResource(R.drawable.round_pause_24);
+                        }
+
+                    }
+                };
+            }
+        }
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,42 +248,37 @@ public class MainActivity extends AppCompatActivity {
             menuView.setNumColumns(4);
         }
 
-
-        //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
-        if (savedInstanceState != null) {
-            wordListSudokuTable = savedInstanceState.getStringArray(KEY_WORDS);
-            solvable_board = savedInstanceState.getIntArray(KEY_SOLVABLEBOARD);
-            board = savedInstanceState.getIntArray(KEY_BOARD);
-        }
-
-        //timer
+        // TIMER
         timer = findViewById(R.id.timer);
         timer.start();
         running = true;
         pause = findViewById(R.id.pause);
         pause.setOnClickListener(imgButtonHandler);
 
-
-        //dark mode switch
-        dayNight = (Switch) findViewById(R.id.dayNight);
-        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES) {
-            dayNight.setChecked(true);
+        //SAVE STATE WHEN DEVICE CONFIGURATION CHANGES (EX. ORIENTATION DUE TO ROTATION)
+        if (savedInstanceState != null) {
+            wordListSudokuTable = savedInstanceState.getStringArray(KEY_WORDS);
+            solvable_board = savedInstanceState.getIntArray(KEY_SOLVABLEBOARD);
+            board = savedInstanceState.getIntArray(KEY_BOARD);
+            timer.setBase(savedInstanceState.getLong(KEY_TIME));
+//            timer.start();
         }
 
-        dayNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    restartApp();
-                }
-                else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    restartApp();
-                }
-            }
-        });
 
+
+//        // RESTORE TIMER STATE DURING ROTATION
+//        if (savedInstanceState != null) {
+//            timer.restoreInstanceState(savedInstanceState);
+//        }
+//        if (savedInstanceState != null) {
+//            timer.setBase(savedInstanceState.getLong(KEY_TIME));
+//            timer.start();
+
+//            else {
+//                timer.stop();
+//                timer.setBase(savedInstanceState.getLong(KEY_TIME));
+//            }
+//        }
 
         //adapter for puzzle grid
         final ArrayAdapter<String> adapter;
@@ -243,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 if (board[position] == 0 && solvable_board[position] != 0) {
                     view.setBackgroundResource(R.drawable.cell_shape_after_click);
                 }
+
 //              For Final Iteration
 //                TextView grid_text = (TextView) view;
 //                if (gridLength == 4 || gridLength == 6) {
@@ -275,21 +325,11 @@ public class MainActivity extends AppCompatActivity {
                     gridWidthLand = gridHeightLand + 29;
                 }
 
-//                if (gridLength == 6) {
-//                    gridWidth = width/(gridLength);
-//                    gridHeight = gridWidth-(gridLength*3);
-//
-//                    gridHeightLand = height/(gridLength+(gridLength/3));
-//                    gridWidthLand = gridHeightLand+29;
-//                }
-
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     // In landscape
                     view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand));
-//                    if (gridLength == 4){
-//                        view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand-20));
-//                    }
+
                 } else {
                     // In portrait
                     view.setLayoutParams(new GridView.LayoutParams(gridWidth, gridHeight));
@@ -349,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
 
         menuView.setAdapter(menu_adapter);
 
-        backSelect = (ImageButton) findViewById(R.id.back_select);
+        backSelect = (Button) findViewById(R.id.back_select);
         backSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton checkBoard = (ImageButton) findViewById(R.id.checkBoard);
+        final Button checkBoard = (Button) findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -587,20 +627,15 @@ public class MainActivity extends AppCompatActivity {
                 timer.stop();
                 pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
                 running = false;
-                pause.setBackgroundResource(R.drawable.play);
+                pause.setBackgroundResource(R.drawable.round_play_arrow_24);
             } else {
                 timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                 timer.start();
                 running = true;
-                pause.setBackgroundResource(R.drawable.pause);
+                pause.setBackgroundResource(R.drawable.round_pause_24);
             }
+
         }
     };
 
-    //dark/light mode
-    public void restartApp() {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
-        finish();
-    }
 }

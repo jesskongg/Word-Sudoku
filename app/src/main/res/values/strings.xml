@@ -6,9 +6,9 @@
     <string name="chooseCell">Tap on a cell first</string>
     <string name="boardTrue">You did it!</string>
     <string name="boardFalse">Try again!</string>
-    <string name="check">Check your answers</string>
+    <string name="check">Verify answers</string>
     <string name="hint">Tap on the box again for a hint!</string>
-    <string name="back_select">Go Back to Select Language Mode</string>
+    <string name="back_select">Undo</string>
     <string name="back_select_information">Tapping this button again will take you back to the mode selection page</string>
     <string name="pause">Pause</string>
 

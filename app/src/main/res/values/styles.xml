@@ -14,6 +14,9 @@
         <item name="headingColour">#97B637</item>
         <item name="tintColour">#000000</item>
         <item name="buttonColour">#FFFFFF</item>
+        <item name="gridSelectColour">#E5F3AD</item>
+        <item name="menuButtonColour">#E5F3AD</item>
+        <item name="menuButtonOutline">#97B637</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
@@ -30,6 +33,9 @@
         <item name="headingColour">#97B637</item>
         <item name="tintColour">#FFFFFF</item>
         <item name="buttonColour">#718261</item>
+        <item name="gridSelectColour">#757575</item>
+        <item name="menuButtonColour">#E5F3AD</item>
+        <item name="menuButtonOutline">#97B637</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
 
     </style>

@@ -11,20 +11,19 @@
         android:id="@+id/pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/pause"
+        android:background="@drawable/round_pause_24"
         android:gravity="center"
-        android:layout_marginRight="8dp"
-
+        android:layout_marginEnd="8dp"
 
         app:layout_constraintRight_toLeftOf="@id/timer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/grid" />
 
-    <Chronometer
+    <com.example.myapplication.Model.ChronometerWithPause
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/dosis_medium"
 
         android:textSize="24sp"
@@ -89,7 +88,7 @@
 
     </com.example.myapplication.View.SquareGrid>
 
-    <ImageButton
+    <Button
         android:id="@+id/back_select"
 
         android:layout_width="wrap_content"
@@ -100,17 +99,21 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/back"
-        android:contentDescription="@string/back_select"
+        android:background="@null"
+        android:text="@string/back_select"
+        android:textColor="?attr/textColour"
+        android:fontFamily="@font/dosis_medium"
+        android:drawableEnd="@drawable/round_undo_24"
+        android:drawablePadding="10dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.837"
+        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/guideline62"
         app:layout_constraintTop_toBottomOf="@id/guideline63"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.41" />
 
-    <ImageButton
+    <Button
         android:id="@+id/checkBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,20 +121,21 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
 
-        android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/check"
+        android:background="@null"
+        android:drawableEnd="@drawable/round_check_circle_outline_24"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/dosis_medium"
         android:text="@string/check"
-
+        android:textColor="?attr/textColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintLeft_toRightOf="@id/guideline62"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline63"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline63" />
 
 
     <android.support.constraint.Guideline

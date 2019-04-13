@@ -125,6 +125,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline13"
         android:layout_width="wrap_content"
@@ -156,6 +158,21 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="1.0"
         app:layout_constraintGuide_begin="20dp" />
+
+    <ImageButton
+        android:id="@+id/share_button"
+        android:layout_width="61dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="162dp"
+        android:layout_marginEnd="471dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/round_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="?attr/actionModeShareDrawable" />
 
 
 </android.support.constraint.ConstraintLayout>

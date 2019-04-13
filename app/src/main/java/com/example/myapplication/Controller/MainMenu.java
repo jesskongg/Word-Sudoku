@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.ImageButton;
 
 import com.example.myapplication.R;
 import com.example.myapplication.View.SharedPref;
@@ -17,6 +18,7 @@ public class MainMenu extends AppCompatActivity {
     private Button startButton;
     private Button helpButton;
     private Button newGameButton;
+    private ImageButton shareButton;
 
     //dark mode variables
     private Switch dayNight;
@@ -52,6 +54,15 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        shareButton = (ImageButton) findViewById(R.id.share_button);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareInfo();
+            }
+        });
+
+
         //dark mode switch
         dayNight = findViewById(R.id.dayNight);
         if (sharedPref.loadNightModeState()) {
@@ -74,6 +85,15 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
+    public void shareInfo(){
+        Intent share;
+        share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        //int score =0;
+        share.putExtra(Intent.EXTRA_SUBJECT, "Wudoku");
+        share.putExtra(Intent.EXTRA_TEXT, "I'm learning new languages with Wudoku!");//+ "My current score is " + score);
+        startActivity(Intent.createChooser(share, "Share via"));
+    }
 
     // Button for user to proceed to choosing their language mode
     public void openSelectLoadMode() {

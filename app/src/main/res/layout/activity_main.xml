@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_pause_24"
         android:gravity="center"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="15dp"
+        android:contentDescription="@string/pause"
 
         app:layout_constraintRight_toLeftOf="@id/timer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/grid" />
 
-    <com.example.myapplication.Model.ChronometerWithPause
+    <Chronometer
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

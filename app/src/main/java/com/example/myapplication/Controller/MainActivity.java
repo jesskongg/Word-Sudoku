@@ -24,8 +24,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
-
-import com.example.myapplication.Model.ChronometerWithPause;
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.Model.boards_and_menu_data;
 import com.example.myapplication.R;
@@ -118,55 +116,59 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
+        Log.i(TAG, "Running is: " + running);
         savedInstanceState.putIntArray(KEY_CELLS, board_tracker);
         savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
         savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
         savedInstanceState.putIntArray(KEY_BOARD, board);
         savedInstanceState.putLong(KEY_TIME, timer.getBase());
         savedInstanceState.putBoolean(KEY_RUNNING, running);
+
 //        timer.saveInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+//        Log.i(TAG, "Running is: " + running);
+        Log.i(TAG, "entering OnRestoreInstanceState");
+
         currTime = timer.getBase();
+        Log.i(TAG, "Current Time is: " + currTime);
         currRunning = running;
         currTime = savedInstanceState.getLong(KEY_TIME);
         currRunning = savedInstanceState.getBoolean(KEY_RUNNING);
 
+
         if (currRunning) {
             timer.setBase(currTime);
-            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
-//            running = false;
-//            pause.setBackgroundResource(R.drawable.round_play_arrow_24);
+//            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+            pause.setBackgroundResource(R.drawable.round_pause_24);
 //            timer.start();
         }
         else {
-            timer.setBase(currTime);
             timer.stop();
-//            timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+//            timer.setBase(currTime);
+            running = false;
+            Log.i(TAG, "Current Time in else is: " + currTime);
+            Log.i(TAG, "System clock time is: " + SystemClock.elapsedRealtime());
+            pauseOffset = SystemClock.elapsedRealtime() - currTime;
+            Log.i(TAG, "Pause offset is: " + pauseOffset);
+            timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            Log.i(TAG, "Timer reading: " + timer.getBase());
             pause.setBackgroundResource(R.drawable.round_play_arrow_24);
 
-            if (running) {
+            View.OnClickListener imgButtonHandler = new View.OnClickListener() {
 
-                View.OnClickListener imgButtonHandler = new View.OnClickListener() {
+                public void onClick(View v) {
 
-                    public void onClick(View v) {
-                        if (running) {
-                            timer.stop();
-                            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
-                            running = false;
-                            pause.setBackgroundResource(R.drawable.round_play_arrow_24);
-                        } else {
-                            timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-                            timer.start();
-                            running = true;
-                            pause.setBackgroundResource(R.drawable.round_pause_24);
-                        }
+                    timer.start();
+                    running = true;
+                    pause.setBackgroundResource(R.drawable.round_pause_24);
 
-                    }
-                };
-            }
+                }
+            };
+
         }
 
     }
@@ -233,13 +235,13 @@ public class MainActivity extends AppCompatActivity {
         data.saveLC(LC_enabled, MainActivity.this);
 
         //grid puzzle
-        gridView = (GridView) findViewById(R.id.grid);
+        gridView = findViewById(R.id.grid);
         gridView.setNumColumns(gridLength);
-        textView = (TextView) findViewById(R.id.textView);
+        textView = findViewById(R.id.textView);
 
         //menu grid
         textMenu = findViewById(R.id.menu_cell);
-        menuView = (GridView) findViewById(R.id.grid_menu);
+        menuView = findViewById(R.id.grid_menu);
         if (gridLength == 4 || gridLength == 6) {
             menuView.setNumColumns(2);
             menuView.setColumnWidth(1);
@@ -389,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
 
         menuView.setAdapter(menu_adapter);
 
-        backSelect = (Button) findViewById(R.id.back_select);
+        backSelect = findViewById(R.id.back_select);
         backSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -458,9 +460,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //when you click
                 //String word_from_menu;
-                if (grid_cell_clicked == true) {
+                if (grid_cell_clicked) {
                     menu_cell_clicked_position = position;
-                    received_text = (String) menu_adapter.getItem(position);
+                    received_text = menu_adapter.getItem(position);
                     wordListSudokuTable[board_cell_clicked_position] = received_text;
                     adapter.notifyDataSetChanged();
                     //array stores all user word inputs in the form of numbers
@@ -478,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button checkBoard = (Button) findViewById(R.id.checkBoard);
+        final Button checkBoard = findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -486,7 +488,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean isCorrect;
                 isCorrect = checkBoard_object.checker(gridLength, subLen, subWid);
 
-                if (isCorrect == true) {
+                if (isCorrect) {
                     Toast.makeText(MainActivity.this,
                             R.string.boardTrue,
                             Toast.LENGTH_SHORT).show();
@@ -626,16 +628,21 @@ public class MainActivity extends AppCompatActivity {
             if (running) {
                 timer.stop();
                 pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+                Log.i(TAG, "Pause offset inside listener if: " + pauseOffset);
                 running = false;
                 pause.setBackgroundResource(R.drawable.round_play_arrow_24);
             } else {
                 timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                 timer.start();
+                pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+                Log.i(TAG, "Pause offset inside listener else: " + pauseOffset);
                 running = true;
                 pause.setBackgroundResource(R.drawable.round_pause_24);
             }
 
         }
     };
+
+
 
 }

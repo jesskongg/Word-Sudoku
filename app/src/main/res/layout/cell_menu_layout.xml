@@ -9,6 +9,6 @@
     android:autoSizeMaxTextSize="20sp"
     android:background="@drawable/grid_menu_shape"
     android:fontFamily="@font/dosis_medium"
-    android:gravity="center"
     android:textColor="@color/black"
+    android:gravity="center"
     android:textSize="14sp" />

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.service.autofill.UserData;
+import android.support.annotation.ColorInt;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -225,6 +227,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
+
+
         //adapter for puzzle grid
         final ArrayAdapter<String> adapter;
 
@@ -236,8 +241,50 @@ public class MainActivity extends AppCompatActivity {
 
                 if (board[position]==0 && solvable_board[position]!=0)
                 {
-                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    if (shaded_rectangle(gridLength, position)==true) {
+                        //color into darl grey if it's clicked
+                        view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                    }
+
+
+                    else
+                    {
+                        //color into blue if ots clicked
+                        view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    }
                 }
+
+
+
+
+
+                if (solvable_board[position]==0 ) {
+                    if (shaded_rectangle(gridLength,position)==true){
+                        //light grey
+                        view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                        //view.setBackgroundResource(R.drawable.cell_shape_rectangles);
+                    }
+                }
+
+                if (solvable_board[position]!=0)
+                {
+                    if (shaded_rectangle(gridLength,position)==true){
+                        //dark grey
+                        //view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                        view.setBackgroundResource(R.drawable.cell_shape_rectangles);
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
 //              For Final Iteration
 //                TextView grid_text = (TextView) view;
 //                if (gridLength == 4 || gridLength == 6) {
@@ -372,7 +419,19 @@ public class MainActivity extends AppCompatActivity {
                     //board_tracker[board_cell_clicked_position] = position;
                     grid_cell_clicked = true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
-                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+
+                    if (shaded_rectangle(gridLength, position)==true) {
+                        view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                    }
+
+                    else
+                    {
+                        view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    }
+
+
+
+                    //view.setBackgroundResource(R.drawable.cell_shape_after_click);
 
                 } else {
                     final int current_position = position;
@@ -750,6 +809,56 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    public boolean shaded_rectangle(int grid_size, int position) {
+
+
+        int index;
+       // int step_size=0;
+        if (gridLength==9 || gridLength==12) {
+
+             for(int group = 0; group < grid_size; group=group+2) {
+                 for (int row = (group / subLen) * subLen; row < (group / subLen) * subLen + subLen; row++) {
+                     for (int column = (group % subLen) * subWid; column < (group % subLen) * subWid + subWid; column++) {
+                         index = grid_size * row + column;
+                         if (position == index) {
+                             return true;
+                         }
+                     }
+                 }
+             }
+         }
+
+         if (gridLength==4)
+         {
+
+
+            for (int group=0 ; group<5; group=group+3)
+             for (int row = (group / subLen) * subLen; row < (group / subLen) * subLen + subLen; row++) {
+                 for (int column = (group % subLen) * subWid; column < (group % subLen) * subWid + subWid; column++) {
+                     index = grid_size * row + column;
+                     if (position == index) {
+                         return true;
+                     }
+                 }
+             }
+
+         }
+
+
+         if (gridLength==6)
+         {
+             if ((position>=0 && position <=2) || (position>=6 && position <=8 || (position>=12 && position <=14)) ||
+                     (position >=21 && position <=23) || (position>=27 && position<=29) || (position>=33))
+             {
+                 return true;
+             }
+
+         }
+
+        return false;
+
+    }
 
 
 }

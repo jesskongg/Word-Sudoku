@@ -6,11 +6,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteException;
 import android.service.autofill.UserData;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
@@ -94,13 +98,30 @@ public class MainActivity extends AppCompatActivity {
     private int subWid;
 
 
-    public static final String MyPREFERENCES = "Sudoku_pref" ;
-    public static final String Length = "gridLength";
-    public static final String SubgridLength = "subgridLength";
-    public static final String SubgridWidth = "subgridWidth";
+    static final String MyPREFERENCES = "Sudoku_pref" ;
+    static final String Length = "gridLength";
+    static final String SubgridLength = "subgridLength";
+    static final String SubgridWidth = "subgridWidth";
     SharedPreferences sharedpreferences_for_grid_var;
 
+    static final String bonusFor9x9="Bonus9x9";
+    static final String bonusFor4x4="Bonus4x4";
+    static final String bonusFor6x6="Bonus6x6";
+    static final String bonusFor12x12="Bonus12x12";
+    static final String totalBonusKey="TotalBonus";
 
+
+    int bonus4x4=0;
+    int bonus6x6=0;
+    int bonus9x9=0;
+    int bonus12x12=0;
+    int totalBonus=0;
+
+    //0 means initially you dont have a point
+    //1 means you alredy recived a point and across rotations you should not get that point
+
+
+    public int haveBonus=0;
 
 
     @Override
@@ -111,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putStringArray(KEY_WORDS, wordListSudokuTable);
         savedInstanceState.putIntArray(KEY_SOLVABLEBOARD, solvable_board);
         savedInstanceState.putIntArray(KEY_BOARD, board);
+        savedInstanceState.putInt("haveBonus", haveBonus);
     }
 
 //    @Override
@@ -199,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
             wordListSudokuTable = savedInstanceState.getStringArray(KEY_WORDS);
             solvable_board = savedInstanceState.getIntArray(KEY_SOLVABLEBOARD);
             board = savedInstanceState.getIntArray(KEY_BOARD);
+            haveBonus=savedInstanceState.getInt("haveBonus");
         }
 
 
@@ -383,8 +406,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
         menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -409,19 +430,176 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        final Button checkBoard = (Button) findViewById(R.id.checkBoard);
+        //int my_bonus=haveBonus;
+        //boolean tablet;
+        Button checkBoard = (Button) findViewById(R.id.checkBoard);
         checkBoard.setOnClickListener(new View.OnClickListener() {
+            //int have_bonus=0;
             @Override
             public void onClick(View v) {
                 board_checker checkBoard_object = new board_checker(solvable_board);
                 boolean isCorrect;
                 isCorrect = checkBoard_object.checker(gridLength, subLen, subWid);
 
+               // boolean got_bonus=false;
                 if (isCorrect == true) {
                     Toast.makeText(MainActivity.this,
                             R.string.boardTrue,
                             Toast.LENGTH_SHORT).show();
+                    //boolean is_correct=true;
+                    Button closePopup;
+
+                    final PopupWindow popupWindow;
+                    ConstraintLayout current_layout;
+
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                    int width = metrics.widthPixels;
+                    int height = metrics.heightPixels;
+                    boolean tablet;
+
+                    tablet=isTablet();
+
+                    //PICK PROPER LAYOUT
+                    current_layout = findViewById(R.id.mainLayout);
+                    int orientation = getResources().getConfiguration().orientation;
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE && tablet==false) {
+                        // In landscape
+                        current_layout = findViewById(R.id.mainLayout_land);
+//                    if (gridLength == 4){
+//                        view.setLayoutParams(new GridView.LayoutParams(gridWidthLand, gridHeightLand-20));
+//                    }
+                    }
+
+                    if (orientation==Configuration.ORIENTATION_PORTRAIT && tablet==true)
+                    {
+                        current_layout=findViewById(R.id.mainLayout_tablet);
+                    }
+
+                    if (orientation==Configuration.ORIENTATION_LANDSCAPE && tablet==true)
+                    {
+                        current_layout=findViewById(R.id.mainLayout_tablet_land);
+                    }
+
+
+                    if (orientation == Configuration.ORIENTATION_PORTRAIT && tablet==false)
+                    {
+                        // In portrait
+                        current_layout = findViewById(R.id.mainLayout);
+                    }
+                    //current_layout = findViewById(R.id.mainLayout_land);
+                    LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    //we now have a custom view
+                    View customView = layoutInflater.inflate(R.layout.bonus_popup_layout,null);
+                    //we add a button to it
+                    closePopup = (Button) customView.findViewById(R.id.close);
+                    //instantiate popup window
+                    popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    //chnage pop-up window size
+                       //use screen size paramenters to set these parameters.
+                    //int width = (displayMetrics.widthPixels);
+                    //int height = (displayMetrics.heightPixels);
+                    //25 is hard coded but as I understand it doesnt add much to the pop up size
+                    //int popupWidth=width/2+width/5;
+                    //int popupHeight=width/2+width/20;
+                    //popupWindow.setWidth(popupWidth);
+                    //popupWindow.setHeight(popupHeight);
+                    //String showbonus=Integer.toString(sharedpreferences_for_grid_var.getInt(bonusFor4x4, 0))
+                    //((TextView)popupWindow.getContentView().findViewById(R.id.textView3)).setText("Total number of bonuses is "+Integer.toString(sharedpreferences_for_grid_var.getInt(bonusFor4x4, 0)));
+                    //location of pop up is center
+                    //here it gives me an arror across rotations
+                    popupWindow.showAtLocation(current_layout, Gravity.CENTER, 0, 0);
+                    //how to determine popup width and hieght????
+                    //close the popup window on button click
+                    closePopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }
+                    });
+
+                    //some variable here across rotations
+                    if (gridLength==4 && haveBonus==0 ) {
+                        bonus4x4=sharedpreferences_for_grid_var.getInt(bonusFor4x4, 0);
+                        bonus4x4=bonus4x4+4;
+                        editor_grid_var.putInt(bonusFor4x4, bonus4x4);
+                        editor_grid_var.commit();
+                        //sharedpreferences_for_grid_var.getInt(bonusFor4x4, 0);
+                        haveBonus=haveBonus+1;
+                        totalBonus=sharedpreferences_for_grid_var.getInt(totalBonusKey,0);
+                        totalBonus=totalBonus+4;
+                        editor_grid_var.putInt(totalBonusKey, totalBonus);
+                        editor_grid_var.commit();
+                    }
+
+                    if (gridLength==4 && haveBonus!=0) {
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView2)).setText("You earned 4 points!");
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView3)).setText("Total bonus points: " + Integer.toString(sharedpreferences_for_grid_var.getInt(totalBonusKey, 0)));
+                    }
+
+                    //haveBonus=0;
+
+                    if (gridLength==6 && haveBonus==0) {
+                        bonus6x6=sharedpreferences_for_grid_var.getInt(bonusFor6x6, 0);
+                        bonus6x6=bonus6x6+6;
+                        editor_grid_var.putInt(bonusFor6x6, bonus6x6);
+                        editor_grid_var.commit();
+                        haveBonus=haveBonus+1;
+
+                        totalBonus=sharedpreferences_for_grid_var.getInt(totalBonusKey,0);
+                        totalBonus=totalBonus+6;
+                        editor_grid_var.putInt(totalBonusKey, totalBonus);
+                        editor_grid_var.commit();
+                    }
+
+
+                    if (gridLength==6 && haveBonus!=0) {
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView2)).setText("You earned 6 points!");
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView3)).setText("Total bonus points: " + Integer.toString(sharedpreferences_for_grid_var.getInt(totalBonusKey, 0)));
+                    }
+
+
+
+                    if (gridLength==9 && haveBonus==0) {
+                        bonus9x9=sharedpreferences_for_grid_var.getInt(bonusFor9x9, 0);
+                        bonus9x9=bonus9x9+9;
+                        editor_grid_var.putInt(bonusFor9x9, bonus9x9);
+                        editor_grid_var.commit();
+
+                        haveBonus=haveBonus+1;
+
+                        totalBonus=sharedpreferences_for_grid_var.getInt(totalBonusKey,0);
+                        totalBonus=totalBonus+9;
+                        editor_grid_var.putInt(totalBonusKey, totalBonus);
+                        editor_grid_var.commit();
+                    }
+
+
+
+                    if (gridLength==9 && haveBonus!=0) {
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView2)).setText("You earned 9 points!");
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView3)).setText("Total bonus points: " + Integer.toString(sharedpreferences_for_grid_var.getInt(totalBonusKey, 0)));
+                    }
+
+                    if (gridLength==12 && haveBonus==0) {
+                        bonus12x12=sharedpreferences_for_grid_var.getInt(bonusFor12x12, 0);
+                        bonus12x12=bonus12x12+12;
+                        editor_grid_var.putInt(bonusFor12x12, bonus12x12);
+                        editor_grid_var.commit();
+
+                        haveBonus=haveBonus+1;
+
+                        totalBonus=sharedpreferences_for_grid_var.getInt(totalBonusKey,0);
+                        totalBonus=totalBonus+12;
+                        editor_grid_var.putInt(totalBonusKey, totalBonus);
+                        editor_grid_var.commit();
+                    }
+
+                    if (gridLength==12 && haveBonus!=0) {
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView2)).setText("You earned 12 points!");
+                        ((TextView) popupWindow.getContentView().findViewById(R.id.textView3)).setText("Total bonus points: " + Integer.toString(sharedpreferences_for_grid_var.getInt(totalBonusKey, 0)));
+                    }
+
                 } else {
                     Toast.makeText(MainActivity.this,
                             R.string.boardFalse,
@@ -429,6 +607,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 
@@ -553,6 +732,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public boolean isTablet()
+    {
+        try {
+            // Compute screen size
+            Context context = MainActivity.this;
+            DisplayMetrics dm = context.getResources().getDisplayMetrics();
+            float screenWidth  = dm.widthPixels / dm.xdpi;
+            float screenHeight = dm.heightPixels / dm.ydpi;
+            double size = Math.sqrt(Math.pow(screenWidth, 2) +
+                    Math.pow(screenHeight, 2));
+            // Tablet devices have a screen size greater than 6 inches
+            return size >= 6;
+        } catch(Throwable t) {
+            //Log.e("Failed to compute screen size", t.toString());
+            return false;
+        }
+    }
 
 
 

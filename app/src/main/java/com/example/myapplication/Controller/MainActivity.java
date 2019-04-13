@@ -442,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
                 isCorrect = checkBoard_object.checker(gridLength, subLen, subWid);
 
                // boolean got_bonus=false;
-                if (isCorrect == false) {
+                if (isCorrect == true) {
                     Toast.makeText(MainActivity.this,
                             R.string.boardTrue,
                             Toast.LENGTH_SHORT).show();
@@ -451,7 +451,6 @@ public class MainActivity extends AppCompatActivity {
 
                     final PopupWindow popupWindow;
                     ConstraintLayout current_layout;
-
 
                     DisplayMetrics metrics = new DisplayMetrics();
                     getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -561,7 +560,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    if (gridLength==9) {
+                    if (gridLength==9 && haveBonus==0) {
                         bonus9x9=sharedpreferences_for_grid_var.getInt(bonusFor9x9, 0);
                         bonus9x9=bonus9x9+9;
                         editor_grid_var.putInt(bonusFor9x9, bonus9x9);
@@ -574,6 +573,8 @@ public class MainActivity extends AppCompatActivity {
                         editor_grid_var.putInt(totalBonusKey, totalBonus);
                         editor_grid_var.commit();
                     }
+
+
 
                     if (gridLength==9 && haveBonus!=0) {
                         ((TextView) popupWindow.getContentView().findViewById(R.id.textView2)).setText("You earned 9 points!");

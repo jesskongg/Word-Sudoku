@@ -19,6 +19,7 @@
         <item name="menuButtonOutline">#97B637</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="changeText">"Dark Mode"</item>
+        <item name="cellShapeRectangle">#D3D1D1</item>
     </style>
 
     <!-- Dark/Night Mode Theme -->
@@ -39,6 +40,8 @@
         <item name="menuButtonOutline">#97B637</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="changeText">"Light Mode"</item>
+        <item name="cellShapeRectangle">#424242</item>
+
 
     </style>
     

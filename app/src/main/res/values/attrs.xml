@@ -11,5 +11,6 @@
         <attr name="menuButtonColour" format="color"/>
         <attr name="menuButtonOutline" format="color"/>
         <attr name="changeText" format="string"/>
+        <attr name="cellShapeRectangle" format="color"/>
     </declare-styleable>
 </resources>

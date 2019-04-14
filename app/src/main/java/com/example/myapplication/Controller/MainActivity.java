@@ -762,6 +762,7 @@ public class MainActivity extends AppCompatActivity {
             timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             timer.start();
             running = true;
+            pause.setBackgroundResource(R.drawable.round_pause_24);
         }
         else {
             return;

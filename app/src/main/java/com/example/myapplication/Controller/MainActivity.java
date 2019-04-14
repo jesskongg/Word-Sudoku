@@ -239,12 +239,21 @@ public class MainActivity extends AppCompatActivity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
+
+                if (shaded_rectangle(gridLength,position)==true){
+                    //dark grey
+                    //view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                    view.setBackgroundResource(R.drawable.cell_shape_rectangles);
+                }
+
+
                 if (board[position]==0 && solvable_board[position]!=0)
                 {
                     if (shaded_rectangle(gridLength, position)==true) {
                         //color into darl grey if it's clicked
                         view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
                     }
+
 
 
                     else
@@ -258,22 +267,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                if (solvable_board[position]==0 ) {
-                    if (shaded_rectangle(gridLength,position)==true){
-                        //light grey
-                        view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
-                        //view.setBackgroundResource(R.drawable.cell_shape_rectangles);
-                    }
-                }
 
-                if (solvable_board[position]!=0)
-                {
-                    if (shaded_rectangle(gridLength,position)==true){
-                        //dark grey
-                        //view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
-                        view.setBackgroundResource(R.drawable.cell_shape_rectangles);
-                    }
-                }
 
 
 

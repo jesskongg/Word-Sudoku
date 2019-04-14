@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="backgroundColour" format="color"/>
+        <attr name="cardBackground" format="color"/>
+        <attr name="textColour" format="color"/>
+        <attr name="tintColour" format="color"/>
+        <attr name="buttonColour" format="color"/>
+        <attr name="gridSelectColour" format="color"/>
+        <attr name="headingColour" format="color"/>
+        <attr name="menuButtonColour" format="color"/>
+        <attr name="menuButtonOutline" format="color"/>
+        <attr name="changeText" format="string"/>
+        <attr name="cellShapeRectangle" format="color"/>
+    </declare-styleable>
+</resources>

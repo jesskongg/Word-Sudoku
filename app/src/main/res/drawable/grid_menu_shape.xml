@@ -6,12 +6,12 @@
     android:shape="rectangle">
 
     <!-- View background color-->
-    <solid android:color="@color/lightGreen" />
+    <solid android:color="?attr/menuButtonColour" />
 
     <!-- View border color and width -->
     <stroke
         android:width="2dip"
-        android:color="@color/colorPrimary"/>
+        android:color="?attr/menuButtonOutline"/>
 
     <!--<padding-->
         <!--android:bottom="2dp"-->

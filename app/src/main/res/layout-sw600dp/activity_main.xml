@@ -4,12 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/backgroundColour"
     tools:context=".Controller.MainActivity"
     android:id="@+id/mainLayout_tablet"  >
 
+    <ImageButton
+        android:id="@+id/pause"
+        android:layout_width="34dp"
+        android:layout_height="38dp"
+        android:background="@drawable/round_pause_24"
+        android:gravity="center"
+        android:layout_marginEnd="15dp"
+        android:contentDescription="@string/pause"
+
+        app:layout_constraintRight_toLeftOf="@id/timer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/grid" />
+
+    <Chronometer
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/dosis_medium"
+
+        android:textSize="30sp"
+        android:textColor="?attr/textColour"
+        app:layout_constraintBottom_toTopOf="@id/grid"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Grid view for Sudoku board-->
-    <com.example.myapplication.SquareGrid
+    <com.example.myapplication.View.SquareGrid
         android:id="@+id/grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,11 +59,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-    </com.example.myapplication.SquareGrid>
+    </com.example.myapplication.View.SquareGrid>
 
 
     <!-- Grid view for menu-->
-    <com.example.myapplication.SquareGrid
+    <com.example.myapplication.View.SquareGrid
         android:id="@+id/grid_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,46 +88,59 @@
         app:layout_constraintTop_toBottomOf="@id/grid"
         app:layout_constraintVertical_bias="0.0">
 
-    </com.example.myapplication.SquareGrid>
+    </com.example.myapplication.View.SquareGrid>
 
 
     <Button
-        android:id="@+id/checkBoard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-
-        android:text="@string/check"
-        android:textSize="18sp"
-        android:background="@drawable/round_buttons"
-
-        app:layout_constraintTop_toBottomOf="@id/guideline27"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/back_select" />
-
-    <ImageButton
         android:id="@+id/back_select"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
 
-        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:text="@string/back_select"
+        android:textSize="20sp"
+        android:textColor="?attr/textColour"
+        android:fontFamily="@font/dosis_medium"
+        android:drawableEnd="@drawable/round_undo_24"
+        android:drawablePadding="10dp"
 
-        android:background="@drawable/round_buttons"
-        android:contentDescription="@string/back_select"
-
-        app:layout_constraintTop_toBottomOf="@id/guideline27"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/checkBoard"
+        app:layout_constraintTop_toBottomOf="@id/guideline63"
+        app:layout_constraintVertical_bias="0.41" />
+
+    <Button
+        android:id="@+id/checkBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:drawableEnd="@drawable/round_check_circle_outline_24"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/dosis_medium"
+        android:text="@string/check"
+        android:textColor="?attr/textColour"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
+        app:layout_constraintLeft_toRightOf="@id/back_select"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/checkBoard"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:layout_constraintTop_toBottomOf="@id/guideline63" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline27"

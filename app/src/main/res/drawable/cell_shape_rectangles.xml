@@ -6,7 +6,7 @@
     android:shape="rectangle">
 
     <!-- View background color-->
-    <solid android:color="#D3D1D1" />
+    <solid android:color="?attr/cellShapeRectangle" />
 
     <!-- View border color and width -->
     <stroke

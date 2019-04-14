@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.R;
+import com.example.myapplication.View.SharedPref;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,6 +47,16 @@ public class load_new_words extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final SharedPref sharedPref;
+
+        sharedPref = new SharedPref(this);
+
+        if(sharedPref.loadNightModeState()) {
+            setTheme(R.style.DarkMode);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_new_words);
 

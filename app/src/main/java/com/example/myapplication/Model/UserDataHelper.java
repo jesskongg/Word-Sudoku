@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class UserDataHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "userData.db";
+    private static final String DATABASE_NAME = "newUserData.db";
     public UserDataHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
@@ -21,5 +21,7 @@ public class UserDataHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("drop table if exists EventsBase");
+        onCreate(db);
     }
 }

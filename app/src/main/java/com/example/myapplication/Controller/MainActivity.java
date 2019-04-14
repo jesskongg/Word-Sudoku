@@ -733,6 +733,39 @@ public class MainActivity extends AppCompatActivity {
             tFR.shutdown(); // releases resources being used by TextToSpeech engine
         }
         super.onPause();
+
+        if (running) {
+            timer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+            running = false;
+        }
+        else {
+            return;
+        }
+    }
+
+    public void onStop() {
+        super.onStop();
+        if (running) {
+            timer.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - timer.getBase();
+            running = false;
+        }
+        else {
+            return;
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        if (!running) {
+            timer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            timer.start();
+            running = true;
+        }
+        else {
+            return;
+        }
     }
 
     public void continue_game() {

@@ -6,12 +6,12 @@
     android:shape="rectangle">
 
     <!-- View background color-->
-    <solid android:color="#DCE7B7" />
+    <solid android:color="#D3D1D1" />
 
     <!-- View border color and width -->
     <stroke
         android:width="2dip"
-        android:color="#000000"/>
+        android:color="#0A0A0A"/>
 
     <!-- radius which makes corners rounded -->
     <corners

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Color;
 import android.service.autofill.UserData;
+import android.support.annotation.ColorInt;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -225,6 +227,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
+
+
         //adapter for puzzle grid
         final ArrayAdapter<String> adapter;
 
@@ -234,10 +239,46 @@ public class MainActivity extends AppCompatActivity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
+
+                if (data_object.shaded_rectangle(gridLength,position)==true){
+                    //dark grey
+                    //view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                    view.setBackgroundResource(R.drawable.cell_shape_rectangles);
+                }
+
+
                 if (board[position]==0 && solvable_board[position]!=0)
                 {
-                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    if (data_object.shaded_rectangle(gridLength, position)==true) {
+                        //color into darl grey if it's clicked
+                        view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                    }
+
+
+
+                    else
+                    {
+                        //color into blue if ots clicked
+                        view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    }
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //              For Final Iteration
 //                TextView grid_text = (TextView) view;
 //                if (gridLength == 4 || gridLength == 6) {
@@ -372,7 +413,19 @@ public class MainActivity extends AppCompatActivity {
                     //board_tracker[board_cell_clicked_position] = position;
                     grid_cell_clicked = true;
                     Toast.makeText(getApplicationContext(), toast_fill_cell, Toast.LENGTH_SHORT).show();
-                    view.setBackgroundResource(R.drawable.cell_shape_after_click);
+
+                    if (data_object.shaded_rectangle(gridLength, position)==true) {
+                        view.setBackgroundResource(R.drawable.cell_shape_aftre_click_shaded);
+                    }
+
+                    else
+                    {
+                        view.setBackgroundResource(R.drawable.cell_shape_after_click);
+                    }
+
+
+
+                    //view.setBackgroundResource(R.drawable.cell_shape_after_click);
 
                 } else {
                     final int current_position = position;
@@ -749,6 +802,10 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
+
+
+
 
 
 

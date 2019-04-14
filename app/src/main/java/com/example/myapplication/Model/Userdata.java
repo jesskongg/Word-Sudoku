@@ -431,7 +431,7 @@ public class Userdata {
     }
 
     public String getChapterWords(String name, Context context){
-        String words = null;
+        String words = "empty";
 
         mContext = context.getApplicationContext();
         db = new UserDataHelper(mContext).getWritableDatabase();

@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,6 +68,8 @@ public class chapters extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapters);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         chapter_grid = (GridView) findViewById(R.id.c_grid);
         chapter_grid.setNumColumns(1);
@@ -149,14 +153,13 @@ public class chapters extends AppCompatActivity {
 //                    FragmentManager manager = getSupportFragmentManager();
 //                    ChapterDialog dialog = new ChapterDialog();
 //                    dialog.show(manager, DIALOG);
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(chapters.this);
                         builder.setTitle("Chapter Name");
 
                         final View v = getLayoutInflater().inflate(R.layout.dialoglayout, null);
                         builder.setView(v);
 
-                        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton(R.string.LOAD, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 EditText name = v.findViewById(R.id.chapterName);
@@ -182,14 +185,19 @@ public class chapters extends AppCompatActivity {
                             }
                         });
 
-                        builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         });
 
-                        builder.show();
+                        AlertDialog dialog = null;
+                        dialog = builder.create();
+
+                        dialog.show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
                     }
                 }
                 else {
@@ -201,10 +209,17 @@ public class chapters extends AppCompatActivity {
                         delete = false;
                     }
                     else{
-                        editor.putString("chapterName", chapter_list.get(position));
-                        editor.commit();
-                        Intent goOpenInstr = new Intent(chapters.this, SelectLanguageMode.class);
-                        startActivity(goOpenInstr);
+                        Userdata data = new Userdata();
+                        String testEmpty = data.getChapterWords(chapter_list.get(position), chapters.this);
+                        if(testEmpty.equals("empty")){
+                            Toast.makeText(getApplicationContext(), R.string.empty_chapter, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            editor.putString("chapterName", chapter_list.get(position));
+                            editor.commit();
+                            Intent goOpenInstr = new Intent(chapters.this, SelectLanguageMode.class);
+                            startActivity(goOpenInstr);
+                        }
                     }
                 }
             }

@@ -842,17 +842,32 @@ public class MainActivity extends AppCompatActivity {
 
          if (gridLength==6)
          {
-             if ((position>=0 && position <=2) || (position>=6 && position <=8 || (position>=12 && position <=14)) ||
-                     (position >=21 && position <=23) || (position>=27 && position<=29) || (position>=33))
-             {
-                 return true;
+             for (int group=0 ; group<=9; group=group+3) {
+
+                 if (group ==9) {
+                        group=4;
+                 }
+
+
+                     for (int row = (group / subLen) * subLen; row < (group / subLen) * subLen + subLen; row++) {
+                         for (int column = (group % subLen) * subWid; column < (group % subLen) * subWid + subWid; column++) {
+                             index = grid_size * row + column;
+                             if (position == index) {
+                                 return true;
+                             }
+                         }
+                     }
+
+                 }
+
              }
 
+             return false;
          }
 
-        return false;
+        //return false;
 
-    }
+
 
 
 }

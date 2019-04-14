@@ -504,7 +504,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button checkBoard = findViewById(R.id.checkBoard);
         //int my_bonus=haveBonus;
         //boolean tablet;
         Button checkBoard = (Button) findViewById(R.id.checkBoard);

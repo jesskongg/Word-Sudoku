@@ -10,5 +10,6 @@
         <attr name="headingColour" format="color"/>
         <attr name="menuButtonColour" format="color"/>
         <attr name="menuButtonOutline" format="color"/>
+        <attr name="changeText" format="string"/>
     </declare-styleable>
 </resources>

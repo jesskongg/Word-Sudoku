@@ -325,6 +325,96 @@ public class boards_and_menu_data {
         }
         return newWordList;
     }
+
+
+
+    public boolean shaded_rectangle(int gridLength, int position) {
+        int index;
+        int subLen=0;
+        int subWid=0;
+        if (gridLength==9)
+        {
+            subLen=3;
+            subWid=3;
+
+        }
+
+        if(gridLength==4)
+        {
+            subLen=2;
+            subWid=2;
+        }
+
+        if (gridLength==6)
+        {
+            subLen=2;
+            subWid=3;
+
+        }
+
+        if (gridLength==12)
+        {
+            subLen=3;
+            subWid=4;
+        }
+
+        // int step_size=0;
+        if (gridLength==9 || gridLength==12) {
+
+            for(int group = 0; group < gridLength; group=group+2) {
+                for (int row = (group / subLen) * subLen; row < (group / subLen) * subLen + subLen; row++) {
+                    for (int column = (group % subLen) * subWid; column < (group % subLen) * subWid + subWid; column++) {
+                        index = gridLength * row + column;
+                        if (position == index) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (gridLength==4)
+        {
+
+
+            for (int group=0 ; group<5; group=group+3)
+                for (int row = (group / subLen) * subLen; row < (group / subLen) * subLen + subLen; row++) {
+                    for (int column = (group % subLen) * subWid; column < (group % subLen) * subWid + subWid; column++) {
+                        index = gridLength * row + column;
+                        if (position == index) {
+                            return true;
+                        }
+                    }
+                }
+
+        }
+
+
+        if (gridLength==6)
+        {
+            for (int group=0 ; group<=9; group=group+3) {
+
+                if (group ==9) {
+                    group=4;
+                }
+                for (int row = (group / subLen) * subLen; row < (group / subLen) * subLen + subLen; row++) {
+                    for (int column = (group % subLen) * subWid; column < (group % subLen) * subWid + subWid; column++) {
+                        index = gridLength * row + column;
+                        if (position == index) {
+                            return true;
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        return false;
+    }
+
+
+
 }
 
 

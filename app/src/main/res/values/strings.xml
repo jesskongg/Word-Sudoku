@@ -65,4 +65,5 @@
     <string name="empty_chapter">This Chapter is empty. Please delete it an recreate one.</string>
     <string name="LOAD">Load and Start</string>
     <string name="enter_chapter_name">Please enter chapter name</string>
+    <string name="chapter_heading">Load Chapters</string>
 </resources>

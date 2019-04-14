@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColour"
+    android:background="@color/turquoise"
     tools:context="com.example.myapplication.Controller.chapters">
 
     <TextView
@@ -43,16 +43,15 @@
         android:background="@drawable/round_buttons"
         android:fontFamily="@font/dosis_medium"
         android:padding="10dp"
-        android:text="@string/delete"
-        android:textColor="?attr/textColour"
 
+        android:text="@string/delete"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideline70"
         app:layout_constraintHorizontal_bias="0.584"
         app:layout_constraintLeft_toRightOf="@id/add"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chapterTitle"
-        app:layout_constraintVertical_bias="0.564" />
+        app:layout_constraintTop_toBottomOf="@+id/chapterTitle"
+        app:layout_constraintVertical_bias="0.531" />
 
     <Button
         android:id="@+id/add"
@@ -69,7 +68,6 @@
         android:fontFamily="@font/dosis_medium"
         android:padding="10dp"
         android:text="@string/add"
-        android:textColor="?attr/textColour"
 
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/guideline70"
@@ -89,7 +87,7 @@
         android:gravity="center"
         android:text="@string/chapter_description"
         android:textAlignment="center"
-        android:textColor="?attr/textColour"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline72"

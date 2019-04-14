@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.Model.Userdata;
 import com.example.myapplication.R;
+import com.example.myapplication.View.SharedPref;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -66,6 +67,17 @@ public class chapters extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //restore state of dark/light mode selection that user selected before closing app
+        final SharedPref sharedPref;
+
+        sharedPref = new SharedPref(this);
+
+        if(sharedPref.loadNightModeState()) {
+            setTheme(R.style.DarkMode);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapters);
 

@@ -23,7 +23,7 @@ Developed with:
     - Can also be paused on demand by user
 - Light and dark modes, for day- and night-time play
 
-### Images of Word Sudoku Android Application
+## Images
 
 #### Landing Page
 ![Landing Page](Landing_page.png)

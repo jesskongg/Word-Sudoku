@@ -16,4 +16,6 @@ Developed with:
     - 4x6
     - 9x9
     - 12x12
+- Timer that begins as the user opens up a new puzzle, and pauses if the user leaves the app
+    - Can also be paused on demand by user
 - Light and dark modes, for day- and night-time play

@@ -6,7 +6,7 @@ Developed with:
 - Java
 - XML
 
-### Features
+## Features
 
 - Toggle between English->French or French->English modes
 - Users can upload their own set of vocabulary words
@@ -23,3 +23,13 @@ Developed with:
     - Can also be paused on demand by user
 - Light and dark modes, for day- and night-time play
 
+### Images of Word Sudoku Android Application
+
+#### Landing Page
+![Landing Page](Landing_page.png)
+
+#### Game Modes Page
+![Game Modes](Game_modes.png)
+
+#### Game Play - Sudoku Board
+![Sudoku Board](Sudoku_board.png)

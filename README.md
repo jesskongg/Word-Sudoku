@@ -2,7 +2,7 @@
 
 Word Sudoku is a language-learning Android application that teaches users French through the game of Sudoku.
 
-Developed with:
+Developed using:
 - Java
 - XML
 

@@ -9,6 +9,7 @@ Developed with:
 ### Features
 
 - 'Easy', 'Medium', and 'Hard' modes
+- Toggle between English->French or French->English modes
 - Users can upload their own set of vocabulary words
 - Choose from the following puzzle dimensions:
     - 3x3
